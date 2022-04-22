@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
-import {Context} from "../index";
-import { AiOutlinePlus } from "react-icons/ai"
+import { Context } from "../index";
+import { AiOutlinePlus, AiOutlineBell } from "react-icons/ai"
 import { FaBars } from "react-icons/fa"
+import { IoIosArrowDown } from "react-icons/io"
 import Modal from '../components/UI/modal/Modal'
 import Button from "./UI/button/Button"
 import Input from "./UI/input/Input"
@@ -13,9 +14,10 @@ import SignIn from "../components/SignIn"
 
 const Header = () => {
     const {store} = useContext(Context);
+    const navigate = useNavigate();
     const [modalSignUp, setModalSignUp] = useState(false);
     const [modalSignIn, setModalSignIn] = useState(false);
-
+    const [showNotifies, setShowNotifies] = useState(false);
 
     const create = () => {
 
@@ -41,6 +43,10 @@ const Header = () => {
         else {
 
         }
+    }
+
+    const profile = () => {
+        navigate(`/${'userID'}`);
     }
 
     return (
@@ -76,7 +82,13 @@ const Header = () => {
                     </>
                     :
                     <>
-                    
+                        <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
+                        <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'}>
+                            <p className="title">Уведомления</p>
+                        </div>
+
+                        <div onClick={profile} className="profile">AI</div>
+                        <IoIosArrowDown className='arrow-down'/>
                     </>
                 }
             </div>
