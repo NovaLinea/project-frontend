@@ -1,0 +1,28 @@
+.sidebar {
+    width: 180px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.sidebar__list-item {
+    margin-top: 5px;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    color: #000;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.sidebar__list-item:hover {
+    color: #000;
+    background-color: #f2f2f2;
+}
+
+.sidebar__list-item.active {
+    background-color: #f2f2f2;
+}
+
+.sidebar__list-item__icon {
+    margin-right: 5px;
+}
