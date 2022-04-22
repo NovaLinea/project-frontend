@@ -2,21 +2,28 @@
     width: 180px;
     margin-top: 20px;
     margin-left: 20px;
+    float: left;
 }
 
 .sidebar__list-item {
     margin-top: 5px;
-    padding: 10px 15px;
+    padding: 8px 15px;
     display: flex;
     align-items: center;
     color: #000;
     text-decoration: none;
     border-radius: 10px;
+    font-size: 17px;
+    -moz-transition: all 0.1s ease-out;
+    -o-transition: all 0.1s ease-out;
+    -webkit-transition: all 0.1s ease-out;
+    transition: all 0.1s ease-out;
 }
 
 .sidebar__list-item:hover {
     color: #000;
     background-color: #f2f2f2;
+    cursor: pointer;
 }
 
 .sidebar__list-item.active {
@@ -24,5 +31,6 @@
 }
 
 .sidebar__list-item__icon {
-    margin-right: 5px;
+    margin-right: 7px;
+    font-size: 19px;
 }

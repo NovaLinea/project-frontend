@@ -10,9 +10,22 @@
 
 .ModalContent {
     padding: 15px;
-    background-color: rgb(88, 88, 88);
+    padding-bottom: 5px;
+    background-color: #fff;
     border-radius: 10px;
     min-width: 250px;
+}
+
+.ModalContent .title {
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.title .close {
+    font-size: 25px;
 }
 
 .Modal.active {

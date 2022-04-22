@@ -3,7 +3,6 @@ import classes from './Button.module.css'
 
 
 const Button = ({mode, children, ...props}) => {
-	console.log(mode);
   	return (
 		mode === 'fill'
 			?
