@@ -14,7 +14,7 @@ const SignIn = ({signIn}) => {
     const signInUser = (e) => {
 		e.preventDefault()
 
-        if (email === '' || password == '') {
+        if (email === '' || password === '') {
             setIsError('Вы заполнили не все поля');
             setTimeout(() => {
                 setIsError(null)
@@ -25,6 +25,8 @@ const SignIn = ({signIn}) => {
                 email, password, id: Date.now()
             }
             signIn(dataUser);
+            setEmail('');
+            setPassword('');
         }
 	}
 

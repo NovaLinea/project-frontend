@@ -55,14 +55,14 @@
 
 .header__middle {
     left: 20;
-    width: 600px;
+    width: 650px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .header__middle Input {
-    width: 300px;
+    width: 350px;
 }
 
 .header__middle Button {
@@ -116,8 +116,11 @@
 }
 
 .notifications__panel p.title {
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 17px;
+}
+
+.notifications__panel .line {
+    margin-top: -8px;
 }
 
 .header__right .profile {

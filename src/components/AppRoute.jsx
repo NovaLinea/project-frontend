@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import Loader from '../components/UI/loader/Loader';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import ModeMenu from './ModeMenu';
 
 const AppRoute = () => {
     const {store} = useContext(Context);
@@ -23,6 +24,7 @@ const AppRoute = () => {
         <>
             <Header/>
             <Sidebar/>
+            <ModeMenu/>
 
             {store.isAuth
                 ?

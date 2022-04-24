@@ -1,0 +1,29 @@
+.mode {
+    width: 400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #e7e7e7;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 0px 10px 5px 10px;
+}
+
+.menu__item {
+    width: 120px;
+    margin-top: 5px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 17px;
+    text-align: center;
+    -moz-transition: all 0.1s ease-out;
+    -o-transition: all 0.1s ease-out;
+    -webkit-transition: all 0.1s ease-out;
+    transition: all 0.1s ease-out;
+    cursor: pointer;
+}
+
+.menu__item:hover, .menu__item.active {
+    background-color: #f8f7f7;
+}

@@ -15,7 +15,7 @@ const SignUp = ({signUp}) => {
     const signUpUser = (e) => {
 		e.preventDefault()
 
-        if (name === '' || email === '' || password == '') {
+        if (name === '' || email === '' || password === '') {
             setIsError('Вы заполнили не все поля');
             setTimeout(() => {
                 setIsError(null)
@@ -26,6 +26,9 @@ const SignUp = ({signUp}) => {
                 email, name, password, id: Date.now()
             }
             signUp(dataUser);
+            setEmail('');
+            setName('');
+            setPassword('');
         }
 	}
 

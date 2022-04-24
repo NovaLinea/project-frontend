@@ -10,6 +10,7 @@ import Button from "./UI/button/Button"
 import Input from "./UI/input/Input"
 import SignUp from "../components/SignUp"
 import SignIn from "../components/SignIn"
+import { Popover, OverlayTrigger, Dropdown } from 'react-bootstrap';
 
 
 const Header = () => {
@@ -26,7 +27,7 @@ const Header = () => {
     const signUpUser = (dataUser) => {
         setModalSignUp(false);
 
-        if (dataUser == 'signIn') {
+        if (dataUser === 'signIn') {
             setModalSignIn(true);
         }
         else {
@@ -37,7 +38,7 @@ const Header = () => {
     const signInUser = (dataUser) => {
         setModalSignIn(false);
 
-        if (dataUser == 'signUp') {
+        if (dataUser === 'signUp') {
             setModalSignUp(true);
         }
         else {
@@ -70,7 +71,26 @@ const Header = () => {
                         <AiOutlinePlus className='create__icon'/>
                         Создать
                     </Button>
-                }   
+                }
+                
+                <Dropdown className='list-status'>
+                    <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{boxShadow: 'none'}}>
+                        <AiOutlinePlus className='create__icon'/>
+                        Создать
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu variant="light">
+                        <Dropdown.Item>
+                            Проект на продажу
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            Сбор донатов
+                        </Dropdown.Item>
+                        <Dropdown.Item>
+                            Набор команды
+                        </Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
             </div>
 
             <div className="header__right">
@@ -83,8 +103,11 @@ const Header = () => {
                     :
                     <>
                         <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
-                        <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'}>
+
+                        <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClickAway={() => setShowNotifies(false)}>
                             <p className="title">Уведомления</p>
+                            <hr className='line'/>
+                            <p>Пусто</p>
                         </div>
 
                         <div onClick={profile} className="profile">AI</div>

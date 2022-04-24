@@ -23,37 +23,37 @@ const Sidebar = () => {
             <div className="sidebar__list">
                 <div onClick={() => changeItem('popular')} className={activeItem === 'popular' ? 'sidebar__list-item active' : 'sidebar__list-item'}>
                     <AiOutlineFire className='sidebar__list-item__icon'/>
-                    <b>Популярное</b>
+                    <span>Популярное</span>
                 </div>
 
                 <div onClick={() => changeItem('new')} className={activeItem === 'new' ? 'sidebar__list-item active' : 'sidebar__list-item'}>
                     <BiTimeFive className='sidebar__list-item__icon'/>
-                    <b>Свежее</b>
+                    <span>Свежее</span>
                 </div>
 
                 {store.isAuth &&
                     <div onClick={() => changeItem('home')} className={activeItem === 'home' ? 'sidebar__list-item active' : 'sidebar__list-item'}>
                         <AiOutlineHome className='sidebar__list-item__icon'/>
-                        <b>Моя лента</b>
+                        <span>Моя лента</span>
                     </div>
                 }
 
                 <div onClick={() => changeItem('categories')} className={activeItem === 'categories' ? 'sidebar__list-item active' : 'sidebar__list-item'}>
                     <BiCategory className='sidebar__list-item__icon'/>
-                    <b>Категории</b>
+                    <span>Категории</span>
                 </div>
 
                 {store.isAuth &&
                     <div onClick={() => changeItem('subs')} className={activeItem === 'subs' ? 'sidebar__list-item active' : 'sidebar__list-item'}>
                         <AiOutlineOrderedList className='sidebar__list-item__icon'/>
-                        <b>Подписки</b>
+                        <span>Подписки</span>
                     </div>
                 }
 
                 {store.isAuth &&
                     <div onClick={() => changeItem('favorite')} className={activeItem === 'favorite' ? 'sidebar__list-item active' : 'sidebar__list-item'}>
                         <HiOutlineBookmark className='sidebar__list-item__icon'/>
-                        <b>Избранное</b>
+                        <span>Избранное</span>
                     </div>
                 }
             </div>
