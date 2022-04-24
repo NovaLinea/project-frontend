@@ -1,19 +1,26 @@
 .mode {
     width: 400px;
-    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: #e7e7e7;
+    background-color: #f2f2f2;
     margin-top: 20px;
     border-radius: 10px;
-    padding: 0px 10px 5px 10px;
+    padding: 0px 5px 5px 5px;
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .menu__item {
     width: 120px;
     margin-top: 5px;
-    padding: 8px 15px;
+    padding: 5px 10px;
     border-radius: 10px;
     font-size: 17px;
     text-align: center;
@@ -25,5 +32,9 @@
 }
 
 .menu__item:hover, .menu__item.active {
-    background-color: #f8f7f7;
+    background-color: #fff;
+}
+
+.menu__item:hover {
+    background-color: #f8f8f8;
 }

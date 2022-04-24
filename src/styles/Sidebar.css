@@ -2,7 +2,6 @@
     width: 180px;
     margin-top: 20px;
     margin-left: 20px;
-    float: left;
 }
 
 .sidebar__list-item {
@@ -18,8 +17,13 @@
     transition: all 0.1s ease-out;
 }
 
-.sidebar__list-item:hover, .sidebar__list-item.active {
+.sidebar__list-item.active {
     background-color: #f2f2f2;
+    cursor: pointer;
+}
+
+.sidebar__list-item:hover {
+    background-color: #f8f8f8;
     cursor: pointer;
 }
 

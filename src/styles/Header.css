@@ -9,6 +9,7 @@
     height: 70px;
     padding: 0px 30px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02);
+    position: relative;
 }
 
 .menu-bars {
@@ -28,14 +29,14 @@
     align-items: center;
 }
 
-.logo__link {
+.header__left .logo__link {
     text-decoration: none;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo__link .logo {
+.header__left .logo__link .logo {
     background-color: #1e2d43;
     padding: 7px 8px;
     margin-right: 10px;
@@ -45,7 +46,7 @@
     text-decoration: none;
 }
 
-.logo__link .name {
+.header__left .logo__link .name {
     font-size: 22px;
     font-weight: bold;
     text-decoration: none;
@@ -55,25 +56,68 @@
 
 .header__middle {
     left: 20;
-    width: 650px;
+    width: 600px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }
 
 .header__middle Input {
     width: 350px;
 }
 
-.header__middle Button {
+.header__middle #dropdown-basic {
     display: flex;
     align-items: center;
+    border-radius: 10px;
+    border: 1.5px solid #1e2d43;
+    padding: 7px 15px;
+    font-weight: bold;
+    box-shadow: none;
 }
 
 .header__middle .create__icon {
     font-size: 20px;
     font-weight: bold;
     margin-right: 2px;
+}
+
+.header__middle .create__action {
+    width: 180px;
+    border: none;
+    -webkit-box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+    box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+}
+
+.create__action .create__action-item {
+    width: 165px;
+    margin: 0 7px 7px 7px;
+    border-radius: 5px;
+    padding: 5px 8px;
+}
+
+.create__action .create__action-item:hover {
+    background-color: #f2f2f2;
+}
+
+.create__action .create__action-item:active {
+    background-color: #e7e7e7;
+    color: #000;
+}
+
+.create__action .create__action-item .create__action-item__icon {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 5px;
 }
 
 .header__right {
@@ -98,6 +142,7 @@
 }
 
 .header__right .notifications__panel {
+    background-color: #fff;
     position: absolute;
     top: 70px;
     right: 100px;
@@ -123,17 +168,20 @@
     margin-top: -8px;
 }
 
-.header__right .profile {
+.header__right .profile__link {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #1e2d43;
     border-radius: 100px;
-    width: 45px;
-    height: 45px;
     cursor: pointer;
     color: #fff;
     font-weight: bold;
+    padding: 10px 14px;
 }
 
-.header__right .profile:hover {
+.header__right .profile__link:hover {
     opacity: 0.9;
 }
 

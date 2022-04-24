@@ -23,33 +23,35 @@ const AppRoute = () => {
     return (
         <>
             <Header/>
-            <Sidebar/>
-            <ModeMenu/>
+            <div className="content">
+                <Sidebar/>
+                <ModeMenu/>
 
-            {store.isAuth
-                ?
-                <Routes>
-                    {privateRoutes.map(route =>
-                        <Route 
-                            path={route.path}
-                            element={<route.element/>}
-                            key={route.path}
-                        />
-                    )}
-                    <Route  path="*" element={<NotFound />} />
-                </Routes>
-                :
-                <Routes>
-                    {publicRoutes.map(route =>
-                        <Route 
-                            path={route.path}
-                            element={<route.element/>}
-                            key={route.path}
-                        />
-                    )}
-                    <Route  path="*" element={<NotFound />} />
-                </Routes>
-            }
+                {store.isAuth
+                    ?
+                    <Routes>
+                        {privateRoutes.map(route =>
+                            <Route 
+                                path={route.path}
+                                element={<route.element/>}
+                                key={route.path}
+                            />
+                        )}
+                        <Route  path="*" element={<NotFound />} />
+                    </Routes>
+                    :
+                    <Routes>
+                        {publicRoutes.map(route =>
+                            <Route 
+                                path={route.path}
+                                element={<route.element/>}
+                                key={route.path}
+                            />
+                        )}
+                        <Route  path="*" element={<NotFound />} />
+                    </Routes>
+                }
+            </div>
         </>
     );
 };

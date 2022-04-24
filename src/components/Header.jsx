@@ -2,15 +2,17 @@ import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
 import { Context } from "../index";
-import { AiOutlinePlus, AiOutlineBell } from "react-icons/ai"
+import { AiOutlinePlus, AiOutlineBell, AiOutlineTeam } from "react-icons/ai"
 import { FaBars } from "react-icons/fa"
 import { IoIosArrowDown } from "react-icons/io"
+import { MdAttachMoney } from "react-icons/md"
+import { BiDonateHeart } from "react-icons/bi"
 import Modal from '../components/UI/modal/Modal'
 import Button from "./UI/button/Button"
 import Input from "./UI/input/Input"
 import SignUp from "../components/SignUp"
 import SignIn from "../components/SignIn"
-import { Popover, OverlayTrigger, Dropdown } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
 
 const Header = () => {
@@ -67,30 +69,28 @@ const Header = () => {
                 <Input placeholder='Поиск...'/>
 
                 {store.isAuth &&
-                    <Button mode='outline' onClick={create}>
-                        <AiOutlinePlus className='create__icon'/>
-                        Создать
-                    </Button>
-                }
-                
-                <Dropdown className='list-status'>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic" style={{boxShadow: 'none'}}>
-                        <AiOutlinePlus className='create__icon'/>
-                        Создать
-                    </Dropdown.Toggle>
+                    <Dropdown className='create list-status'>
+                        <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
+                            <AiOutlinePlus className='create__icon'/>
+                            Создать
+                        </Dropdown.Toggle>
 
-                    <Dropdown.Menu variant="light">
-                        <Dropdown.Item>
-                            Проект на продажу
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            Сбор донатов
-                        </Dropdown.Item>
-                        <Dropdown.Item>
-                            Набор команды
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                        <Dropdown.Menu variant="light" className='create__action'>
+                            <Dropdown.Item className='create__action-item'>
+                                <MdAttachMoney className='create__action-item__icon'/>
+                                На продажу
+                            </Dropdown.Item>
+                            <Dropdown.Item className='create__action-item'>
+                                <BiDonateHeart className='create__action-item__icon'/>
+                                Сбор донатов
+                            </Dropdown.Item>
+                            <Dropdown.Item className='create__action-item'>
+                                <AiOutlineTeam className='create__action-item__icon'/>
+                                Набор команды
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                }
             </div>
 
             <div className="header__right">
@@ -110,7 +110,9 @@ const Header = () => {
                             <p>Пусто</p>
                         </div>
 
-                        <div onClick={profile} className="profile">AI</div>
+                        <Link to={`/${'userID'}`} className='profile__link'>
+                            AI
+                        </Link>
                         <IoIosArrowDown className='arrow-down'/>
                     </>
                 }

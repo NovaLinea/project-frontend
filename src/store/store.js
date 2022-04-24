@@ -4,7 +4,7 @@ import { API_URL } from "../API";
 import AuthService from "../API/AuthService";
 
 export default class Store {
-    isAuth = true;
+    isAuth = false;
     isLoading = false;
     isError = null;
     isRole = null;

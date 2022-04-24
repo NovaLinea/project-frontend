@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import classes from './Error.module.css'
+import { GrFormClose } from 'react-icons/gr'
 
 
 const Error = ({children, mode}) => {
@@ -15,13 +16,13 @@ const Error = ({children, mode}) => {
             show &&
                 <div className={`${classes.Err} ${classes.Window}`}>
                     <b>{children}</b>
-                    <i className="fa-solid fa-xmark" onClick={() => setShow(false)}></i>
+                    <GrFormClose onClick={() => setShow(false)} className={classes.close}/>
                 </div>
             :
             show &&
                 <div className={`${classes.Sccss} ${classes.Window}`}>
                     <b>{children}</b>
-                    <i className="fa-solid fa-xmark" onClick={() => setShow(false)}></i>
+                    <GrFormClose onClick={() => setShow(false)} className={classes.close}/>
                 </div>
     );
 };
