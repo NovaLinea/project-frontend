@@ -16,13 +16,13 @@ const Error = ({children, mode}) => {
             show &&
                 <div className={`${classes.Err} ${classes.Window}`}>
                     <b>{children}</b>
-                    <GrFormClose onClick={() => setShow(false)} className={classes.close}/>
+                    <GrFormClose onClick={() => setShow(false)} className={classes.closeErr}/>
                 </div>
             :
             show &&
                 <div className={`${classes.Sccss} ${classes.Window}`}>
                     <b>{children}</b>
-                    <GrFormClose onClick={() => setShow(false)} className={classes.close}/>
+                    <GrFormClose onClick={() => setShow(false)} className={classes.closeSccss}/>
                 </div>
     );
 };

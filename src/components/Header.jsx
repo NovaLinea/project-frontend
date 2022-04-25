@@ -18,9 +18,41 @@ import { Dropdown } from 'react-bootstrap';
 const Header = () => {
     const {store} = useContext(Context);
     const navigate = useNavigate();
+    const timeout = 5000;
+    const [isLoading, setIsLoading] = useState(false);
+    const [isError, setIsError] = useState(null);
+    const [isNotification, setIsNotification] = useState(null);
     const [modalSignUp, setModalSignUp] = useState(false);
     const [modalSignIn, setModalSignIn] = useState(false);
     const [showNotifies, setShowNotifies] = useState(false);
+
+    async function signUp(dataUser) {
+        try {
+            setIsLoading(true);
+            store.signup(dataUser.name, dataUser.email, dataUser.password);
+        } catch (e) {
+            setIsError('Ошибка при регистрации');
+            setTimeout(() => {
+                setIsError(null)
+            }, timeout)
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function signIn(dataUser) {
+        try {
+            setIsLoading(true);
+            store.signin(dataUser.email, dataUser.password);
+        } catch (e) {
+            setIsError('Ошибка при входе');
+            setTimeout(() => {
+                setIsError(null)
+            }, timeout)
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     const create = () => {
 
@@ -33,7 +65,7 @@ const Header = () => {
             setModalSignIn(true);
         }
         else {
-
+            signUp(dataUser);
         }
     }
 
@@ -44,7 +76,7 @@ const Header = () => {
             setModalSignUp(true);
         }
         else {
-
+            signIn(dataUser);
         }
     }
 

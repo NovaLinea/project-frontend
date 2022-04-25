@@ -7,7 +7,6 @@ export default class Store {
     isAuth = false;
     isLoading = false;
     isError = null;
-    isRole = null;
     isUserID = null;
     timeout = 5000;
 
@@ -27,20 +26,29 @@ export default class Store {
         this.isError = error;
     }
 
-    setIsRole(role) {
-        this.isRole = role;
-    }
-
-    setIsUserID(userID) {
+    setUserID(userID) {
         this.isUserID = userID;
     }
 
-    async login(username, password) {
+    async signup(name, email, password) {
         try {
-            const response = await AuthService.login(username, password);
+            const response = await AuthService.signup(name, email, password);
             localStorage.setItem('token', response.data.accessToken);
-            this.setIsRole(response.data.position);
-            this.setIsUserID(response.data.userID);
+            this.setUserID(response.data.userID);
+            this.setAuth(true);
+        } catch (e) {
+            this.setError(e.response?.data?.message);
+            setTimeout(() => {
+                this.setError(null)
+            }, this.timeout)
+        }
+    }
+
+    async signin(email, password) {
+        try {
+            const response = await AuthService.signin(email, password);
+            localStorage.setItem('token', response.data.accessToken);
+            this.setUserID(response.data.userID);
             this.setAuth(true);
         } catch (e) {
             this.setError(e.response?.data?.message);
@@ -55,8 +63,7 @@ export default class Store {
             const response = await AuthService.logout()
             localStorage.removeItem('token');
             this.setAuth(false);
-            this.setIsRole(null);
-            this.setIsUserID(null);
+            this.setUserID(null);
         } catch (e) {
             this.setError(e.response?.data?.message);
             setTimeout(() => {
@@ -70,8 +77,7 @@ export default class Store {
         try {
             const response = await axios.get(`${API_URL}/refresh`, {withCredentials: true})
             localStorage.setItem('token', response.data.accessToken);
-            this.setIsRole(response.data.position);
-            this.setIsUserID(response.data.userID);
+            this.setUserID(response.data.userID);
             this.setAuth(true);
         } catch (e) {
             this.setError(e.response?.data?.message);

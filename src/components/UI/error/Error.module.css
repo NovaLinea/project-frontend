@@ -39,7 +39,15 @@
     margin-top: 30px;
 }
 
-.close {
+.closeErr, .closeSccss {
     font-weight: bold;
     font-size: 20px;
+}
+
+.closeErr {
+    color: rgb(117, 63, 63);
+}
+
+.closeSccss {
+    background-color: rgb(74, 105, 53);
 }
