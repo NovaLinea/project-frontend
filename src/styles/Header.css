@@ -12,7 +12,7 @@
     position: relative;
 }
 
-.menu-bars {
+.header__left .menu-bars {
     margin-right: 20px;
     font-size: 22px;
     text-decoration: none;
@@ -20,7 +20,7 @@
     display: flex;
 }
 
-.menu-bars:hover {
+.header__left .menu-bars:hover {
     color: #000;
 }
 
@@ -75,7 +75,7 @@
     width: 350px;
 }
 
-.header__middle #dropdown-basic {
+.header__middle .dropdown .dropdown__btn {
     display: flex;
     align-items: center;
     border-radius: 10px;
@@ -85,36 +85,36 @@
     box-shadow: none;
 }
 
-.header__middle .create__icon {
+.dropdown .icon {
     font-size: 20px;
     font-weight: bold;
     margin-right: 2px;
 }
 
-.header__middle .create__action {
+.dropdown .actions {
     width: 180px;
     border: none;
     -webkit-box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
     box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
 }
 
-.create__action .create__action-item {
+.dropdown .action-item {
     width: 165px;
     margin: 0 7px 7px 7px;
     border-radius: 5px;
     padding: 5px 8px;
 }
 
-.create__action .create__action-item:hover {
+.dropdown .action-item:hover {
     background-color: #f2f2f2;
 }
 
-.create__action .create__action-item:active {
+.dropdown .action-item:active {
     background-color: #e7e7e7;
     color: #000;
 }
 
-.create__action .create__action-item .create__action-item__icon {
+.dropdown .action-item .action-item__icon {
     font-size: 20px;
     font-weight: bold;
     margin-right: 5px;
@@ -185,13 +185,17 @@
     opacity: 0.9;
 }
 
-.header__right .arrow-down {
-    font-size: 20px;
+.header__right .dropdown .dropdown__btn {
+    display: flex;
+    align-items: center;
+    background-color: #f2f2f2;
     font-weight: bold;
-    margin-left: 5px;
-    cursor: pointer;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    padding: 5px;
 }
 
-.header__right .arrow-down:hover {
-    opacity: 0.6;
+.header__right .dropdown .logout {
+    color: rgb(231, 65, 65);
 }

@@ -4,12 +4,14 @@ import '../styles/Header.css';
 import { Context } from "../index";
 import { AiOutlinePlus, AiOutlineBell, AiOutlineTeam } from "react-icons/ai"
 import { FaBars } from "react-icons/fa"
-import { IoIosArrowDown } from "react-icons/io"
 import { MdAttachMoney } from "react-icons/md"
-import { BiDonateHeart } from "react-icons/bi"
+import { BiDonateHeart, BiExit } from "react-icons/bi"
+import { CgProfile } from "react-icons/cg"
+import { FiSettings } from "react-icons/fi"
 import Modal from '../components/UI/modal/Modal'
 import Button from "./UI/button/Button"
 import Input from "./UI/input/Input"
+import Error from '../components/UI/error/Error';
 import SignUp from "../components/SignUp"
 import SignIn from "../components/SignIn"
 import { Dropdown } from 'react-bootstrap';
@@ -27,31 +29,16 @@ const Header = () => {
     const [showNotifies, setShowNotifies] = useState(false);
 
     async function signUp(dataUser) {
-        try {
-            setIsLoading(true);
-            store.signup(dataUser.name, dataUser.email, dataUser.password);
-        } catch (e) {
-            setIsError('Ошибка при регистрации');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
-        } finally {
-            setIsLoading(false);
-        }
+        store.signup(dataUser.name, dataUser.email, dataUser.password);
     }
 
     async function signIn(dataUser) {
-        try {
-            setIsLoading(true);
-            store.signin(dataUser.email, dataUser.password);
-        } catch (e) {
-            setIsError('Ошибка при входе');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
-        } finally {
-            setIsLoading(false);
-        }
+        store.signin(dataUser.email, dataUser.password);
+    }
+
+    async function logout() {
+        store.logout();
+        navigate('/');
     }
 
     const create = () => {
@@ -80,10 +67,6 @@ const Header = () => {
         }
     }
 
-    const profile = () => {
-        navigate(`/${'userID'}`);
-    }
-
     return (
         <div className='header'>
             <div className="header__left">
@@ -101,23 +84,23 @@ const Header = () => {
                 <Input placeholder='Поиск...'/>
 
                 {store.isAuth &&
-                    <Dropdown className='create list-status'>
-                        <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
-                            <AiOutlinePlus className='create__icon'/>
+                    <Dropdown className='dropdown'>
+                        <Dropdown.Toggle variant="outline-dark" className='dropdown__btn'>
+                            <AiOutlinePlus className='icon'/>
                             Создать
                         </Dropdown.Toggle>
 
-                        <Dropdown.Menu variant="light" className='create__action'>
-                            <Dropdown.Item className='create__action-item'>
-                                <MdAttachMoney className='create__action-item__icon'/>
+                        <Dropdown.Menu variant="light" className='actions'>
+                            <Dropdown.Item className='action-item'>
+                                <MdAttachMoney className='action-item__icon'/>
                                 На продажу
                             </Dropdown.Item>
-                            <Dropdown.Item className='create__action-item'>
-                                <BiDonateHeart className='create__action-item__icon'/>
+                            <Dropdown.Item className='action-item'>
+                                <BiDonateHeart className='action-item__icon'/>
                                 Сбор донатов
                             </Dropdown.Item>
-                            <Dropdown.Item className='create__action-item'>
-                                <AiOutlineTeam className='create__action-item__icon'/>
+                            <Dropdown.Item className='action-item'>
+                                <AiOutlineTeam className='action-item__icon'/>
                                 Набор команды
                             </Dropdown.Item>
                         </Dropdown.Menu>
@@ -142,10 +125,33 @@ const Header = () => {
                             <p>Пусто</p>
                         </div>
 
-                        <Link to={`/${'userID'}`} className='profile__link'>
+                        <Link to={`/${store.isUserID}`} className='profile__link'>
                             AI
                         </Link>
-                        <IoIosArrowDown className='arrow-down'/>
+
+                        <Dropdown className='dropdown'>
+                            <Dropdown.Toggle variant="light" className='dropdown__btn'>
+                            </Dropdown.Toggle>
+
+                            <Dropdown.Menu variant="light" className='actions'>
+                                <Dropdown.Item className='action-item' onClick={() => navigate(`/${store.isUserID}`)}>
+                                    <CgProfile className='action-item__icon'/>
+                                    Профиль
+                                </Dropdown.Item>
+                                <Dropdown.Item className='action-item' onClick={() => navigate('/donates')}>
+                                    <BiDonateHeart className='action-item__icon'/>
+                                    Донаты
+                                </Dropdown.Item>
+                                <Dropdown.Item className='action-item' onClick={() => navigate('/settings')}>
+                                    <FiSettings className='action-item__icon'/>
+                                    Настройки
+                                </Dropdown.Item>
+                                <Dropdown.Item className='action-item logout' onClick={logout}>
+                                    <BiExit className='action-item__icon'/>
+                                    Выйти
+                                </Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </>
                 }
             </div>
@@ -157,6 +163,10 @@ const Header = () => {
             <Modal title='Вход' visible={modalSignIn} setVisible={setModalSignIn}>
                 <SignIn signIn={signInUser}/>
             </Modal>
+
+            {store.isError &&
+                <Error mode='error'>{store.isError}</Error>
+            }
         </div>
     );
 };
