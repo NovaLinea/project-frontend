@@ -1,12 +1,10 @@
 .Inpt {
-    padding: .375rem .75rem;
+    padding: 10px;
     font-size: 1rem;
-    line-height: 1.5;
     background-color: #e7e7e7;
     border: 1px solid #e7e7e7;
     border-radius: 10px;
     outline: none;
-    height: 45px;
 }
 
 .Inpt:hover, .Inpt:focus {

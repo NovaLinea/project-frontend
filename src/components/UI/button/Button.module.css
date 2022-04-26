@@ -1,7 +1,7 @@
 .BtnFill {
     padding: 7px 20px;
     color: #fff;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     background-color: #1e2d43;
     border: 1.5px solid #1e2d43;
@@ -21,7 +21,7 @@
 .BtnOutline {
     padding: 7px 20px;
     color: #000;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     border: 1.5px solid #1e2d43;
     border-radius: 10px;

@@ -1,11 +1,10 @@
 .sidebar {
     width: 180px;
-    margin-top: 20px;
     margin-left: 20px;
 }
 
 .sidebar__list-item {
-    margin-top: 5px;
+    margin-bottom: 5px;
     padding: 8px 15px;
     display: flex;
     align-items: center;

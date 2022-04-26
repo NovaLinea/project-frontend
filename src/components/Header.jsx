@@ -3,15 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
 import { Context } from "../index";
 import { AiOutlinePlus, AiOutlineBell, AiOutlineTeam } from "react-icons/ai"
-import { FaBars } from "react-icons/fa"
 import { MdAttachMoney } from "react-icons/md"
-import { BiDonateHeart, BiExit } from "react-icons/bi"
+import { BiDonateHeart, BiExit, BiSearch } from "react-icons/bi"
 import { CgProfile } from "react-icons/cg"
 import { FiSettings } from "react-icons/fi"
 import Modal from '../components/UI/modal/Modal'
 import Button from "./UI/button/Button"
 import Input from "./UI/input/Input"
-import Error from '../components/UI/error/Error';
 import SignUp from "../components/SignUp"
 import SignIn from "../components/SignIn"
 import { Dropdown } from 'react-bootstrap';
@@ -20,21 +18,9 @@ import { Dropdown } from 'react-bootstrap';
 const Header = () => {
     const {store} = useContext(Context);
     const navigate = useNavigate();
-    const timeout = 5000;
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(null);
-    const [isNotification, setIsNotification] = useState(null);
     const [modalSignUp, setModalSignUp] = useState(false);
     const [modalSignIn, setModalSignIn] = useState(false);
     const [showNotifies, setShowNotifies] = useState(false);
-
-    async function signUp(dataUser) {
-        store.signup(dataUser.name, dataUser.email, dataUser.password);
-    }
-
-    async function signIn(dataUser) {
-        store.signin(dataUser.email, dataUser.password);
-    }
 
     async function logout() {
         store.logout();
@@ -45,35 +31,23 @@ const Header = () => {
 
     }
 
-    const signUpUser = (dataUser) => {
+    const signUp = (dataAction) => {
         setModalSignUp(false);
-
-        if (dataUser === 'signIn') {
+        if (dataAction === 'signIn') {
             setModalSignIn(true);
-        }
-        else {
-            signUp(dataUser);
         }
     }
 
-    const signInUser = (dataUser) => {
+    const signIn = (dataAction) => {
         setModalSignIn(false);
-
-        if (dataUser === 'signUp') {
+        if (dataAction === 'signUp') {
             setModalSignUp(true);
-        }
-        else {
-            signIn(dataUser);
         }
     }
 
     return (
         <div className='header'>
             <div className="header__left">
-                <Link to='#' className='menu-bars'>
-                    <FaBars/>
-                </Link>
-
                 <Link to='/' className='logo__link'>
                     <div className="logo">PU</div>
                     <b className='name'>ProjectUnion</b>
@@ -87,7 +61,7 @@ const Header = () => {
                     <Dropdown className='dropdown'>
                         <Dropdown.Toggle variant="outline-dark" className='dropdown__btn'>
                             <AiOutlinePlus className='icon'/>
-                            Создать
+                            <span>Создать</span>
                         </Dropdown.Toggle>
 
                         <Dropdown.Menu variant="light" className='actions'>
@@ -112,11 +86,14 @@ const Header = () => {
                 {!store.isAuth
                     ?
                     <>
+                        <BiSearch className='search'/>
                         <Button mode='outline' onClick={() => setModalSignUp(true)}>Регистрация</Button>
                         <Button mode='fill' onClick={() => setModalSignIn(true)}>Вход</Button>
                     </>
                     :
                     <>
+                        <AiOutlinePlus className='add'/>
+                        <BiSearch className='search'/>
                         <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
 
                         <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClickAway={() => setShowNotifies(false)}>
@@ -157,16 +134,12 @@ const Header = () => {
             </div>
 
             <Modal title='Регистрация' visible={modalSignUp} setVisible={setModalSignUp}>
-                <SignUp signUp={signUpUser}/>
+                <SignUp action={signUp}/>
             </Modal>
 
             <Modal title='Вход' visible={modalSignIn} setVisible={setModalSignIn}>
-                <SignIn signIn={signInUser}/>
+                <SignIn action={signIn}/>
             </Modal>
-
-            {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
-            }
         </div>
     );
 };

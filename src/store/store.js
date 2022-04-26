@@ -53,7 +53,7 @@ export default class Store {
         } catch (e) {
             this.setError(e.response?.data?.message);
             setTimeout(() => {
-                this.setError(null)
+                this.setError(null);
             }, this.timeout)
         }
     }

@@ -11,16 +11,18 @@ const ModeMenu = () => {
 
     return (
         <div className="mode">
-            <div onClick={() => changeItem('sale')} className={activeItem === 'sale' ? 'menu__item active' : 'menu__item'}>
-                <span>Продажа</span>
-            </div>
+            <div className="menu__list">
+                <div onClick={() => changeItem('sale')} className={activeItem === 'sale' ? 'menu__list-item active' : 'menu__list-item'}>
+                    <span>Продажа</span>
+                </div>
 
-            <div onClick={() => changeItem('donate')} className={activeItem === 'donate' ? 'menu__item active' : 'menu__item'}>
-                <span>Донаты</span>
-            </div>
+                <div onClick={() => changeItem('donate')} className={activeItem === 'donate' ? 'menu__list-item active' : 'menu__list-item'}>
+                    <span>Донаты</span>
+                </div>
 
-            <div onClick={() => changeItem('team')} className={activeItem === 'team' ? 'menu__item active' : 'menu__item'}>
-                <span>Команды</span>
+                <div onClick={() => changeItem('team')} className={activeItem === 'team' ? 'menu__list-item active' : 'menu__list-item'}>
+                    <span>Команды</span>
+                </div>
             </div>
         </div>
     );
