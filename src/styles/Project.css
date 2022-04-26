@@ -1,0 +1,76 @@
+.content__data {
+    width: 600px;
+}
+
+.project {
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.from__data, .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.from__data .from {
+    display: flex;
+    align-items: center;
+}
+
+.from__data .photo {
+    width: 30px;
+    height: 30px;
+    background-color: #dedede;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.from__data .time {
+    color: grey;
+    font-size: 15px;
+}
+
+.heading {
+    padding-top: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.project__body {
+    margin-top: -20px;
+}
+
+.category {
+    font-size: 15px;
+    color: grey;
+}
+
+.description {
+    margin-top: -10px;
+    font-size: 17px;
+}
+
+.project__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.feedback {
+    width: 220px;
+    display: flex;
+    align-items: center;
+}
+
+.feedback__item {
+    margin-right: 20px;
+}
+
+.project__footer-icon {
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 5px;
+    margin-top: -2px;
+}

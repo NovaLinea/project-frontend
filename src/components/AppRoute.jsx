@@ -23,7 +23,7 @@ const AppRoute = () => {
     return (
         <>
             <Header/>
-            <div className="content">
+            <div className="main">
                 <Sidebar/>
 
                 {store.isAuth

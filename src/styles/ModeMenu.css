@@ -24,3 +24,8 @@
 .menu__list-item:hover {
     background-color: #f8f8f8;
 }
+
+.menu__list-item__icon {
+    margin-right: 7px;
+    font-size: 19px;
+}
