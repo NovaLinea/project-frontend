@@ -1,5 +1,13 @@
-.content__data {
+.projects {
     width: 600px;
+    position: absolute;
+    left: 50%;
+    top: 23%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }
 
 .project {
@@ -39,16 +47,10 @@
 }
 
 .project__body {
-    margin-top: -20px;
-}
-
-.category {
-    font-size: 15px;
-    color: grey;
+    margin-top: -10px;
 }
 
 .description {
-    margin-top: -10px;
     font-size: 17px;
 }
 

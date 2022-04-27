@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const Categories = () => {
+const Messages = () => {
     return (
         <div>
             
@@ -9,4 +9,4 @@ const Categories = () => {
     );
 };
 
-export default Categories;
+export default Messages;

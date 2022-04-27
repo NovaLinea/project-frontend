@@ -1,9 +1,8 @@
 .profile {
-    width: 70%;
-    padding: 0 30px;
+    padding: 0 40px;
 }
 
-.profile__info {
+.profile__data {
     border-radius: 10px;
     background-color: #f2f2f2;
     padding: 15px;

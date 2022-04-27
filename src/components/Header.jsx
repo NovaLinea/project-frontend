@@ -13,6 +13,7 @@ import Input from "./UI/input/Input"
 import SignUp from "../components/SignUp"
 import SignIn from "../components/SignIn"
 import { Dropdown } from 'react-bootstrap';
+import { Container, Row, Col } from "react-bootstrap";
 
 
 const Header = () => {
@@ -46,92 +47,94 @@ const Header = () => {
     }
 
     return (
-        <div className='header'>
-            <div className="header__left">
-                <Link to='/' className='logo__link'>
-                    <div className="logo">PU</div>
-                    <b className='name'>ProjectUnion</b>
-                </Link>
-            </div>
+        <Container fluid align-self-center className='header'>
+            <Row>
+                <Col md={3} className="header__left">
+                    <Link to='/' className='logo__link'>
+                        <div className="logo">PU</div>
+                        <b className='name'>ProjectUnion</b>
+                    </Link>
+                </Col>
 
-            <div className="header__middle">
-                <Input placeholder='Поиск...'/>
+                <Col md={6} className="header__middle">
+                    <Input placeholder='Поиск...'/>
 
-                {store.isAuth &&
-                    <Dropdown className='dropdown'>
-                        <Dropdown.Toggle variant="outline-dark" className='dropdown__btn'>
-                            <AiOutlinePlus className='icon'/>
-                            <span>Создать</span>
-                        </Dropdown.Toggle>
-
-                        <Dropdown.Menu variant="light" className='actions'>
-                            <Dropdown.Item className='action-item'>
-                                <MdAttachMoney className='action-item__icon'/>
-                                На продажу
-                            </Dropdown.Item>
-                            <Dropdown.Item className='action-item'>
-                                <BiDonateHeart className='action-item__icon'/>
-                                Сбор донатов
-                            </Dropdown.Item>
-                            <Dropdown.Item className='action-item'>
-                                <AiOutlineTeam className='action-item__icon'/>
-                                Набор команды
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                }
-            </div>
-
-            <div className="header__right">
-                {!store.isAuth
-                    ?
-                    <>
-                        <BiSearch className='search'/>
-                        <Button mode='outline' onClick={() => setModalSignUp(true)}>Регистрация</Button>
-                        <Button mode='fill' onClick={() => setModalSignIn(true)}>Вход</Button>
-                    </>
-                    :
-                    <>
-                        <AiOutlinePlus className='add'/>
-                        <BiSearch className='search'/>
-                        <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
-
-                        <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClickAway={() => setShowNotifies(false)}>
-                            <p className="title">Уведомления</p>
-                            <hr className='line'/>
-                            <p>Пусто</p>
-                        </div>
-
-                        <Link to={`/${store.isUserID}`} className='profile__link'>
-                            AI
-                        </Link>
-
+                    {store.isAuth &&
                         <Dropdown className='dropdown'>
-                            <Dropdown.Toggle variant="light" className='dropdown__btn'>
+                            <Dropdown.Toggle variant="outline-dark" className='dropdown__btn'>
+                                <AiOutlinePlus className='icon'/>
+                                <span>Создать</span>
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu variant="light" className='actions'>
-                                <Dropdown.Item className='action-item' onClick={() => navigate(`/${store.isUserID}`)}>
-                                    <CgProfile className='action-item__icon'/>
-                                    Профиль
+                                <Dropdown.Item className='action-item'>
+                                    <MdAttachMoney className='action-item__icon'/>
+                                    На продажу
                                 </Dropdown.Item>
-                                <Dropdown.Item className='action-item' onClick={() => navigate('/donates')}>
+                                <Dropdown.Item className='action-item'>
                                     <BiDonateHeart className='action-item__icon'/>
-                                    Донаты
+                                    Сбор донатов
                                 </Dropdown.Item>
-                                <Dropdown.Item className='action-item' onClick={() => navigate('/settings')}>
-                                    <FiSettings className='action-item__icon'/>
-                                    Настройки
-                                </Dropdown.Item>
-                                <Dropdown.Item className='action-item logout' onClick={logout}>
-                                    <BiExit className='action-item__icon'/>
-                                    Выйти
+                                <Dropdown.Item className='action-item'>
+                                    <AiOutlineTeam className='action-item__icon'/>
+                                    Набор команды
                                 </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                    </>
-                }
-            </div>
+                    }
+                </Col>
+
+                <Col md={3} className="header__right">
+                    {!store.isAuth
+                        ?
+                        <>
+                            <BiSearch className='search'/>
+                            <Button mode='outline' onClick={() => setModalSignUp(true)}>Регистрация</Button>
+                            <Button mode='fill' onClick={() => setModalSignIn(true)}>Вход</Button>
+                        </>
+                        :
+                        <>
+                            <AiOutlinePlus className='add'/>
+                            <BiSearch className='search'/>
+                            <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
+
+                            <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClickAway={() => setShowNotifies(false)}>
+                                <p className="title">Уведомления</p>
+                                <hr className='line'/>
+                                <p>Пусто</p>
+                            </div>
+
+                            <Link to={`/profile/${store.isUserID}`} className='profile__link'>
+                                AI
+                            </Link>
+
+                            <Dropdown className='dropdown'>
+                                <Dropdown.Toggle variant="light" className='dropdown__btn'>
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu variant="light" className='actions'>
+                                    <Dropdown.Item className='action-item' onClick={() => navigate(`/profile/${store.isUserID}`)}>
+                                        <CgProfile className='action-item__icon'/>
+                                        Профиль
+                                    </Dropdown.Item>
+                                    <Dropdown.Item className='action-item' onClick={() => navigate('/donates')}>
+                                        <BiDonateHeart className='action-item__icon'/>
+                                        Донаты
+                                    </Dropdown.Item>
+                                    <Dropdown.Item className='action-item' onClick={() => navigate('/settings')}>
+                                        <FiSettings className='action-item__icon'/>
+                                        Настройки
+                                    </Dropdown.Item>
+                                    <Dropdown.Item className='action-item logout' onClick={logout}>
+                                        <BiExit className='action-item__icon'/>
+                                        Выйти
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+                        </>
+                    }
+                </Col>
+            </Row>
 
             <Modal title='Регистрация' visible={modalSignUp} setVisible={setModalSignUp}>
                 <SignUp action={signUp}/>
@@ -140,7 +143,7 @@ const Header = () => {
             <Modal title='Вход' visible={modalSignIn} setVisible={setModalSignIn}>
                 <SignIn action={signIn}/>
             </Modal>
-        </div>
+        </Container>
     );
 };
 
