@@ -2,9 +2,11 @@ import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import {Context} from "../index";
 import '../styles/Sidebar.css';
-import { AiOutlineFire, AiOutlineHome, AiOutlineOrderedList } from "react-icons/ai"
-import { BiMessageRounded } from "react-icons/bi"
+import { AiOutlineFire, AiOutlineHome, AiOutlineOrderedList, AiOutlinePlus, AiOutlineBell, AiOutlineTeam } from "react-icons/ai"
+import { BiMessageRounded, BiDonateHeart } from "react-icons/bi"
 import { HiOutlineBookmark } from "react-icons/hi"
+import { MdAttachMoney } from "react-icons/md"
+import { Dropdown } from "react-bootstrap"
 
 
 const Sidebar = () => {
@@ -50,6 +52,32 @@ const Sidebar = () => {
                         <HiOutlineBookmark className='sidebar__list-item__icon'/>
                         <span>Избранное</span>
                     </div>
+                }
+            </div>
+
+            <div className="sidebar__action">
+                {store.isAuth &&
+                    <Dropdown className='dropdown'>
+                        <Dropdown.Toggle variant="outline-dark" className='dropdown__btn'>
+                            <AiOutlinePlus className='icon'/>
+                            <span>Создать</span>
+                        </Dropdown.Toggle>
+
+                        <Dropdown.Menu variant="light" className='actions'>
+                            <Dropdown.Item className='action-item'>
+                                <MdAttachMoney className='action-item__icon'/>
+                                На продажу
+                            </Dropdown.Item>
+                            <Dropdown.Item className='action-item'>
+                                <BiDonateHeart className='action-item__icon'/>
+                                Сбор донатов
+                            </Dropdown.Item>
+                            <Dropdown.Item className='action-item'>
+                                <AiOutlineTeam className='action-item__icon'/>
+                                Набор команды
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
                 }
             </div>
         </div>

@@ -7,7 +7,7 @@ import Button from "../components/UI/button/Button"
 const Profile = () => {
     return (
         <div className='profile'>
-            <div className="profile__data">
+            <div className="profile__card">
                 <div className="information">
                     <div className="information_img">
 
@@ -28,7 +28,7 @@ const Profile = () => {
 
             <div className="profile__content">
                 <div className="projects">
-
+                    
                 </div>
                 <div className="follows">
                     

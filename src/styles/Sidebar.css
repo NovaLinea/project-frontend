@@ -30,3 +30,12 @@
     margin-right: 7px;
     font-size: 19px;
 }
+
+.sidebar .sidebar__action {
+    margin-top: 20px;
+    display: flex;
+}
+
+.sidebar__action .dropdown {
+    margin: 0 auto;
+}

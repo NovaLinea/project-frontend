@@ -27,9 +27,9 @@ const AppRoute = () => {
 
             <Container fluid className='content'>
                 <Row>
-                    <Col md={2}><Sidebar/></Col>
+                    <Col md={3}><Sidebar/></Col>
 
-                    <Col md={10}>
+                    <Col lg={9} xl={8}>
                         {store.isAuth
                             ?
                             <Routes>
