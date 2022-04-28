@@ -7,7 +7,6 @@ import { observer } from 'mobx-react-lite';
 import Loader from '../components/UI/loader/Loader';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import { Container, Row, Col } from "react-bootstrap";
 
 
 const AppRoute = () => {
@@ -25,38 +24,34 @@ const AppRoute = () => {
         <>
             <Header/>
 
-            <Container fluid className='content'>
-                <Row>
-                    <Col md={3}><Sidebar/></Col>
+            <div className='content container'>
+                <Sidebar/>
 
-                    <Col lg={9} xl={8}>
-                        {store.isAuth
-                            ?
-                            <Routes>
-                                {privateRoutes.map(route =>
-                                    <Route 
-                                        path={route.path}
-                                        element={<route.element/>}
-                                        key={route.path}
-                                    />
-                                )}
-                                <Route  path="*" element={<NotFound />} />
-                            </Routes>
-                            :
-                            <Routes>
-                                {publicRoutes.map(route =>
-                                    <Route 
-                                        path={route.path}
-                                        element={<route.element/>}
-                                        key={route.path}
-                                    />
-                                )}
-                                <Route  path="*" element={<NotFound />} />
-                            </Routes>
-                        }
-                    </Col>
-                </Row>
-            </Container>
+                {store.isAuth
+                    ?
+                    <Routes>
+                        {privateRoutes.map(route =>
+                            <Route 
+                                path={route.path}
+                                element={<route.element/>}
+                                key={route.path}
+                            />
+                        )}
+                        <Route  path="*" element={<NotFound />} />
+                    </Routes>
+                    :
+                    <Routes>
+                        {publicRoutes.map(route =>
+                            <Route 
+                                path={route.path}
+                                element={<route.element/>}
+                                key={route.path}
+                            />
+                        )}
+                        <Route  path="*" element={<NotFound />} />
+                    </Routes>
+                }
+            </div>
         </>
     );
 };

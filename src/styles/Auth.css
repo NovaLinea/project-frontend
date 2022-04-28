@@ -16,12 +16,11 @@
 }
 
 .auth p {
-    margin-top: 7px;
+    margin-top: 10px;
     text-align: left;
 }
 
 .auth p span {
     color: #0000ff;
-    text-decoration: underline;
     cursor: pointer;
 }

@@ -1,14 +1,15 @@
 .profile {
-    padding: 0 40px;
-    max-width: 1000px;
+    margin: 0 auto;
+    max-width: 700px;
 }
 
 .profile__card {
     border-radius: 10px;
-    background-color: #f2f2f2;
+    background-color: #fff;
     padding: 15px;
     display: flex;
     justify-content: space-between;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02);
 }
 
 .information {
@@ -17,7 +18,7 @@
 }
 
 .information_img {
-    background-color: #dedede;
+    background-color: #f2f2f2;
     width: 100px;
     height: 100px;
     border-radius: 10px;
@@ -33,14 +34,10 @@
     font-weight: bold;
 }
 
-.information .login {
-    font-size: 15px;
-    color: grey;
-}
-
 .information .description {
     font-size: 15px;
     max-width: 400px;
+    max-height: 65px;
 }
 
 .action .icon {
@@ -55,27 +52,4 @@
 .profile__content .follows {
     background-color: #f2f2f2;
     border-radius: 10px;
-}
-
-
-@media (max-width: 992px) {
-    .profile {
-        margin-top: -30px;
-        padding: 0 20px;
-        width: 100%;
-        position: absolute;
-        left: 50%;
-        top: 23%;
-        -webkit-transform: translate(-50%, -50%);
-        -moz-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        -o-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-    }
-}
-
-@media (max-width: 576px) {
-    .profile {
-        padding: 0 10px;
-    }
 }
