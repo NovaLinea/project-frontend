@@ -71,13 +71,6 @@
     padding: 10px 14px;
 }
 
-.header__right .dropdown__btn {
-    box-shadow: none;
-    outline: none;
-    border: none;
-    padding: 0;
-}
-
 .header__right .dropdown__btn:hover {
     opacity: 0.9;
 }

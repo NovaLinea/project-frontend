@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {Context} from "../index";
+import { Context } from "../index";
 import '../styles/Profile.css';
 import { useParams, useNavigate } from "react-router-dom";
 import UserService from '../API/UserService';

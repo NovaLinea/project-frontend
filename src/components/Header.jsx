@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
 import { Context } from "../index";
 import { AiOutlineBell } from "react-icons/ai"
-import { BiDonateHeart, BiExit, BiSearch } from "react-icons/bi"
+import { BiExit, BiSearch } from "react-icons/bi"
 import { CgProfile } from "react-icons/cg"
 import { FiSettings } from "react-icons/fi"
 import Modal from '../components/UI/modal/Modal'
@@ -71,20 +71,16 @@ const Header = () => {
                                 </Dropdown.Toggle>
 
                                 <Dropdown.Menu variant="light" className='actions'>
-                                    <Dropdown.Item className='action-item' onClick={() => navigate(`/profile/${store.isUserID}`)}>
-                                        <CgProfile className='action-item__icon'/>
+                                    <Dropdown.Item className='action__item' onClick={() => navigate(`/profile/${store.isUserID}`)}>
+                                        <CgProfile className='action__item-icon'/>
                                         Профиль
                                     </Dropdown.Item>
-                                    <Dropdown.Item className='action-item' onClick={() => navigate('/donates')}>
-                                        <BiDonateHeart className='action-item__icon'/>
-                                        Донаты
-                                    </Dropdown.Item>
-                                    <Dropdown.Item className='action-item' onClick={() => navigate('/settings')}>
-                                        <FiSettings className='action-item__icon'/>
+                                    <Dropdown.Item className='action__item' onClick={() => navigate('/settings')}>
+                                        <FiSettings className='action__item-icon'/>
                                         Настройки
                                     </Dropdown.Item>
-                                    <Dropdown.Item className='action-item logout' onClick={logout}>
-                                        <BiExit className='action-item__icon'/>
+                                    <Dropdown.Item className='action__item logout' onClick={logout}>
+                                        <BiExit className='action__item-icon'/>
                                         Выйти
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
