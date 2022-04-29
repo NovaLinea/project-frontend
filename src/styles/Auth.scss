@@ -1,0 +1,28 @@
+@import "App.scss";
+
+.auth {
+    width: 280px;
+    padding: 0px 5px;
+    margin-top: 10px;
+    text-align: center;
+
+    Input {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    Button {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    p {
+        margin-top: 10px;
+        text-align: left;
+
+        span {
+            color: #0000ff;
+            cursor: pointer;
+        }
+    }
+}

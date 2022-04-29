@@ -1,8 +1,19 @@
+$app-background-color: #f2f2f2;
+$app-white-color: #fff;
+$app-black-color: #000;
+$app-blue-color: #1e2d43;
+$app-hover-color: #f8f8f8;
+$app-red-color: rgb(231, 65, 65);
+$app-grey-color: grey;
+$app-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+$app-radius: 10px;
+
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #f2f2f2
+    background-color: $app-background-color;
 }
 
 .content {
@@ -28,15 +39,16 @@ body {
 .dropdown .actions {
     width: 170px;
     border: none;
+    border-radius: $app-radius;
     margin-top: 10px;
     padding: 0 7px;
-    -webkit-box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
-    box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+    -webkit-box-shadow: $app-shadow;
+    box-shadow: $app-shadow;
 }
 
 .dropdown .action__item {
     width: 100%;
-    border-radius: 5px;
+    border-radius: $app-radius;
     padding: 7px 10px;
     margin: 7px 0;
     display: flex;
@@ -44,12 +56,12 @@ body {
 }
 
 .dropdown .action__item:hover {
-    background-color: #f2f2f2;
+    background-color: $app-hover-color;
 }
 
 .dropdown .action__item:active {
-    background-color: #e7e7e7;
-    color: #000;
+    background-color: $app-background-color;
+    color: $app-black-color;
 }
 
 .dropdown .action__item-icon {

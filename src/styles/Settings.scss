@@ -5,7 +5,16 @@
     background-color: #fff;
     border-radius: 10px;
     padding: 15px 25px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02);
+    -webkit-box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+    box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
+}
+
+.settings__header {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 .settings .settings__item {
@@ -13,8 +22,7 @@
     width: 300px;
 }
 
-.settings p.title {
-    font-weight: bold;
+.settings b.title {
     font-size: 20px;
 }
 

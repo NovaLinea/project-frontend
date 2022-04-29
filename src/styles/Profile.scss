@@ -1,0 +1,63 @@
+@import "App.scss";
+
+.profile {
+    margin: 0 auto;
+    max-width: 700px;
+    text-align: left;
+
+    .profile__card {
+        border-radius: $app-radius;
+        background-color: $app-white-color;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        -webkit-box-shadow: $app-shadow;
+        box-shadow: $app-shadow;
+        
+        .information {
+            display: flex;
+            justify-content: space-between;
+
+            .img {
+                background-color: $app-background-color;
+                width: 100px;
+                height: 100px;
+                border-radius: $app-radius;
+                margin-right: 15px;
+            }
+
+            .text {
+                p {
+                    margin: 0;
+                }
+
+                .name {
+                    font-size: 22px;
+                    font-weight: bold;
+                }
+
+                .description {
+                    font-size: 15px;
+                    max-width: 400px;
+                    max-height: 65px;
+                }
+            }
+        }
+
+        .action {
+            .icon {
+                margin-right: 8px;
+            }
+        }
+    }
+
+    .profile__content {
+        display: flex;
+        justify-content: space-between;
+
+        .follows {
+            background-color: $app-background-color;
+            border-radius: $app-radius;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import '../styles/Auth.css';
+import '../styles/Auth.scss';
 import { Context } from "../index";
 import Input from './UI/input/Input';
 import Button from './UI/button/Button';

@@ -1,12 +1,10 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import {Context} from "../index";
-import '../styles/Sidebar.css';
+import '../styles/Sidebar.scss';
 import { AiOutlineFire, AiOutlineHome, AiOutlineOrderedList, AiOutlinePlus } from "react-icons/ai"
 import { BiMessageRounded } from "react-icons/bi"
 import { HiOutlineBookmark } from "react-icons/hi"
-import { CgProfile } from "react-icons/cg"
-import { FiSettings } from "react-icons/fi"
 
 
 const Sidebar = () => {
@@ -17,11 +15,7 @@ const Sidebar = () => {
 
     const changeItem = (name) => {
         setActiveItem(name);
-
-        if (name === "profile")
-            navigate(`/${name}/${store.isUserID}`);
-        else
-            navigate(`/${name}`);
+        navigate(`/${name}`);
     }
 
     return (
@@ -55,18 +49,6 @@ const Sidebar = () => {
             <div onClick={() => changeItem('create')} className={activeItem === 'create' ? 'sidebar__item active' : 'sidebar__item'}>
                 <AiOutlinePlus className='sidebar__item-icon'/>
             </div>
-
-            {store.isAuth &&
-                <div onClick={() => changeItem('profile')} className={activeItem === 'profile' ? 'sidebar__item active' : 'sidebar__item'}>
-                    <CgProfile className='sidebar__item-icon'/>
-                </div>
-            }
-
-            {store.isAuth &&
-                <div onClick={() => changeItem('settings')} className={activeItem === 'settings' ? 'sidebar__item active' : 'sidebar__item'}>
-                    <FiSettings className='sidebar__item-icon'/>
-                </div>
-            }
 
         </div>
     );

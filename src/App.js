@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react'
 import {Context} from "./index";
-import './styles/App.css';
+import './styles/App.scss';
 import AppRoute from './components/AppRoute';
 
 

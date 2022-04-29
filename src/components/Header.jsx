@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/Header.css';
+import '../styles/Header.scss';
 import { Context } from "../index";
-import { AiOutlineBell } from "react-icons/ai"
+import { AiOutlineBell, AiOutlineUser } from "react-icons/ai"
 import { BiExit, BiSearch } from "react-icons/bi"
 import { CgProfile } from "react-icons/cg"
 import { FiSettings } from "react-icons/fi"
@@ -57,7 +57,7 @@ const Header = () => {
                         <>
                             <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
 
-                            <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClickAway={() => setShowNotifies(false)}>
+                            <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClick={() => setShowNotifies(false)}>
                                 <p className="title">Уведомления</p>
                                 <hr className='line'/>
                                 <p>Пусто</p>
@@ -66,7 +66,7 @@ const Header = () => {
                             <Dropdown className='dropdown'>
                                 <Dropdown.Toggle variant="light" className='dropdown__btn'>
                                     <div className='profile__icon'>
-                                        AI
+                                        <AiOutlineUser/>
                                     </div>
                                 </Dropdown.Toggle>
 

@@ -1,0 +1,29 @@
+@import "App.scss";
+
+.not-foung-page {
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
+    color: $app-blue-color;
+
+    .error {
+        font-size: 7rem;
+        position: relative;
+        line-height: 1;
+        width: 12.5rem;
+    }
+
+    .lead {
+        font-size: 1.25rem;
+        font-weight: 300;
+    }
+
+    .description {
+        font-size: 1.15rem;
+        font-weight: 300;
+
+        .again-link {
+            text-decoration: none;
+        }
+    }
+}

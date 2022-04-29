@@ -1,0 +1,39 @@
+@import "App.scss";
+
+.sidebar {
+    display: inline-flex;
+    align-items: center;
+    background-color: $app-white-color;
+    border-radius: $app-radius;
+    padding: 7px 5px;
+    -webkit-box-shadow: $app-shadow;
+    box-shadow: $app-shadow;
+    margin-bottom: 10px;
+
+    .sidebar__item {
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        margin: 0 5px;
+        border-radius: $app-radius;
+        font-size: 17px;
+        -moz-transition: all 0.1s ease-out;
+        -o-transition: all 0.1s ease-out;
+        -webkit-transition: all 0.1s ease-out;
+        transition: all 0.1s ease-out;
+
+        .sidebar__item-icon {
+            font-size: 20px;
+        }   
+    }
+
+    .sidebar__item.active {
+        background-color: $app-background-color;
+        cursor: pointer;
+    }
+
+    .sidebar__item:hover {
+        background-color: $app-hover-color;
+        cursor: pointer;
+    }
+}

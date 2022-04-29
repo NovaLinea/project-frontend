@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from "../index";
-import '../styles/Profile.css';
+import '../styles/Profile.scss';
 import { useParams, useNavigate } from "react-router-dom";
 import UserService from '../API/UserService';
 import { FiEdit2 } from "react-icons/fi";
@@ -15,7 +15,6 @@ const Profile = () => {
     const navigate = useNavigate();
     const timeout = 5000;
     const [isError, setIsError] = useState(null);
-    const [isNotification, setIsNotification] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState({});
 
@@ -53,10 +52,10 @@ const Profile = () => {
         <div className='profile'>
             <div className="profile__card">
                 <div className="information">
-                    <div className="information_img">
+                    <div className="img">
 
                     </div>
-                    <div className="information__text">
+                    <div className="text">
                         <p className="name">{dataUser.name}</p>
                         <p className="description">{dataUser.description}</p>
                     </div>
@@ -84,10 +83,6 @@ const Profile = () => {
 
             {isError &&
                 <Error mode='error'>{isError}</Error>
-            }
-
-            {isNotification &&
-                <Error mode='success'>{isNotification}</Error>
             }
         </div>
     );

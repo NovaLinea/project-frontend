@@ -1,0 +1,89 @@
+@import "App.scss";
+
+.header {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02);
+    background-color: $app-white-color;
+    height: 60px;
+    display: flex;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .header__left {
+            .logo {
+                text-decoration: none;
+                font-size: 22px;
+                font-weight: bold;
+                color: $app-black-color;
+            }
+        }
+
+        .header__right {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+        
+            .search, .notifications {
+                font-size: 28px;
+                font-weight: bold;
+                margin-right: 20px;
+                cursor: pointer;
+            }
+
+            .search:hover, .notifications:hover {
+                opacity: 0.8;
+            }
+
+            .notifications__panel {
+                background-color: $app-white-color;
+                position: absolute;
+                top: 65px;
+                right: 100px;
+                width: 300px;
+                -webkit-box-shadow: $app-shadow;
+                box-shadow: $app-shadow;
+                z-index: 2;
+                border: none;
+                border-radius: $app-radius;
+                padding: 10px 15px;
+                display: none;
+
+                p.title {
+                    font-size: 17px;
+                }
+
+                .line {
+                    margin-top: -8px;
+                }
+            }
+
+            .notifications__panel.show {
+                display: block;
+            }
+
+            .profile__icon {
+                background-color: $app-blue-color;
+                border-radius: 100px;
+                cursor: pointer;
+                color: $app-white-color;
+                font-weight: bold;
+                font-size: 20px;
+                display: flex;
+                align-items: center;
+                padding: 12px;
+            }
+
+            .dropdown {
+                .dropdown__btn:hover {
+                    opacity: 0.9;
+                }
+
+                .logout {
+                    color: $app-red-color;
+                }
+            }
+        }
+    }
+}
