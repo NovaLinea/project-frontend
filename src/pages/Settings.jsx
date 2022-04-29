@@ -8,7 +8,9 @@ import Textarea from '../components/UI/textarea/Textarea';
 import Error from '../components/UI/error/Error';
 import Loader from '../components/UI/loader/Loader';
 import Button from '../components/UI/button/Button';
+import Modal from '../components/UI/modal/Modal'
 import Toggle from '../components/UI/toggle/Toggle';
+import ConfirmAction from '../components/ConfirmAction';
 
 
 const Settings = () => {
@@ -17,7 +19,7 @@ const Settings = () => {
     const timeout = 5000;
     const [isError, setIsError] = useState(null);
     const [isNotification, setIsNotification] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState({});
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -30,6 +32,7 @@ const Settings = () => {
     const [ntfsNewComment, setNftsNewComment] = useState(false);
     const [ntfsUpdate, setNftsUpdate] = useState(false);
     const [ntfsEmail, setNftsEmail] = useState(false);
+    const [modalConfirm, setModalConfirm] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -45,6 +48,14 @@ const Settings = () => {
                 setName(response.data.name);
                 setEmail(response.data.email);
                 setDescription(response.data.description);
+
+                if (response.data.notifications) {
+                    setNftsNewMsg(response.data.notifications.new_message);
+                    setNftsNewSubs(response.data.notifications.new_sub);
+                    setNftsNewComment(response.data.notifications.new_comment);
+                    setNftsUpdate(response.data.notifications.update);
+                    setNftsEmail(response.data.notifications.email_notification);
+                }
             }
             
         } catch (e) {
@@ -59,7 +70,7 @@ const Settings = () => {
 
     async function saveData() {
         try {
-            await UserService.saveData(store.isUserID, name, email, description);
+            await UserService.saveData(store.isUserID, name, email, description, ntfsNewMsg, ntfsNewSubs, ntfsNewComment, ntfsUpdate, ntfsEmail);
 
             setIsNotification('Настройки успешно сохранены');
             setTimeout(() => {
@@ -117,11 +128,6 @@ const Settings = () => {
         try {
             await UserService.deleteAccount(store.isUserID);
 
-            setIsNotification('Аккаунт успешно удален');
-            setTimeout(() => {
-                setIsNotification(null)
-            }, timeout)
-
             store.logout();
             navigate("/")
         } catch (e) {
@@ -129,6 +135,13 @@ const Settings = () => {
             setTimeout(() => {
                 setIsError(null)
             }, timeout)
+        }
+    }
+
+    const confirmDelete = (choice) => {
+        setModalConfirm(false);
+        if (choice) {
+            deleteAccount();
         }
     }
 
@@ -208,36 +221,36 @@ const Settings = () => {
                 <Toggle 
                     text="Новые сообщения" 
                     status={ntfsNewMsg && "checked"}
-                    onChange={() => setNftsNewMsg(!ntfsNewMsg)}
+                    change={() => setNftsNewMsg(!ntfsNewMsg)}
                 />
 
                 <Toggle 
                     text="Новые подписчики"
                     status={ntfsNewSubs && "checked"}
-                    onChange={() => setNftsNewSubs(!ntfsNewSubs)}
+                    change={() => setNftsNewSubs(!ntfsNewSubs)}
                 />
 
                 <Toggle 
                     text="Новые комментарии к проектам"
                     status={ntfsNewComment && "checked"}
-                    onChange={() => setNftsNewComment(!ntfsNewComment)}
+                    change={() => setNftsNewComment(!ntfsNewComment)}
                 />
 
                 <Toggle
                     text="Обновления платформы"
                     status={ntfsUpdate && "checked"}
-                    onChange={() => setNftsUpdate(!ntfsUpdate)}
+                    change={() => setNftsUpdate(!ntfsUpdate)}
                 />
 
                 <Toggle
                     text="Уведомления на почту"
                     status={ntfsEmail && "checked"}
-                    onChange={() => setNftsEmail(!ntfsEmail)}
+                    change={() => setNftsEmail(!ntfsEmail)}
                 />
             </div>
 
             <div className="delete-account">
-                <p onClick={deleteAccount}>Удалить аккаунт</p>
+                <p onClick={() => setModalConfirm(true)}>Удалить аккаунт</p>
             </div>
 
             {store.isError &&
@@ -251,6 +264,10 @@ const Settings = () => {
             {isNotification &&
                 <Error mode='success'>{isNotification}</Error>
             }
+
+            <Modal title='Вход' visible={modalConfirm} setVisible={setModalConfirm}>
+                <ConfirmAction text="Вы уверены, что хотите удалить аккаунт и все свои проекты?" action={confirmDelete}/>
+            </Modal>
         </div>
     );
 };
