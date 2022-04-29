@@ -1,0 +1,11 @@
+@import "../../../styles/App.scss";
+
+.Select {
+    width: 100%;
+    border-radius: $app-radius;
+    border: 1px solid $app-background-color;
+    padding: 8px;
+    display: block;
+    background: $app-white-color;
+    margin-bottom: 10px;
+}

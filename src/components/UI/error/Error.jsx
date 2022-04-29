@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import classes from './Error.module.css'
+import classes from './Error.module.scss'
 import { GrFormClose } from 'react-icons/gr'
 
 

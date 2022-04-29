@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './Select.module.css'
+import classes from './Select.module.scss'
 
 const Select = ({options, defaultValue, defaultName, value, onChange}) => {
     return (

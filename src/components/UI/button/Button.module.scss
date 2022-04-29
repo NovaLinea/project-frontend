@@ -1,11 +1,13 @@
+@import "../../../styles/App.scss";
+
 .BtnFill {
     padding: 7px 20px;
-    color: #fff;
+    color: $app-white-color;
     font-size: 15px;
     font-weight: bold;
-    background-color: #1e2d43;
-    border: 1.5px solid #1e2d43;
-    border-radius: 10px;
+    background-color: $app-blue-color;
+    border: 1.5px solid $app-blue-color;
+    border-radius: $app-radius;
     cursor: pointer;
     -moz-transition: all 0.1s ease-out;
     -o-transition: all 0.1s ease-out;
@@ -14,18 +16,18 @@
 }
 
 .BtnFill:hover {
-    color: #000;
+    color: $app-black-color;
     background-color: initial;
 }
 
 .BtnOutline {
     padding: 7px 20px;
-    color: #000;
+    color: $app-black-color;
     font-size: 15px;
     font-weight: bold;
-    background-color: #fff;
-    border: 1.5px solid #1e2d43;
-    border-radius: 10px;
+    background-color: $app-white-color;
+    border: 1.5px solid $app-blue-color;
+    border-radius: $app-radius;
     cursor: pointer;
     -moz-transition: all 0.1s ease-out;
     -o-transition: all 0.1s ease-out;
@@ -34,6 +36,6 @@
 }
 
 .BtnOutline:hover {
-    color: #fff;
-    background-color: #1e2d43;
+    color: $app-white-color;
+    background-color: $app-blue-color;
 }

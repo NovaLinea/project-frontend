@@ -1,42 +1,106 @@
+@import "App.scss";
+
 .settings {
     text-align: left;
     margin: 0 auto;
+    margin-bottom: 20px;
     max-width: 700px;
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 15px 25px;
-    -webkit-box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
-    box-shadow: 0 3px 5px 0 rgba(116,116,116,.25);
-}
+    background-color: $app-white-color;
+    border-radius: $app-radius;
+    padding: 15px 25px 5px 25px;
+    -webkit-box-shadow: $app-shadow;
+    box-shadow: $app-shadow;
 
-.settings__header {
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
+    .settings__header {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
 
-.settings .settings__item {
-    margin-bottom: 10px;
-    width: 300px;
-}
+        b.title {
+            font-size: 20px;
+        }
+    }
 
-.settings b.title {
-    font-size: 20px;
-}
+    .main-settings {
+        p.title {
+            font-weight: bold;
+            color: $app-black-color;
+            font-size: 17px;
+            margin: 0;
+            margin-bottom: 5px;
+        }
 
-.settings p.name {
-    color: grey;
-    margin: 0;
-}
+        .settings__item {
+            margin-bottom: 10px;
+            width: 300px;
+    
+            p.name {
+                color: $app-grey-color;
+                margin: 0;
+                font-size: 15px;
+            }
+    
+            Input, Textarea {
+                margin-top: 3px;
+                width: 100%;
+            }
+    
+            Textarea {
+                min-height: 40px;
+                max-height: 200px;
+            }
+        }
+    }
 
-.settings Input, .settings Textarea {
-    margin-top: 5px;
-    width: 100%;
-}
+    .change-password {
+        margin-top: 25px;
+        width: 300px;
 
-.settings Textarea {
-    min-height: 40px;
-    max-height: 200px;
+        .title {
+            font-weight: bold;
+            color: $app-black-color;
+            font-size: 17px;
+            margin: 0;
+            margin-bottom: 5px;
+        }
+        
+        Input {
+            margin-bottom: 7px;
+            width: 100%;
+        }
+
+        Button {
+            margin-top: 5px;
+        }
+    }
+
+    .notifications {
+        margin-top: 25px;
+        width: 300px;
+
+        .title {
+            font-weight: bold;
+            color: $app-black-color;
+            font-size: 17px;
+            margin: 0;
+            margin-bottom: 5px;
+        }
+    }
+
+    .delete-account {
+        margin-top: 15px;
+        width: 100%;
+        text-align: center;
+
+        p {
+            color: $app-red-color;
+            cursor: pointer;
+        }
+
+        p:hover {
+            opacity: 0.8;
+        }
+    }
 }

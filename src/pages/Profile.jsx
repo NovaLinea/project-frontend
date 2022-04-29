@@ -24,7 +24,7 @@ const Profile = () => {
 
     async function fetchData() {
         try {
-            const response = await UserService.fetchData(params.userID);
+            const response = await UserService.fetchDataProfile(params.userID);
 
             if (response.data) {
                 setDataUser(response.data);
