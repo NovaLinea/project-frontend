@@ -265,7 +265,7 @@ const Settings = () => {
                 <Error mode='success'>{isNotification}</Error>
             }
 
-            <Modal title='Вход' visible={modalConfirm} setVisible={setModalConfirm}>
+            <Modal title='Удаление аккаунта' visible={modalConfirm} setVisible={setModalConfirm}>
                 <ConfirmAction text="Вы уверены, что хотите удалить аккаунт и все свои проекты?" action={confirmDelete}/>
             </Modal>
         </div>
