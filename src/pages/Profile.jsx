@@ -8,6 +8,7 @@ import { FiEdit2 } from "react-icons/fi";
 import Button from "../components/UI/button/Button";
 import Error from '../components/UI/error/Error';
 import Loader from '../components/UI/loader/Loader';
+import ListProjects from '../components/ListProjects';
 
 
 const Profile = () => {
@@ -89,7 +90,7 @@ const Profile = () => {
             </div>
 
             <div className="profile__content">
-                
+                <ListProjects projects={projects} />
             </div>
 
             {store.isError &&
