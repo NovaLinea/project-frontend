@@ -3,6 +3,7 @@ import { Context } from "../index";
 import '../styles/Profile.scss';
 import { useParams, useNavigate } from "react-router-dom";
 import UserService from '../API/UserService';
+import ProjectService from '../API/ProjectService';
 import { FiEdit2 } from "react-icons/fi";
 import Button from "../components/UI/button/Button";
 import Error from '../components/UI/error/Error';
@@ -16,10 +17,12 @@ const Profile = () => {
     const timeout = 5000;
     const [isError, setIsError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [dataUser, setDataUser] = useState({});
+    const [dataUser, setDataUser] = useState("");
+    const [projects, setProjects] = useState([]);
 
     useEffect(() => {
         fetchData();
+        fetchProjects();
     }, [])
 
     async function fetchData() {
@@ -32,6 +35,23 @@ const Profile = () => {
             
         } catch (e) {
             setIsError('Ошибка при получении данных пользователя');
+            setTimeout(() => {
+                setIsError(null)
+            }, timeout)
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    async function fetchProjects() {
+        try {
+            const response = await ProjectService.fetchProjects(params.userID);
+            if (response.data) {
+                setProjects(response.data);
+            }
+            
+        } catch (e) {
+            setIsError('Ошибка при получении проектов');
             setTimeout(() => {
                 setIsError(null)
             }, timeout)
@@ -69,12 +89,7 @@ const Profile = () => {
             </div>
 
             <div className="profile__content">
-                <div className="projects">
-                    
-                </div>
-                <div className="follows">
-                    
-                </div>
+                
             </div>
 
             {store.isError &&

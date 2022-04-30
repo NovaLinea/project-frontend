@@ -52,12 +52,6 @@
     }
 
     .profile__content {
-        display: flex;
-        justify-content: space-between;
-
-        .follows {
-            background-color: $app-background-color;
-            border-radius: $app-radius;
-        }
+        
     }
 }

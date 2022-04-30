@@ -8,6 +8,7 @@ import Input from '../components/UI/input/Input';
 import Select from '../components/UI/select/Select';
 import Textarea from '../components/UI/textarea/Textarea';
 import Error from '../components/UI/error/Error';
+import { GrFormClose } from 'react-icons/gr';
 
 
 const Create = () => {
@@ -19,21 +20,40 @@ const Create = () => {
     const [typeProject, setTypeProject] = useState("sale");
     const [descriptionProject, setDescriptionProject] = useState("");
     const [priceProject, setPriceProject] = useState("");
-    const [countStaff, setCountStaff] = useState("");
     const [paymentSystem, setPaymentSystem] = useState("");
-    const [descriptionStaff, setDescritpionStaff] = useState("");
+    const [nameStaff, setNameStaff] = useState("");
+    const [listStaff, setListStaff] = useState([]);
 
     async function createProject() {
         try {
-            await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, countStaff, paymentSystem, descriptionStaff);
+            await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
             
             navigate(`/profile/${store.isUserID}`);
+            setNameProject("");
+            setDescriptionProject("");
+            setTypeProject("");
+            setPriceProject("");
+            setPaymentSystem("");
+            setListStaff([]);
         } catch (e) {
             setIsError('Ошибка при создании проекта');
             setTimeout(() => {
                 setIsError(null)
             }, timeout)
         }
+    }
+
+    const addStaff = () => {
+        if (nameStaff) {
+            setListStaff([...listStaff, nameStaff]);
+            setNameStaff("");
+        }
+    }
+
+    const deleteStaff = (staff) => {
+        const temp = [...listStaff];
+        temp.splice(staff, 1);
+        setListStaff(temp);
     }
 
     return (
@@ -92,7 +112,7 @@ const Create = () => {
                                 <p className="name">Цель дотанов</p>
                                 <Input
                                     type="number"
-                                    placeholder="Введите цену"
+                                    placeholder="Введите сумму"
                                     value={priceProject} 
                                     onChange={e => setPriceProject(e.target.value)}
                                 />
@@ -108,26 +128,27 @@ const Create = () => {
                             </div>
                         </>
                         :
-                        <>
-                            <div className="create__item count-staff-project">
-                                <p className="name">Сколько сотрудников</p>
-                                <Input
-                                    type="number"
-                                    placeholder="Введите количество"
-                                    value={countStaff} 
-                                    onChange={e => setCountStaff(e.target.value)}
-                                />
-                            </div>
+                        <div className="create__item description-staff-project">
+                            <p className="name">Какие сотрудники требуются</p>
 
-                            <div className="create__item description-staff-project">
-                                <p className="name">Какие сотрудники требуются</p>
-                                <Textarea
-                                    placeholder="Введите сотрудников"
-                                    value={descriptionStaff} 
-                                    onChange={e => setDescritpionStaff(e.target.value)}
+                            <ul className='list-staff'>
+                                {listStaff.map(staff =>
+                                    <div className='list-staff-item'>
+                                        <li>{staff}</li>
+                                        <GrFormClose className='close' onClick={() => deleteStaff(staff)} />
+                                    </div>
+                                )}
+                            </ul>
+
+                            <div className="form-add-staff">
+                                <Input
+                                    placeholder="Введите должность"
+                                    value={nameStaff} 
+                                    onChange={e => setNameStaff(e.target.value)}
                                 />
+                                <Button mode='fill' onClick={addStaff}>Добавить</Button>
                             </div>
-                        </>
+                        </div>
                 }
             </div>
             

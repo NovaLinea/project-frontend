@@ -47,7 +47,7 @@
         }
     
         .type-project {
-            width: 200px;
+            max-width: 200px;
 
             Select {
                 margin-top: 5px;
@@ -55,11 +55,52 @@
         }
 
         .price-project, .target-price-project, .count-staff-project {
-            width: 200px;
+            max-width: 200px;
         }
 
-        .description-staff-project, .payment-project {
+        .payment-project {
             width: 100%;
+        }
+
+        .description-staff-project {
+            max-width: 450px;
+
+            .list-staff {
+                margin-top: 10px;
+                padding: 0 20px;
+                
+                .list-staff-item {
+                    width: 300px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+
+                    li {
+                        font-size: 17px;
+                    }
+
+                    .close {
+                        font-size: 20px;
+                    }
+                }
+            }
+
+            .form-add-staff {
+                padding: 0;
+                display: flex;
+                align-items: center;
+                margin-top: -5px;
+
+                Input {
+                    margin-right: 10px;
+                }
+
+                Button {
+                    padding: 9px 20px;
+                    margin-top: 4px;
+                }
+            }
         }
     }
 }
