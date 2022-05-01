@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react'
 import '../styles/Create.scss';
 import ProjectService from '../API/ProjectService';
 import { Context } from "../index";
-import { useNavigate } from 'react-router-dom';
 import Button from '../components/UI/button/Button';
 import Input from '../components/UI/input/Input';
 import Select from '../components/UI/select/Select';
@@ -13,9 +12,9 @@ import { GrFormClose } from 'react-icons/gr';
 
 const Create = () => {
     const {store} = useContext(Context)
-    const navigate = useNavigate();
     const timeout = 5000;
     const [isError, setIsError] = useState(null);
+    const [isNotification, setIsNotification] = useState(null);
     const [nameProject, setNameProject] = useState("");
     const [typeProject, setTypeProject] = useState("sale");
     const [descriptionProject, setDescriptionProject] = useState("");
@@ -26,15 +25,33 @@ const Create = () => {
 
     async function createProject() {
         try {
-            await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
-            
-            navigate(`/profile/${store.isUserID}`);
-            setNameProject("");
-            setDescriptionProject("");
-            setTypeProject("");
-            setPriceProject("");
-            setPaymentSystem("");
-            setListStaff([]);
+            if (nameProject === "" || descriptionProject === "" || (typeProject === "donates" && paymentSystem === "") || (typeProject !== "team" && priceProject === "")) {
+                setIsError('Вы заполнили не все поля');
+                setTimeout(() => {
+                    setIsError(null)
+                }, timeout)
+            }
+            else if (typeProject === "team" && listStaff.length === 0) {
+                setIsError('Добавьте хотя бы одну должность');
+                setTimeout(() => {
+                    setIsError(null)
+                }, timeout)
+            }
+            else {
+                await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
+        
+                setIsNotification('Проект успешно создан');
+                setTimeout(() => {
+                    setIsNotification(null)
+                }, timeout)
+
+                setNameProject("");
+                setDescriptionProject("");
+                setTypeProject("");
+                setPriceProject("");
+                setPaymentSystem("");
+                setListStaff([]);
+            }
         } catch (e) {
             setIsError('Ошибка при создании проекта');
             setTimeout(() => {
@@ -158,6 +175,10 @@ const Create = () => {
 
             {isError &&
                 <Error mode='error'>{isError}</Error>
+            }
+
+            {isNotification &&
+                <Error mode='success'>{isNotification}</Error>
             }
         </div>
     );

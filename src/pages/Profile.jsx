@@ -20,6 +20,9 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState("");
     const [projects, setProjects] = useState([]);
+    const [favorites, setFavorites] = useState(0);
+    const [follows, setFollows] = useState(0);
+    const [followings, setFollowings] = useState(0);
 
     useEffect(() => {
         fetchData();
@@ -29,9 +32,24 @@ const Profile = () => {
     async function fetchData() {
         try {
             const response = await UserService.fetchDataProfile(params.userID);
-
+            
             if (response.data) {
                 setDataUser(response.data);
+
+                if (response.data.favorites !== null)
+                    setFavorites(response.data.favorites.length);
+                else
+                    setFavorites(0);
+
+                if (response.data.follows !== null)
+                    setFollows(response.data.follows.length);
+                else
+                    setFollows(0);
+
+                if (response.data.followings !== null)
+                    setFollowings(response.data.followings.length);
+                else
+                    setFollowings(0);
             }
             
         } catch (e) {
@@ -49,8 +67,7 @@ const Profile = () => {
             const response = await ProjectService.fetchProjects(params.userID);
             if (response.data) {
                 setProjects(response.data);
-            }
-            
+            }  
         } catch (e) {
             setIsError('Ошибка при получении проектов');
             setTimeout(() => {
@@ -86,6 +103,28 @@ const Profile = () => {
                         <FiEdit2 className='icon'/>
                         Редактировать
                     </Button>
+                </div>
+            </div>
+
+            <div className="profile__params">
+                <div className="params__item">
+                    <p>Всего проектов</p>
+                    <p>{projects.length}</p>
+                </div>
+
+                <div className="params__item">
+                    <p>Избранных</p>
+                    <p>{favorites}</p>
+                </div>
+
+                <div className="params__item">
+                    <p>Подписчиков</p>
+                    <p>{follows}</p>
+                </div>
+
+                <div className="params__item">
+                    <p>Подписок</p>
+                    <p>{followings}</p>
                 </div>
             </div>
 

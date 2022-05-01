@@ -42,7 +42,7 @@ const Settings = () => {
         try {
             setIsLoading(true);
             const response = await UserService.fetchDataSettings(store.isUserID);
-
+            console.log(response.data)
             if (response.data) {
                 setDataUser(response.data);
                 setName(response.data.name);

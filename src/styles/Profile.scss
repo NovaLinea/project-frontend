@@ -51,6 +51,27 @@
         }
     }
 
+    .profile__params {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        border-radius: $app-radius;
+        background-color: $app-white-color;
+        margin-top: 10px;
+        padding: 10px;
+        -webkit-box-shadow: $app-shadow;
+        box-shadow: $app-shadow;
+
+        .params__item {
+            text-align: center;
+
+            p {
+                margin: 0;
+                color: $app-grey-color;
+            }
+        }
+    }
+
     .profile__content {
         margin-top: 20px;
     }
