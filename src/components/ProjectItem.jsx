@@ -108,7 +108,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                 <div className="from__data">
                     <div className="person">
                         <div className="photo"></div>
-                        <Link to={`/profile/${project.user_id}`} className="name">{project.user_id}</Link>
+                        <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
                     </div>
                     <div className="time">{project.time}</div>
                 </div>

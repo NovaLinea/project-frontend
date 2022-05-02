@@ -47,7 +47,7 @@ const Create = () => {
 
                 setNameProject("");
                 setDescriptionProject("");
-                setTypeProject("");
+                setTypeProject("sale");
                 setPriceProject("");
                 setPaymentSystem("");
                 setListStaff([]);
