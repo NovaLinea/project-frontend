@@ -4,7 +4,9 @@ import '../styles/Profile.scss';
 import { useParams, useNavigate } from "react-router-dom";
 import UserService from '../API/UserService';
 import ProjectService from '../API/ProjectService';
+import { AiOutlineUserAdd } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
+import { FcCheckmark } from "react-icons/fc";
 import Button from "../components/UI/button/Button";
 import Error from '../components/UI/error/Error';
 import Loader from '../components/UI/loader/Loader';
@@ -21,6 +23,7 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState("");
     const [projects, setProjects] = useState([]);
+    const [modeSubscribe, setModeSubscribe] = useState(false);
 
     useEffect(() => {
         fetchData();
@@ -59,6 +62,17 @@ const Profile = () => {
         }
     }
 
+    async function subscribeUser() {
+        try {
+            await UserService.subscribeUser(store.isUserID, params.userID);
+        } catch (e) {
+            setIsError('Ошибка при подписке на пользователя');
+            setTimeout(() => {
+                setIsError(null)
+            }, timeout)
+        }
+    }
+
     if (isLoading) {
         return (
             <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>
@@ -80,10 +94,25 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="action">
-                    <Button mode='fill' onClick={() => navigate('/settings')}>
-                        <FiEdit2 className='icon'/>
-                        Редактировать
-                    </Button>
+                    {store.isUserID === params.userID
+                        ?
+                        <Button mode='fill' onClick={() => navigate('/settings')}>
+                            <FiEdit2 className='icon'/>
+                            Редактировать
+                        </Button>
+                        :
+                        modeSubscribe
+                            ?
+                            <Button mode='outline' onClick={() => subscribeUser()}>
+                                <FcCheckmark className='icon'/>
+                                Подписан
+                            </Button>
+                            :
+                            <Button mode='fill' onClick={() => subscribeUser()}>
+                                <AiOutlineUserAdd className='icon'/>
+                                Подписаться
+                            </Button>
+                    }
                 </div>
             </div>
 

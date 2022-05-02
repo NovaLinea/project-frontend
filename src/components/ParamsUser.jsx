@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../styles/Tape.scss';
 import UserService from '../API/UserService';
 import Error from '../components/UI/error/Error';
@@ -43,10 +42,10 @@ const ParamsUser = ({countProjects, userID}) => {
                 <p>{follows}</p>
             </div>
 
-            <Link to='/subs' className="params__item">
+            <div className="params__item">
                 <p>Подписок</p>
                 <p>{followings}</p>
-            </Link>
+            </div>
 
             {isError &&
                 <Error mode='error'>{isError}</Error>

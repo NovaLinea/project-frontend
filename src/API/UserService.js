@@ -28,4 +28,12 @@ export default class UserService {
     static async fetchDataParams(userID) {
         return $api.get(`/user/${userID}/get-data-params`)
     }
+
+    static async subscribeUser(userID, accountID) {
+        return $api.get(`/user/${userID}/subscribe/${accountID}`)
+    }
+
+    static async unsubscribeUser(userID, accountID) {
+        return $api.get(`/user/${userID}/unsubscribe/${accountID}`)
+    }
 }
