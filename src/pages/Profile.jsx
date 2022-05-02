@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from "../index";
 import '../styles/Profile.scss';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import UserService from '../API/UserService';
 import ProjectService from '../API/ProjectService';
 import { FiEdit2 } from "react-icons/fi";
@@ -109,10 +109,10 @@ const Profile = () => {
                     <p>{follows}</p>
                 </div>
 
-                <div className="params__item">
+                <Link to='/subs' className="params__item">
                     <p>Подписок</p>
                     <p>{followings}</p>
-                </div>
+                </Link>
             </div>
 
             <div className="profile__content">

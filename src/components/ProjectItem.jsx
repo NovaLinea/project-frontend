@@ -21,6 +21,32 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     const [modeLike, setModeLike] = useState(false);
     const [favorites, setFavorites] = useState([]);
     const [modeFavorite, setModeFavorite] = useState(false);
+    const [time, setTime] = useState("");
+
+    useEffect(() => {
+        const countTime = Math.round((new Date() - new Date(project.time)) / (1000 * 60));
+        
+        if (countTime < 60) {
+            setTime(String(countTime) + " мин");
+        }
+        else if (Math.round(countTime / 60) < 24) {
+            if (Math.round(countTime / 60) === 1 || Math.round(countTime / 60) === 21) {
+                setTime(Math.round(countTime / 60) + " час")
+            }
+            else if (Math.round(countTime / 60) === 2 || Math.round(countTime / 60) === 3 || Math.round(countTime / 60) === 4 || Math.round(countTime / 60) === 22 || Math.round(countTime / 60) === 23) {
+                setTime(Math.round(countTime / 60) + " часа");
+            }
+            else {
+                setTime(Math.round(countTime / 60) + " часов");
+            }
+        }
+        else if (Math.round(countTime / 60) < 48) {
+            setTime("вчера");
+        }
+        else {
+            setTime(new Date(project.time).toDateString().substring(4));
+        }
+    }, [])
 
     useEffect(() => {
         if (listLikes.indexOf(project.id) != -1)
@@ -110,7 +136,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                         <div className="photo"></div>
                         <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
                     </div>
-                    <div className="time">{project.time}</div>
+                    <div className="time">{time}</div>
                 </div>
 
                 <div className="heading">
