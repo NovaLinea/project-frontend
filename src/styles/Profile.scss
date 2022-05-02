@@ -64,11 +64,16 @@
 
         .params__item {
             text-align: center;
+            cursor: pointer;
+            color: $app-grey-color;
 
             p {
                 margin: 0;
-                color: $app-grey-color;
             }
+        }
+
+        .params__item:hover {
+            color: $app-black-color;
         }
     }
 

@@ -20,7 +20,8 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState("");
     const [projects, setProjects] = useState([]);
-    const [favorites, setFavorites] = useState(0);
+    const [favorites, setFavorites] = useState([]);
+    const [likes, setLikes] = useState([]);
     const [follows, setFollows] = useState(0);
     const [followings, setFollowings] = useState(0);
 
@@ -37,9 +38,10 @@ const Profile = () => {
                 setDataUser(response.data);
 
                 if (response.data.favorites !== null)
-                    setFavorites(response.data.favorites.length);
-                else
-                    setFavorites(0);
+                    setFavorites(response.data.favorites);
+
+                if (response.data.likes !== null)
+                    setLikes(response.data.likes);
 
                 if (response.data.follows !== null)
                     setFollows(response.data.follows.length);
@@ -67,7 +69,7 @@ const Profile = () => {
             const response = await ProjectService.fetchProjects(params.userID);
             if (response.data) {
                 setProjects(response.data);
-            }  
+            }
         } catch (e) {
             setIsError('Ошибка при получении проектов');
             setTimeout(() => {
@@ -114,7 +116,7 @@ const Profile = () => {
 
                 <div className="params__item">
                     <p>Избранных</p>
-                    <p>{favorites}</p>
+                    <p>{favorites.length}</p>
                 </div>
 
                 <div className="params__item">
@@ -129,7 +131,7 @@ const Profile = () => {
             </div>
 
             <div className="profile__content">
-                <ListProjects projects={projects} />
+                <ListProjects projects={projects} likes={likes} favorites={favorites} />
             </div>
 
             {store.isError &&

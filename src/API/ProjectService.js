@@ -16,4 +16,16 @@ export default class ProjectService {
     static async fetchProjects(userID) {
         return $api.get(`/project/${userID}/get-projects`)
     }
+
+    static async likeProject(projectID, userID) {
+        return $api.get(`/project/${projectID}/like/${userID}`)
+    }
+
+    static async dislikeProject(projectID, userID) {
+        return $api.get(`/project/${projectID}/dislike/${userID}`)
+    }
+
+    static async favoriteProject(projectID, userID) {
+        return $api.get(`/project/${projectID}/favorite/${userID}`)
+    }
 }

@@ -32,6 +32,11 @@
                         border-radius: $app-radius;
                         margin-right: 10px;
                     }
+
+                    .name {
+                        text-decoration: none;
+                        color: $app-grey-color;
+                    }
                 }
 
                 .time {
@@ -74,6 +79,12 @@
                     font-weight: bold;
                     margin-right: 5px;
                     margin-top: -2px;
+                }
+            }
+
+            .share {
+                .project__footer-icon {
+                    font-size: 23px;
                 }
             }
         }
