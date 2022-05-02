@@ -1,12 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useContext, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Tape.scss';
 import { Context } from "../index";
 import ProjectService from '../API/ProjectService';
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai"
-import { FaRegComment } from "react-icons/fa"
-import { HiOutlineBookmark } from "react-icons/hi"
-import { RiShareForwardLine } from "react-icons/ri"
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { FaRegComment } from "react-icons/fa";
+import { HiOutlineBookmark } from "react-icons/hi";
+import { RiShareForwardLine } from "react-icons/ri";
+import { BsBookmarkFill } from "react-icons/bs";
 import Error from '../components/UI/error/Error';
 
 
@@ -18,7 +19,7 @@ const Project = ({project, listLikes, listFavorites}) => {
     const [likes, setLikes] = useState([]);
     const [countLikes, setCountLikes] = useState(project.likes);
     const [modeLike, setModeLike] = useState(false);
-    const [favorite, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState([]);
     const [modeFavorite, setModeFavorite] = useState(false);
 
     useEffect(() => {
@@ -41,7 +42,7 @@ const Project = ({project, listLikes, listFavorites}) => {
 
     async function likeProject() {
         try {
-            if (!store.isAuth) {
+            if (store.isAuth) {
                 if (likes.indexOf(project.id) != -1) {
                     setCountLikes(countLikes-1);
                     const temp = [...likes];
@@ -74,10 +75,24 @@ const Project = ({project, listLikes, listFavorites}) => {
     async function favoriteProject() {
         try {
             if (store.isAuth) {
-                await ProjectService.favoriteProject(project.id, store.isUserID);
+                if (favorites.indexOf(project.id) != -1) {
+                    const temp = [...favorites];
+                    temp.splice(project.id, 1);
+                    setFavorites(temp);
+                    setModeFavorite(false);
+                    await ProjectService.removeFavoriteProject(project.id, store.isUserID);
+                }
+                else {
+                    setFavorites([...favorites, project.id]);
+                    setModeFavorite(true);
+                    await ProjectService.favoriteProject(project.id, store.isUserID);
+                }
             }
             else {
-    
+                setIsError('Вы не авторизованы в системе');
+                setTimeout(() => {
+                    setIsError(null)
+                }, timeout)
             }
         } catch (e) {
             setIsError('Ошибка при добавлении проект в избранное');
@@ -128,7 +143,10 @@ const Project = ({project, listLikes, listFavorites}) => {
                         }
                     </div>
                     
-                    <HiOutlineBookmark onClick={() => favoriteProject()} className='project__footer-icon'/>
+                    {modeFavorite
+                        ? <BsBookmarkFill onClick={() => favoriteProject()} className='project__footer-icon'/>
+                        : <HiOutlineBookmark onClick={() => favoriteProject()} className='project__footer-icon'/>
+                    }
                 </div>
 
                 <div className="share">
