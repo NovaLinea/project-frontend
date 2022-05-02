@@ -11,7 +11,7 @@ import { BsBookmarkFill } from "react-icons/bs";
 import Error from '../components/UI/error/Error';
 
 
-const Project = ({project, listLikes, listFavorites}) => {
+const ProjectItem = ({project, listLikes, listFavorites}) => {
     const {store} = useContext(Context);
     const navigate = useNavigate();
     const timeout = 5000;
@@ -165,4 +165,4 @@ const Project = ({project, listLikes, listFavorites}) => {
     );
 };
 
-export default Project;
+export default ProjectItem;

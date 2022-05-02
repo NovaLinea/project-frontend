@@ -12,7 +12,7 @@ import ListProjects from '../components/ListProjects';
 
 
 const Profile = () => {
-    const {store} = useContext(Context)
+    const {store} = useContext(Context);
     const params = useParams();
     const navigate = useNavigate();
     const timeout = 5000;
@@ -20,8 +20,6 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState("");
     const [projects, setProjects] = useState([]);
-    const [favorites, setFavorites] = useState([]);
-    const [likes, setLikes] = useState([]);
     const [follows, setFollows] = useState(0);
     const [followings, setFollowings] = useState(0);
 
@@ -36,12 +34,6 @@ const Profile = () => {
             
             if (response.data) {
                 setDataUser(response.data);
-
-                if (response.data.favorites !== null)
-                    setFavorites(response.data.favorites);
-
-                if (response.data.likes !== null)
-                    setLikes(response.data.likes);
 
                 if (response.data.follows !== null)
                     setFollows(response.data.follows.length);
@@ -75,8 +67,6 @@ const Profile = () => {
             setTimeout(() => {
                 setIsError(null)
             }, timeout)
-        } finally {
-            setIsLoading(false);
         }
     }
 
@@ -115,11 +105,6 @@ const Profile = () => {
                 </div>
 
                 <div className="params__item">
-                    <p>Избранных</p>
-                    <p>{favorites.length}</p>
-                </div>
-
-                <div className="params__item">
                     <p>Подписчиков</p>
                     <p>{follows}</p>
                 </div>
@@ -131,7 +116,7 @@ const Profile = () => {
             </div>
 
             <div className="profile__content">
-                <ListProjects projects={projects} likes={likes} favorites={favorites} />
+                <ListProjects projects={projects} />
             </div>
 
             {store.isError &&

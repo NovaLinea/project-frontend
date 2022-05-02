@@ -20,4 +20,8 @@ export default class UserService {
     static async deleteAccount(userID) {
         return $api.get(`/user/${userID}/delete-account`)
     }
+
+    static async fetchLikesFavorites(userID) {
+        return $api.get(`/user/${userID}/get-likes-favorites`)
+    }
 }
