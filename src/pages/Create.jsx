@@ -25,32 +25,40 @@ const Create = () => {
 
     async function createProject() {
         try {
-            if (nameProject === "" || descriptionProject === "" || (typeProject === "donates" && paymentSystem === "") || (typeProject !== "team" && priceProject === "")) {
-                setIsError('Вы заполнили не все поля');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
-            else if (typeProject === "team" && listStaff.length === 0) {
-                setIsError('Добавьте хотя бы одну должность');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
+            if (store.isAuth) {
+                if (nameProject === "" || descriptionProject === "" || (typeProject === "donates" && paymentSystem === "") || (typeProject !== "team" && priceProject === "")) {
+                    setIsError('Вы заполнили не все поля');
+                    setTimeout(() => {
+                        setIsError(null)
+                    }, timeout)
+                }
+                else if (typeProject === "team" && listStaff.length === 0) {
+                    setIsError('Добавьте хотя бы одну должность');
+                    setTimeout(() => {
+                        setIsError(null)
+                    }, timeout)
+                }
+                else {
+                    await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
+            
+                    setIsNotification('Проект успешно создан');
+                    setTimeout(() => {
+                        setIsNotification(null)
+                    }, timeout)
+
+                    setNameProject("");
+                    setDescriptionProject("");
+                    setTypeProject("sale");
+                    setPriceProject("");
+                    setPaymentSystem("");
+                    setListStaff([]);
+                }
             }
             else {
-                await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
-        
-                setIsNotification('Проект успешно создан');
+                setIsError('Вы не авторизованы в системе');
                 setTimeout(() => {
-                    setIsNotification(null)
+                    setIsError(null)
                 }, timeout)
-
-                setNameProject("");
-                setDescriptionProject("");
-                setTypeProject("sale");
-                setPriceProject("");
-                setPaymentSystem("");
-                setListStaff([]);
             }
         } catch (e) {
             setIsError('Ошибка при создании проекта');

@@ -24,4 +24,8 @@ export default class UserService {
     static async fetchLikesFavorites(userID) {
         return $api.get(`/user/${userID}/get-likes-favorites`)
     }
+
+    static async fetchDataParams(userID) {
+        return $api.get(`/user/${userID}/get-data-params`)
+    }
 }

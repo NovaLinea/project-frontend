@@ -15,7 +15,10 @@ const ListProjects = ({projects}) => {
     const [likes, setLikes] = useState([]);
 
     useEffect(() => {
-        fetchLikesFavorites();
+        if (store.isAuth)
+            fetchLikesFavorites();
+        else
+            setIsLoading(false);
     }, [])
 
     async function fetchLikesFavorites() {

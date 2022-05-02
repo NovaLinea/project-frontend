@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from "../index";
 import '../styles/Profile.scss';
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import UserService from '../API/UserService';
 import ProjectService from '../API/ProjectService';
 import { FiEdit2 } from "react-icons/fi";
@@ -9,6 +9,7 @@ import Button from "../components/UI/button/Button";
 import Error from '../components/UI/error/Error';
 import Loader from '../components/UI/loader/Loader';
 import ListProjects from '../components/ListProjects';
+import ParamsUser from '../components/ParamsUser';
 
 
 const Profile = () => {
@@ -20,8 +21,6 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState("");
     const [projects, setProjects] = useState([]);
-    const [follows, setFollows] = useState(0);
-    const [followings, setFollowings] = useState(0);
 
     useEffect(() => {
         fetchData();
@@ -34,16 +33,6 @@ const Profile = () => {
             
             if (response.data) {
                 setDataUser(response.data);
-
-                if (response.data.follows !== null)
-                    setFollows(response.data.follows.length);
-                else
-                    setFollows(0);
-
-                if (response.data.followings !== null)
-                    setFollowings(response.data.followings.length);
-                else
-                    setFollowings(0);
             }
             
         } catch (e) {
@@ -58,7 +47,7 @@ const Profile = () => {
 
     async function fetchProjects() {
         try {
-            const response = await ProjectService.fetchProjects(params.userID);
+            const response = await ProjectService.fetchProjectsUser(params.userID);
             if (response.data) {
                 setProjects(response.data);
             }
@@ -98,22 +87,7 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div className="profile__params">
-                <div className="params__item">
-                    <p>Всего проектов</p>
-                    <p>{projects.length}</p>
-                </div>
-
-                <div className="params__item">
-                    <p>Подписчиков</p>
-                    <p>{follows}</p>
-                </div>
-
-                <Link to='/subs' className="params__item">
-                    <p>Подписок</p>
-                    <p>{followings}</p>
-                </Link>
-            </div>
+            <ParamsUser countProjects={projects.length} userID={params.userID} />
 
             <div className="profile__content">
                 <ListProjects projects={projects} />

@@ -24,28 +24,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     const [time, setTime] = useState("");
 
     useEffect(() => {
-        const countTime = Math.round((new Date() - new Date(project.time)) / (1000 * 60));
-        
-        if (countTime < 60) {
-            setTime(String(countTime) + " мин");
-        }
-        else if (Math.round(countTime / 60) < 24) {
-            if (Math.round(countTime / 60) === 1 || Math.round(countTime / 60) === 21) {
-                setTime(Math.round(countTime / 60) + " час")
-            }
-            else if (Math.round(countTime / 60) === 2 || Math.round(countTime / 60) === 3 || Math.round(countTime / 60) === 4 || Math.round(countTime / 60) === 22 || Math.round(countTime / 60) === 23) {
-                setTime(Math.round(countTime / 60) + " часа");
-            }
-            else {
-                setTime(Math.round(countTime / 60) + " часов");
-            }
-        }
-        else if (Math.round(countTime / 60) < 48) {
-            setTime("вчера");
-        }
-        else {
-            setTime(new Date(project.time).toDateString().substring(4));
-        }
+        determinateTime();
     }, [])
 
     useEffect(() => {
@@ -125,6 +104,31 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
             setTimeout(() => {
                 setIsError(null)
             }, timeout)
+        }
+    }
+
+    const determinateTime = () => {
+        const countTime = Math.round((new Date() - new Date(project.time)) / (1000 * 60));
+        
+        if (countTime < 60) {
+            setTime(String(countTime) + " мин");
+        }
+        else if (Math.round(countTime / 60) < 24) {
+            if (Math.round(countTime / 60) === 1 || Math.round(countTime / 60) === 21) {
+                setTime(Math.round(countTime / 60) + " час")
+            }
+            else if (Math.round(countTime / 60) === 2 || Math.round(countTime / 60) === 3 || Math.round(countTime / 60) === 4 || Math.round(countTime / 60) === 22 || Math.round(countTime / 60) === 23) {
+                setTime(Math.round(countTime / 60) + " часа");
+            }
+            else {
+                setTime(Math.round(countTime / 60) + " часов");
+            }
+        }
+        else if (Math.round(countTime / 60) < 48) {
+            setTime("вчера");
+        }
+        else {
+            setTime(new Date(project.time).toDateString().substring(4));
         }
     }
 

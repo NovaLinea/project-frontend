@@ -1,95 +1,41 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import '../styles/Tape.scss';
-import { AiOutlineHeart } from "react-icons/ai"
-import { FaRegComment } from "react-icons/fa"
-import { HiOutlineBookmark } from "react-icons/hi"
-import { RiShareForwardLine } from "react-icons/ri"
+import ProjectService from '../API/ProjectService';
+import Error from '../components/UI/error/Error';
+import ListProjects from '../components/ListProjects';
 
 
 const Popular = () => {
+    const timeout = 5000;
+    const [isError, setIsError] = useState(null);
+    const [projects, setProjects] = useState([])
+
+    useEffect(() => {
+        fetchProjects();
+    }, [])
+
+    async function fetchProjects() {
+        try {
+            const response = await ProjectService.fetchProjectsPopular();
+            
+            if (response.data) {
+                setProjects(response.data);
+            }
+        } catch (e) {
+            setIsError('Ошибка при получении проектов');
+            setTimeout(() => {
+                setIsError(null)
+            }, timeout)
+        }
+    }
+
     return (
-        <div className='projects'>
-            <div className="project">
-                <div className="project__header">
-                    <div className="from__data">
-                        <div className="person">
-                            <div className="photo"></div>
-                            <div className="name">Иван Иванов</div>
-                        </div>
-                        <div className="time">6 часов</div>
-                    </div>
+        <div className='popular'>
+            <ListProjects projects={projects} />
 
-                    <div className="heading">
-                        <p className="title">Название проекта</p>
-                        <p className="price">15000₽</p>
-                    </div>
-                </div>
-
-                <div className="project__body">
-                    <p className="description">Описание проекта. Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quidem laudantium dolorum ducimus fugiat, nihil cumque minus numquam dolor ea corporis consectetur ipsam omnis nulla. Eligendi atque incidunt deleniti cum.</p>
-                </div>
-
-                <div className="project__footer">
-                    <div className="feedback">
-                        <div className="likes feedback__item">
-                            <AiOutlineHeart className='project__footer-icon'/>
-                            <span>3</span>
-                        </div>
-
-                        <div className="comments feedback__item">
-                            <FaRegComment className='project__footer-icon'/>
-                            <span>0</span>
-                        </div>
-                        
-                        <HiOutlineBookmark className='project__footer-icon'/>
-                    </div>
-
-                    <div className="share">
-                        <RiShareForwardLine className='project__footer-icon'/>
-                    </div>
-                </div>
-            </div>
-
-            <div className="project">
-                <div className="project__header">
-                    <div className="from__data">
-                        <div className="person">
-                            <div className="photo"></div>
-                            <div className="name">Александр Петров</div>
-                        </div>
-                        <div className="time">вчера</div>
-                    </div>
-
-                    <div className="heading">
-                        <p className="title">Название проекта</p>
-                        <p className="price">20000₽</p>
-                    </div>
-                </div>
-
-                <div className="project__body">
-                    <p className="description">Описание проекта. Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quidem laudantium dolorum ducimus fugiat, nihil cumque minus numquam dolor ea corporis consectetur ipsam omnis nulla. Eligendi atque incidunt deleniti cum. Alias quidem laudantium dolorum ducimus fugiat, nihil cumque minus numquam dolor ea corporis consectetur ipsam omnis nulla. Eligendi atque incidunt deleniti cum. Alias quidem laudantium dolorum ducimus fugiat, nihil cumque minus numquam dolor ea corporis consectetur ipsam omnis nulla. Eligendi atque incidunt deleniti cum.</p>
-                </div>
-
-                <div className="project__footer">
-                    <div className="feedback">
-                        <div className="likes feedback__item">
-                            <AiOutlineHeart className='project__footer-icon'/>
-                            <span>15</span>
-                        </div>
-
-                        <div className="comments feedback__item">
-                            <FaRegComment className='project__footer-icon'/>
-                            <span>4</span>
-                        </div>
-                        
-                        <HiOutlineBookmark className='project__footer-icon'/>
-                    </div>
-
-                    <div className="share">
-                        <RiShareForwardLine className='project__footer-icon'/>
-                    </div>
-                </div>
-            </div>
+            {isError &&
+                <Error mode='error'>{isError}</Error>
+            }
         </div>
     );
 };
