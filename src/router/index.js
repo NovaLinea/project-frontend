@@ -2,7 +2,6 @@ import Popular from "../pages/Popular"
 import Messages from "../pages/Messages"
 import Profile from "../pages/Profile"
 import Home from "../pages/Home"
-import Subs from "../pages/Subs"
 import Favorite from "../pages/Favorite"
 import Settings from "../pages/Settings"
 import Project from "../pages/Project"
@@ -16,7 +15,6 @@ export const privateRoutes = [
     {path: '/profile/:userID', element: Profile},
     {path: '/project/:projectID', element: Project},
     {path: '/home', element: Home},
-    {path: '/subs', element: Subs},
     {path: '/create', element: Create},
     {path: '/favorite', element: Favorite},
     {path: '/settings', element: Settings},
@@ -25,8 +23,6 @@ export const privateRoutes = [
 export const publicRoutes = [
     {path: '/', element: Popular},
     {path: '/popular', element: Popular},
-    {path: '/subs', element: Subs},
-    {path: '/create', element: Create},
     {path: '/profile/:userID', element: Profile},
     {path: '/project/:projectID', element: Project},
 ]

@@ -28,14 +28,14 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     }, [])
 
     useEffect(() => {
-        if (listLikes.indexOf(project.id) != -1)
+        if (listLikes.indexOf(project.id) !== -1)
             setModeLike(true);
 
         setLikes(listLikes);
     }, [listLikes])
 
     useEffect(() => {
-        if (listFavorites.indexOf(project.id) != -1)
+        if (listFavorites.indexOf(project.id) !== -1)
             setModeFavorite(true);
 
         setFavorites(listFavorites);
@@ -44,7 +44,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     async function likeProject() {
         try {
             if (store.isAuth) {
-                if (likes.indexOf(project.id) != -1) {
+                if (likes.indexOf(project.id) !== -1) {
                     setCountLikes(countLikes-1);
                     const temp = [...likes];
                     temp.splice(project.id, 1);
@@ -76,7 +76,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     async function favoriteProject() {
         try {
             if (store.isAuth) {
-                if (favorites.indexOf(project.id) != -1) {
+                if (favorites.indexOf(project.id) !== -1) {
                     const temp = [...favorites];
                     temp.splice(project.id, 1);
                     setFavorites(temp);
@@ -128,8 +128,12 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
         }
     }
 
+    const openProject = (projectID) => {
+        navigate(`/project/${projectID}`);
+    }
+
     return (
-        <div className="project">
+        <div onClick={() => openProject(project.id)} className="project">
             <div className="project__header">
                 <div className="from__data">
                     <div className="person">
