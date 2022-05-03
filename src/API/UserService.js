@@ -29,8 +29,8 @@ export default class UserService {
         return $api.get(`/user/${userID}/get-data-params`)
     }
 
-    static async fetchFollowings(userID) {
-        return $api.get(`/user/${userID}/get-followings`)
+    static async fetchListFollowings(userID) {
+        return $api.get(`/user/${userID}/get-list-followings`)
     }
 
     static async subscribeUser(userID, accountID) {
@@ -39,5 +39,13 @@ export default class UserService {
 
     static async unsubscribeUser(userID, accountID) {
         return $api.get(`/user/${userID}/unsubscribe/${accountID}`)
+    }
+
+    static async fetchFollows(userID) {
+        return $api.get(`/user/${userID}/get-follows`)
+    }
+
+    static async fetchFollowings(userID) {
+        return $api.get(`/user/${userID}/get-followings`)
     }
 }

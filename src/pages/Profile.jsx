@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Context } from "../index";
 import '../styles/Profile.scss';
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import UserService from '../API/UserService';
 import ProjectService from '../API/ProjectService';
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -18,6 +18,7 @@ const Profile = () => {
     const {store} = useContext(Context);
     const params = useParams();
     const navigate = useNavigate();
+    const location = useLocation()
     const timeout = 5000;
     const [isError, setIsError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -32,7 +33,7 @@ const Profile = () => {
 
         if (store.isAuth)
             fetchFollowings();
-    }, [])
+    }, [location.pathname])
 
     async function fetchData() {
         try {
@@ -68,7 +69,7 @@ const Profile = () => {
 
     async function fetchFollowings() {
         try {
-            const responce = await UserService.fetchFollowings(store.isUserID);
+            const responce = await UserService.fetchListFollowings(store.isUserID);
 
             if (responce.data) {
                 setFollowings(responce.data);

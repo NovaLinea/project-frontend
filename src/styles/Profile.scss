@@ -81,4 +81,30 @@
     .profile__content {
         margin-top: 20px;
     }
+
+    .follows, .followings {
+        margin: 10px 0;
+        width: 250px;
+
+        p.empty {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: $app-grey-color;
+            margin-top: 20px;
+        }
+
+        .list__users {
+            
+            .list__users-item {
+                display: block;
+                padding: 10px 15px;
+                background-color: $app-background-color;
+                border-radius: $app-radius;
+                margin-top: 7px;
+                text-decoration: none;
+                color: $app-black-color;
+            }
+        }
+    }
 }
