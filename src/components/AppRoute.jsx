@@ -25,7 +25,9 @@ const AppRoute = () => {
             <Header/>
 
             <div className='content container'>
-                <Sidebar/>
+                {store.isAuth &&
+                    <Sidebar/>
+                }
 
                 {store.isAuth
                     ?

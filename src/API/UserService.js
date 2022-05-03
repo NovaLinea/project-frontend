@@ -29,6 +29,10 @@ export default class UserService {
         return $api.get(`/user/${userID}/get-data-params`)
     }
 
+    static async fetchFollowings(userID) {
+        return $api.get(`/user/${userID}/get-followings`)
+    }
+
     static async subscribeUser(userID, accountID) {
         return $api.get(`/user/${userID}/subscribe/${accountID}`)
     }

@@ -30,8 +30,6 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     useEffect(() => {
         if (listLikes.indexOf(project.id) != -1)
             setModeLike(true);
-        else 
-            setModeLike(false);
 
         setLikes(listLikes);
     }, [listLikes])
@@ -39,8 +37,6 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     useEffect(() => {
         if (listFavorites.indexOf(project.id) != -1)
             setModeFavorite(true);
-        else 
-            setModeFavorite(false);
 
         setFavorites(listFavorites);
     }, [listFavorites])

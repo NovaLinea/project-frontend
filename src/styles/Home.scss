@@ -1,0 +1,11 @@
+@import "App.scss";
+
+.home {
+
+    p.empty {
+        font-size: 20px;
+        font-weight: bold;
+        color: $app-grey-color;
+        margin-top: 100px;
+    }
+}

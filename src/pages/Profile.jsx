@@ -24,10 +24,14 @@ const Profile = () => {
     const [dataUser, setDataUser] = useState("");
     const [projects, setProjects] = useState([]);
     const [modeSubscribe, setModeSubscribe] = useState(false);
+    const [followings, setFollowings] = useState([]);
 
     useEffect(() => {
         fetchData();
         fetchProjects();
+
+        if (store.isAuth)
+            fetchFollowings();
     }, [])
 
     async function fetchData() {
@@ -62,9 +66,46 @@ const Profile = () => {
         }
     }
 
+    async function fetchFollowings() {
+        try {
+            const responce = await UserService.fetchFollowings(store.isUserID);
+
+            if (responce.data) {
+                setFollowings(responce.data);
+
+                if (responce.data.indexOf(params.userID) != -1)
+                    setModeSubscribe(true)
+            }
+        } catch (e) {
+            setIsError('Ошибка при получении подписок');
+            setTimeout(() => {
+                setIsError(null)
+            }, timeout)
+        }
+    }
+
     async function subscribeUser() {
         try {
-            await UserService.subscribeUser(store.isUserID, params.userID);
+            if (store.isAuth) {
+                if (followings.indexOf(params.userID) != -1) {
+                    const temp = [...followings];
+                    temp.splice(params.userID.id, 1);
+                    setFollowings(temp);
+                    setModeSubscribe(false);
+                    await UserService.unsubscribeUser(store.isUserID, params.userID);
+                }
+                else {
+                    setFollowings([...followings, params.userID]);
+                    setModeSubscribe(true);
+                    await UserService.subscribeUser(store.isUserID, params.userID);
+                }
+            }
+            else {
+                setIsError('Вы не авторизированы в системе');
+                setTimeout(() => {
+                    setIsError(null)
+                }, timeout)
+            }
         } catch (e) {
             setIsError('Ошибка при подписке на пользователя');
             setTimeout(() => {
@@ -94,24 +135,28 @@ const Profile = () => {
                     </div>
                 </div>
                 <div className="action">
-                    {store.isUserID === params.userID
-                        ?
-                        <Button mode='fill' onClick={() => navigate('/settings')}>
-                            <FiEdit2 className='icon'/>
-                            Редактировать
-                        </Button>
-                        :
-                        modeSubscribe
-                            ?
-                            <Button mode='outline' onClick={() => subscribeUser()}>
-                                <FcCheckmark className='icon'/>
-                                Подписан
-                            </Button>
-                            :
-                            <Button mode='fill' onClick={() => subscribeUser()}>
-                                <AiOutlineUserAdd className='icon'/>
-                                Подписаться
-                            </Button>
+                    {store.isAuth &&
+                        <>
+                            {store.isUserID === params.userID
+                                ?
+                                <Button mode='fill' onClick={() => navigate('/settings')}>
+                                    <FiEdit2 className='icon'/>
+                                    Редактировать
+                                </Button>
+                                :
+                                modeSubscribe
+                                    ?
+                                    <Button mode='outline' onClick={() => subscribeUser()}>
+                                        <FcCheckmark className='icon'/>
+                                        Подписан
+                                    </Button>
+                                    :
+                                    <Button mode='fill' onClick={() => subscribeUser()}>
+                                        <AiOutlineUserAdd className='icon'/>
+                                        Подписаться
+                                    </Button>
+                            }
+                        </>
                     }
                 </div>
             </div>
