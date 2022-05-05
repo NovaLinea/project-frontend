@@ -133,7 +133,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     }
 
     return (
-        <div onClick={() => openProject(project.id)} className="project">
+        <div className="project">
             <div className="project__header">
                 <div className="from__data">
                     <div className="person">
@@ -143,13 +143,13 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                     <div className="time">{time}</div>
                 </div>
 
-                <div className="heading">
+                <div onClick={() => openProject(project.id)} className="heading">
                     <p className="title">{project.name}</p>
                     <p className="price">{project.price}₽</p>
                 </div>
             </div>
 
-            <div className="project__body">
+            <div onClick={() => openProject(project.id)} className="project__body">
                 <p className="description">{project.description}</p>
             </div>
 

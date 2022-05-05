@@ -59,7 +59,7 @@ const Settings = () => {
             }
             
         } catch (e) {
-            setIsError('Ошибка при получении данных пользователя');
+            setIsError('Ошибка при получении настроек');
             setTimeout(() => {
                 setIsError(null)
             }, timeout)

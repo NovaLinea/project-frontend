@@ -44,4 +44,8 @@ export default class ProjectService {
     static async removeFavoriteProject(projectID, userID) {
         return $api.get(`/project/${projectID}/remove-favorite/${userID}`)
     }
+
+    static async getDataProject(projectID) {
+        return $api.get(`/project/${projectID}/get-data`)
+    }
 }

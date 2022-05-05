@@ -1,0 +1,66 @@
+@import "App.scss";
+
+.project {
+    text-align: left;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    max-width: 700px;
+    background-color: $app-white-color;
+    border-radius: $app-radius;
+    padding: 15px;
+    -webkit-box-shadow: $app-shadow;
+    box-shadow: $app-shadow;
+
+    .project__header {
+        .from__data, .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .from__data {
+            .person {
+                display: flex;
+                align-items: center;
+
+                .photo {
+                    width: 30px;
+                    height: 30px;
+                    background-color: $app-background-color;
+                    border-radius: $app-radius;
+                    margin-right: 10px;
+                }
+
+                .name {
+                    text-decoration: none;
+                    color: $app-grey-color;
+                }
+            }
+
+            .time {
+                color: $app-grey-color;
+                font-size: 15px;
+            }
+        }
+
+        .heading {
+            padding-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+
+    .comments {
+
+        p.title {
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        Textarea {
+            width: 100%;
+            min-height: 50px;
+            max-height: 200px;
+        }
+    }
+}
