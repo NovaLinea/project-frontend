@@ -14,58 +14,60 @@ body {
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     background-color: $app-background-color;
-}
 
-.content {
-    padding-top: 10px;
-    text-align: center;
-}
+    .content {
+        padding-top: 10px;
+        text-align: center;
+    }
 
-.dropdown .dropdown__btn {
-    display: flex;
-    align-items: center;
-    padding: 5px 15px;
-    font-weight: bold;
-    border: none;
-    box-shadow: none;
-    outline: none;
-    padding: 0;
-}
+    .dropdown {
+        .dropdown__btn {
+            display: flex;
+            align-items: center;
+            padding: 5px 15px;
+            font-weight: bold;
+            border: none;
+            box-shadow: none;
+            outline: none;
+            padding: 0;
+        }
 
-.dropdown .dropdown__btn::after {
-    content: none;
-}
-
-.dropdown .actions {
-    width: 170px;
-    border: none;
-    border-radius: $app-radius;
-    margin-top: 10px;
-    padding: 0 7px;
-    -webkit-box-shadow: $app-shadow;
-    box-shadow: $app-shadow;
-}
-
-.dropdown .action__item {
-    width: 100%;
-    border-radius: $app-radius;
-    padding: 7px 10px;
-    margin: 7px 0;
-    display: flex;
-    align-items: center;
-}
-
-.dropdown .action__item:hover {
-    background-color: $app-hover-color;
-}
-
-.dropdown .action__item:active {
-    background-color: $app-background-color;
-    color: $app-black-color;
-}
-
-.dropdown .action__item-icon {
-    font-size: 20px;
-    font-weight: bold;
-    margin-right: 7px;
+        .dropdown__btn::after {
+            content: none;
+        }
+        
+        .actions {
+            width: 170px;
+            border: none;
+            border-radius: $app-radius;
+            margin-top: 10px;
+            padding: 0 7px;
+            -webkit-box-shadow: $app-shadow;
+            box-shadow: $app-shadow;
+        
+            .action__item {
+                width: 100%;
+                border-radius: $app-radius;
+                padding: 7px 10px;
+                margin: 7px 0;
+                display: flex;
+                align-items: center;
+            }
+            
+            .action__item:hover {
+                background-color: $app-hover-color;
+            }
+            
+            .action__item:active {
+                background-color: $app-background-color;
+                color: $app-black-color;
+            }
+            
+            .action__item-icon {
+                font-size: 20px;
+                font-weight: bold;
+                margin-right: 7px;
+            }
+        }
+    }
 }

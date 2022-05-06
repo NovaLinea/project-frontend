@@ -46,6 +46,10 @@ export default class ProjectService {
     }
 
     static async getDataProject(projectID) {
-        return $api.get(`/project/${projectID}/get-data`)
+        return $api.get(`/project/${projectID}/get-data-project`)
+    }
+
+    static async deleteProject(projectID) {
+        return $api.get(`/project/${projectID}/delete-project`)
     }
 }

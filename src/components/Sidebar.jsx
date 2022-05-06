@@ -19,7 +19,7 @@ const Sidebar = () => {
         if (location.pathname === "/") {
             setActiveItem("popular");
         }
-        else if (location.pathname.includes("profile")) {
+        else if (location.pathname === `/profile/${store.isUserID}`) {
             setActiveItem("profile");
         }
         else {

@@ -35,11 +35,24 @@
                     text-decoration: none;
                     color: $app-grey-color;
                 }
+
+                .time {
+                    margin-left: 20px;
+                    color: $app-grey-color;
+                    font-size: 15px;
+                }
             }
 
-            .time {
-                color: $app-grey-color;
-                font-size: 15px;
+            .dropdown {
+                .menu__icon {
+                    background-color: $app-white-color;
+                    color: $app-grey-color;
+                    font-size: 20px;
+                }
+                
+                .delete {
+                    color: $app-red-color;
+                }
             }
         }
 
@@ -47,6 +60,43 @@
             padding-top: 10px;
             font-size: 20px;
             font-weight: bold;
+        }
+    }
+
+    .project__body {
+        margin-top: -10px;
+
+        .description {
+            font-size: 17px;
+        }
+    }
+
+    .project__footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .feedback {
+            width: 220px;
+            display: flex;
+            align-items: center;
+
+            .feedback__item {
+                margin-right: 20px;
+            }
+
+            .project__footer-icon {
+                font-size: 22px;
+                font-weight: bold;
+                margin-right: 5px;
+                margin-top: -2px;
+            }
+        }
+
+        .share {
+            .project__footer-icon {
+                font-size: 23px;
+            }
         }
     }
 
