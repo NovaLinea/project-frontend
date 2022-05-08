@@ -80,6 +80,10 @@
 
     .profile__content {
         margin-top: 20px;
+
+        p.empty {
+            text-align: center;
+        }
     }
 
     .follows, .followings {
@@ -88,9 +92,7 @@
 
         p.empty {
             text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            color: $app-grey-color;
+            font-size: 17px;
             margin-top: 20px;
         }
 

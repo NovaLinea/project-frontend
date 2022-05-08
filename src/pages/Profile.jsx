@@ -165,7 +165,10 @@ const Profile = () => {
             <ParamsUser countProjects={projects.length} userID={params.userID} />
 
             <div className="profile__content">
-                <ListProjects projects={projects} />
+                {projects.length === 0
+                    ? <p className='empty'>К сожалению у вас еще нет проектов</p>
+                    : <ListProjects projects={projects} />
+                }
             </div>
 
             {store.isError &&

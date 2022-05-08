@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react'
 import { Context } from "../index";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../styles/Project.scss';
+import '../styles/Tape.scss';
 import ProjectService from '../API/ProjectService';
 import UserService from '../API/UserService';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -21,7 +22,6 @@ const Project = () => {
     const params = useParams();
     const timeout = 5000;
     const [isError, setIsError] = useState(null);
-    const [isNotification, setIsNotification] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [project, setProject] = useState({});
     const [time, setTime] = useState("");
@@ -193,86 +193,88 @@ const Project = () => {
     }
 
     return (
-        <div className='project'>
-            <div className="project__header">
-                <div className="from__data">
-                    <div className="person">
-                        <div className="photo"></div>
-                        <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
-                        <div className="time">{time}</div>
-                    </div>
-                    <Dropdown className='dropdown'>
-                        <Dropdown.Toggle variant="light" className='dropdown__btn'>
-                            <div className='menu__icon'>
-                                <BsThreeDots/>
-                            </div>
-                        </Dropdown.Toggle>
+        <div className="projects">
+            <div className='project'>
+                <div className="project__header">
+                    <div className="from__data">
+                        <div className="person">
+                            <div className="photo"></div>
+                            <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
+                            <div className="time">{time}</div>
+                        </div>
+                        <Dropdown className='dropdown'>
+                            <Dropdown.Toggle variant="light" className='dropdown__btn'>
+                                <div className='menu__icon'>
+                                    <BsThreeDots/>
+                                </div>
+                            </Dropdown.Toggle>
 
-                        <Dropdown.Menu variant="light" className='actions'>
-                            <Dropdown.Item className='action__item'>
-                                Пожаловаться
-                            </Dropdown.Item>
-                            
-                            {store.isUserID === project.user_id &&
-                                <>
-                                    <Dropdown.Item className='action__item'>
-                                        Редактировать
-                                    </Dropdown.Item>
-                                    <Dropdown.Item onClick={() => deleteProject()} className='action__item delete'>
-                                        Удалить
-                                    </Dropdown.Item>
-                                </>
+                            <Dropdown.Menu variant="light" className='actions'>
+                                <Dropdown.Item className='action__item'>
+                                    Пожаловаться
+                                </Dropdown.Item>
+                                
+                                {store.isUserID === project.user_id &&
+                                    <>
+                                        <Dropdown.Item className='action__item'>
+                                            Редактировать
+                                        </Dropdown.Item>
+                                        <Dropdown.Item onClick={() => deleteProject()} className='action__item delete'>
+                                            Удалить
+                                        </Dropdown.Item>
+                                    </>
+                                }
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
+
+                    <div className="heading">
+                        <p className="title">{project.name}</p>
+                        <p className="price">{project.price}₽</p>
+                    </div>
+                </div>
+
+                <div className="project__body">
+                    <p className="description">{project.description}</p>
+                </div>
+
+                <div className="project__footer">
+                    <div className="feedback">
+                        <div className="likes feedback__item">
+                            {modeLike
+                                ? <AiFillHeart onClick={() => likeProject()} className='project__footer-icon'/>
+                                : <AiOutlineHeart onClick={() => likeProject()} className='project__footer-icon'/>
                             }
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </div>
-
-                <div className="heading">
-                    <p className="title">{project.name}</p>
-                    <p className="price">{project.price}₽</p>
-                </div>
-            </div>
-
-            <div className="project__body">
-                <p className="description">{project.description}</p>
-            </div>
-
-            <div className="project__footer">
-                <div className="feedback">
-                    <div className="likes feedback__item">
-                        {modeLike
-                            ? <AiFillHeart onClick={() => likeProject()} className='project__footer-icon'/>
-                            : <AiOutlineHeart onClick={() => likeProject()} className='project__footer-icon'/>
+                            <span>{countLikes}</span>
+                        </div>
+                        
+                        {modeFavorite
+                            ? <BsBookmarkFill onClick={() => favoriteProject()} className='project__footer-icon'/>
+                            : <HiOutlineBookmark onClick={() => favoriteProject()} className='project__footer-icon'/>
                         }
-                        <span>{countLikes}</span>
                     </div>
-                    
-                    {modeFavorite
-                        ? <BsBookmarkFill onClick={() => favoriteProject()} className='project__footer-icon'/>
-                        : <HiOutlineBookmark onClick={() => favoriteProject()} className='project__footer-icon'/>
-                    }
+
+                    <div className="share">
+                        <RiShareForwardLine className='project__footer-icon'/>
+                    </div>
                 </div>
 
-                <div className="share">
-                    <RiShareForwardLine className='project__footer-icon'/>
+                <hr />
+
+                <div className="comments">
+                    <p className='title'>Комментарии (count)</p>
+
+                    <Textarea
+                        placeholder="Написать комментарий..."
+                        value={comment} 
+                        onChange={e => setComment(e.target.value)}
+                    />
                 </div>
+                
+                {isError &&
+                    <Error mode='error'>{isError}</Error>
+                }
             </div>
-
-            <hr />
-
-            <div className="comments">
-                <p className='title'>Комментарии (count)</p>
-
-                <Textarea
-                    placeholder="Написать комментарий..."
-                    value={comment} 
-                    onChange={e => setComment(e.target.value)}
-                />
-            </div>
-            
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
         </div>
     );
 };

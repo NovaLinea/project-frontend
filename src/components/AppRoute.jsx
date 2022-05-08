@@ -23,12 +23,11 @@ const AppRoute = () => {
     return (
         <>
             <Header/>
+            {store.isAuth &&
+                <Sidebar/>
+            }
 
-            <div className='content container'>
-                {store.isAuth &&
-                    <Sidebar/>
-                }
-
+            <div className={store.isAuth ? 'content container authorized' : 'content container no-authorized'}>
                 {store.isAuth
                     ?
                     <Routes>

@@ -3,8 +3,11 @@
 .header {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02);
     background-color: $app-white-color;
+    width: 100%;
     height: 60px;
     display: flex;
+    position: fixed;
+    z-index: 3;
 
     .container {
         display: flex;
@@ -44,7 +47,6 @@
                 width: 300px;
                 -webkit-box-shadow: $app-shadow;
                 box-shadow: $app-shadow;
-                z-index: 2;
                 border: none;
                 border-radius: $app-radius;
                 padding: 10px 15px;

@@ -1,14 +1,18 @@
 @import "App.scss";
 
 .sidebar {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     background-color: $app-white-color;
     border-radius: $app-radius;
     padding: 7px 5px;
     -webkit-box-shadow: $app-shadow;
     box-shadow: $app-shadow;
-    margin-bottom: 10px;
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
 
     .sidebar__item {
         padding: 8px;

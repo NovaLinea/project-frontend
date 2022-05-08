@@ -14,6 +14,7 @@ import Error from '../components/UI/error/Error';
 const ProjectItem = ({project, listLikes, listFavorites}) => {
     const {store} = useContext(Context);
     const navigate = useNavigate();
+    const maxSymbols = 350;
     const timeout = 5000;
     const [isError, setIsError] = useState(null);
     const [likes, setLikes] = useState([]);
@@ -150,7 +151,10 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
             </div>
 
             <div onClick={() => openProject(project.id)} className="project__body">
-                <p className="description">{project.description}</p>
+                {project.description.length > maxSymbols
+                    ? <p className="description">{project.description.substr(0, maxSymbols)}...</p>
+                    : <p className="description">{project.description.substr(0, maxSymbols)}</p>
+                }
             </div>
 
             <div className="project__footer">

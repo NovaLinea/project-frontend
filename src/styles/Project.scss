@@ -12,34 +12,10 @@
     box-shadow: $app-shadow;
 
     .project__header {
-        .from__data, .heading {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
         .from__data {
             .person {
-                display: flex;
-                align-items: center;
-
-                .photo {
-                    width: 30px;
-                    height: 30px;
-                    background-color: $app-background-color;
-                    border-radius: $app-radius;
-                    margin-right: 10px;
-                }
-
-                .name {
-                    text-decoration: none;
-                    color: $app-grey-color;
-                }
-
                 .time {
                     margin-left: 20px;
-                    color: $app-grey-color;
-                    font-size: 15px;
                 }
             }
 
@@ -53,49 +29,6 @@
                 .delete {
                     color: $app-red-color;
                 }
-            }
-        }
-
-        .heading {
-            padding-top: 10px;
-            font-size: 20px;
-            font-weight: bold;
-        }
-    }
-
-    .project__body {
-        margin-top: -10px;
-
-        .description {
-            font-size: 17px;
-        }
-    }
-
-    .project__footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        .feedback {
-            width: 220px;
-            display: flex;
-            align-items: center;
-
-            .feedback__item {
-                margin-right: 20px;
-            }
-
-            .project__footer-icon {
-                font-size: 22px;
-                font-weight: bold;
-                margin-right: 5px;
-                margin-top: -2px;
-            }
-        }
-
-        .share {
-            .project__footer-icon {
-                font-size: 23px;
             }
         }
     }
