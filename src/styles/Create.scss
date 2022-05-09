@@ -10,40 +10,44 @@
     padding: 15px 25px;
     -webkit-box-shadow: $app-shadow;
     box-shadow: $app-shadow;
-
-    .create__header {
-        width: 100%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 10px;
-
-        b.title {
-            font-size: 20px;
+    
+    .create__editor {
+        p.name {
+            color: $app-grey-color;
+            margin: 0;
+            font-size: 15px;
         }
-    }
-    
-    .create__boby {
-        .create__item {
+
+        .title {
+            height: 100%;
             width: 100%;
-            margin-bottom: 10px;
-    
-            p.name {
-                color: $app-grey-color;
-                margin: 0;
-                font-size: 15px;
-            }
-    
-            Input, Textarea {
-                margin-top: 5px;
-                width: 100%;
-            }
-    
-            Textarea {
-                min-height: 40px;
-                height: 100px;
-                max-height: 200px;
-            }
+            font-weight: bold;
+            font-size: 20px;
+            border: 0;
+            outline: 0;
+            resize: none;
+        }
+
+        .counter {
+            color: $app-grey-color;
+            float: right;
+            font-size: 15px;
+        }
+
+        .description {
+            width: 100%;
+            font-size: 17px;
+            border: 0;
+            outline: 0;
+            overflow-y: hidden;
+            resize: none;
+            margin-bottom: 20px;
+            cursor: text;
+        }
+
+        [data-placeholder].empty:before{
+            content: attr(data-placeholder);
+            color: $app-grey-color;
         }
     
         .type-project {

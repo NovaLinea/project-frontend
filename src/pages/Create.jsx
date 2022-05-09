@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import '../styles/Create.scss';
 import ProjectService from '../API/ProjectService';
 import { Context } from "../index";
@@ -16,12 +16,13 @@ const Create = () => {
     const [isError, setIsError] = useState(null);
     const [isNotification, setIsNotification] = useState(null);
     const [nameProject, setNameProject] = useState("");
-    const [typeProject, setTypeProject] = useState("sale");
     const [descriptionProject, setDescriptionProject] = useState("");
+    const [typeProject, setTypeProject] = useState("sale");
     const [priceProject, setPriceProject] = useState("");
     const [paymentSystem, setPaymentSystem] = useState("");
     const [nameStaff, setNameStaff] = useState("");
     const [listStaff, setListStaff] = useState([]);
+    const [counter, setCounter] = useState(0);
 
     async function createProject() {
         try {
@@ -81,33 +82,34 @@ const Create = () => {
         setListStaff(temp);
     }
 
+    const changeTitle = (e) => {
+        setNameProject(e.target.value);
+        setCounter(e.target.value.length);
+    }
+
     return (
         <div className='create'>
-            <div className="create__header">
-                <b className="title">Создание проекта</b>
-                <Button mode='fill' onClick={createProject}>Создать</Button>
-            </div>
-
-            <div className="create__boby">
-                <div className="create__item">
-                    <p className="name">Название проекта</p>
-                    <Input
-                        placeholder="Введите название"
-                        value={nameProject} 
-                        onChange={e => setNameProject(e.target.value)}
-                    />
+             <div className="create__editor">
+                <textarea
+                    className='title' 
+                    placeholder='Заголовок'
+                    maxLength={120}
+                    onChange={e => changeTitle(e)}
+                />
+                <div className="counter">
+                    <span className="current">{120-counter}</span>
                 </div>
 
-                <div className="create__item">
-                    <p className="name">Описание проекта</p>
-                    <Textarea 
-                        placeholder="Введите описание"
-                        value={descriptionProject} 
-                        onChange={e => setDescriptionProject(e.target.value)}
-                    />
+                <div 
+                    className={descriptionProject.length !== 0 ? "description" : "description empty"}
+                    contentEditable="true"
+                    data-placeholder="Описание проекта"
+                    onInput={e => setDescriptionProject(e.currentTarget.textContent)}
+                >
+                    {descriptionProject} 
                 </div>
 
-                <div className="create__item type-project">
+                <div className="type-project">
                     <p className="name">Тип проекта</p>
                     <Select
                         defaultValue="sale"
@@ -120,7 +122,7 @@ const Create = () => {
                 
                 {typeProject === 'sale'
                     ?
-                    <div className="create__item price-project">
+                    <div className="price-project">
                         <p className="name">Цена проекта</p>
                         <Input
                             type="number"
@@ -176,6 +178,8 @@ const Create = () => {
                         </div>
                 }
             </div>
+
+            <Button mode='fill' onClick={createProject}>Создать</Button>
             
             {store.isError &&
                 <Error mode='error'>{store.isError}</Error>

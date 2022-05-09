@@ -33,6 +33,8 @@ const Settings = () => {
     const [ntfsUpdate, setNftsUpdate] = useState(false);
     const [ntfsEmail, setNftsEmail] = useState(false);
     const [modalConfirm, setModalConfirm] = useState(false);
+    const [counterName, setCounterName] = useState(0);
+    const [counterDescription, setCounterDescription] = useState(0);
 
     useEffect(() => {
         fetchData();
@@ -42,12 +44,14 @@ const Settings = () => {
         try {
             setIsLoading(true);
             const response = await UserService.fetchDataSettings(store.isUserID);
-            console.log(response.data)
+            
             if (response.data) {
                 setDataUser(response.data);
                 setName(response.data.name);
                 setEmail(response.data.email);
                 setDescription(response.data.description);
+                setCounterName(response.data.name.length);
+                setCounterDescription(response.data.description.length);
 
                 if (response.data.notifications) {
                     setNftsNewMsg(response.data.notifications.new_message);
@@ -145,6 +149,16 @@ const Settings = () => {
         }
     }
 
+    const changeName = (e) => {
+        setName(e.target.value);
+        setCounterName(e.target.value.length);
+    }
+
+    const changeDescription = (e) => {
+        setDescription(e.target.value);
+        setCounterDescription(e.target.value.length);
+    }
+
     if (isLoading) {
         return (
             <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>
@@ -164,11 +178,12 @@ const Settings = () => {
                 <p className="title">Основные настройки</p>
 
                 <div className="settings__item">
-                    <p className='name'>Имя и фамилия</p>
+                    <p className='name'>Имя и фамилия (<span className="current">{30-counterName})</span></p>
                     <Input
                         placeholder="Введите имя"
+                        maxLength="30"
                         value={name} 
-                        onChange={e => setName(e.target.value)}
+                        onChange={e => changeName(e)}
                     />
                 </div>
 
@@ -182,11 +197,12 @@ const Settings = () => {
                 </div>
 
                 <div className="settings__item">
-                    <p className='name'>Описание</p>
+                    <p className='name'>Описание (<span className="current">{150-counterDescription})</span></p>
                     <Textarea 
                         placeholder="Введите описание"
+                        maxLength={150}
                         value={description} 
-                        onChange={e => setDescription(e.target.value)}
+                        onChange={e => changeDescription(e)}
                     />
                 </div>
             </div>
