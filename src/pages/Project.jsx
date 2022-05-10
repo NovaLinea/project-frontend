@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Context } from "../index";
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import '../styles/Project.scss';
 import '../styles/Tape.scss';
+import '../styles/Project.scss';
 import ProjectService from '../API/ProjectService';
 import UserService from '../API/UserService';
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
@@ -196,10 +196,21 @@ const Project = () => {
         <div className="projects">
             <div className='project'>
                 <div className="project__header">
-                    <div className="from__data">
+                    <div className="main__data">
                         <div className="person">
                             <div className="photo"></div>
                             <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
+
+                            <div className='type'>
+                                {project.type === 'sale'
+                                    ? <span>Продажа</span>
+                                    :
+                                    project.type === 'donates'
+                                        ? <span>Сбор донатов</span>
+                                        : <span>Набор команды</span>
+                                }
+                            </div>
+                            
                             <div className="time">{time}</div>
                         </div>
                         <Dropdown className='dropdown'>

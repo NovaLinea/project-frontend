@@ -9,6 +9,7 @@ import { HiOutlineBookmark } from "react-icons/hi";
 import { RiShareForwardLine } from "react-icons/ri";
 import { BsBookmarkFill } from "react-icons/bs";
 import Error from '../components/UI/error/Error';
+import { ProgressBar } from "react-bootstrap";
 
 
 const ProjectItem = ({project, listLikes, listFavorites}) => {
@@ -129,31 +130,53 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
         }
     }
 
-    const openProject = (projectID) => {
-        navigate(`/project/${projectID}`);
-    }
-
     return (
         <div className="project">
             <div className="project__header">
-                <div className="from__data">
+                <div className="main__data">
                     <div className="person">
                         <div className="photo"></div>
                         <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
+
+                        <div className='type'>
+                            {project.type === 'sale'
+                                ? <span>Продажа</span>
+                                :
+                                project.type === 'donates'
+                                    ? <span>Сбор донатов</span>
+                                    : <span>Набор команды</span>
+                            }
+                        </div>
                     </div>
                     <div className="time">{time}</div>
                 </div>
 
-                <div onClick={() => openProject(project.id)} className="heading">
+                <div onClick={() => navigate(`/project/${project.id}`)} className="heading">
                     <p className="title">{project.name}</p>
-                    <p className="price">{project.price}₽</p>
+                    {project.type === 'sale' &&
+                        <p className="price">{project.price}₽</p>
+                    }
                 </div>
             </div>
 
-            <div onClick={() => openProject(project.id)} className="project__body">
+            <div onClick={() => navigate(`/project/${project.id}`)} className="project__body">
                 {project.description.length > maxSymbols
                     ? <p className="description">{project.description.substr(0, maxSymbols)}...</p>
                     : <p className="description">{project.description.substr(0, maxSymbols)}</p>
+                }
+
+                {project.type === 'donates' &&
+                    <>
+                        {project.price === project.progress
+                            ? <ProgressBar variant='success' className='progress-donates' now={100} label={project.price}  />
+                            : <ProgressBar className='progress-donates' max={project.price} now={project.progress} label={project.progress}  />
+                        }
+
+                        <div className="borders">
+                            <p className='start'>0</p>
+                            <p className='end'>{project.price}</p>
+                        </div>
+                    </>
                 }
             </div>
 

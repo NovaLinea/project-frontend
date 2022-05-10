@@ -15,13 +15,15 @@
         cursor: pointer;
 
         .project__header {
-            .from__data, .heading {
+            .main__data, .heading {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
 
-            .from__data {
+            .main__data {
+                cursor: default;
+
                 .person {
                     display: flex;
                     align-items: center;
@@ -32,17 +34,31 @@
                         background-color: $app-background-color;
                         border-radius: $app-radius;
                         margin-right: 10px;
+                        cursor: pointer;
                     }
 
                     .name {
                         text-decoration: none;
                         color: $app-grey-color;
+                        cursor: pointer;
+                    }
+
+                    .name:hover {
+                        color: $app-black-color;
+                    }
+
+                    .type {
+                        color: $app-grey-color;
+                        margin-left: 20px;
+                        font-size: 16px;
+                        cursor: text;
                     }
                 }
 
                 .time {
                     color: $app-grey-color;
                     font-size: 15px;
+                    cursor: text;
                 }
             }
 
@@ -62,6 +78,26 @@
 
             .description {
                 font-size: 17px;
+            }
+
+            .progress-donates {
+                margin: -5px 0 3px 0;
+                height: 25px;
+                border-radius: $app-radius;
+                font-size: 15px;
+                color: $app-white-color;
+                font-weight: 600;
+            }
+    
+            .borders {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 2px;
+    
+                p {
+                    color: $app-grey-color;
+                }
             }
         }
 

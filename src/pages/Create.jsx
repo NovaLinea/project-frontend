@@ -92,7 +92,7 @@ const Create = () => {
                     className={nameProject.length !== 0 ? "title" : "title empty"}
                     contentEditable="true"
                     data-placeholder="Заголовок"
-                    value={nameProject}
+                    data-value={nameProject}
                     onInput={e => setNameProject(e.currentTarget.textContent)}
                 ></div>
 
