@@ -1,13 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import '../styles/Create.scss';
 import ProjectService from '../API/ProjectService';
 import { Context } from "../index";
+import { GrFormClose } from 'react-icons/gr';
 import Button from '../components/UI/button/Button';
 import Input from '../components/UI/input/Input';
-import Select from '../components/UI/select/Select';
-import Textarea from '../components/UI/textarea/Textarea';
 import Error from '../components/UI/error/Error';
-import { GrFormClose } from 'react-icons/gr';
 
 
 const Create = () => {
@@ -22,7 +20,6 @@ const Create = () => {
     const [paymentSystem, setPaymentSystem] = useState("");
     const [nameStaff, setNameStaff] = useState("");
     const [listStaff, setListStaff] = useState([]);
-    const [counter, setCounter] = useState(0);
 
     async function createProject() {
         try {
@@ -71,62 +68,62 @@ const Create = () => {
 
     const addStaff = () => {
         if (nameStaff) {
-            setListStaff([...listStaff, nameStaff]);
-            setNameStaff("");
+            if (listStaff.indexOf(nameStaff) === -1) {
+                setListStaff([...listStaff, nameStaff]);
+                setNameStaff("");
+            }
+            else {
+                setIsError('Такая должность уже указана');
+                setTimeout(() => {
+                    setIsError(null)
+                }, timeout)
+            }
         }
     }
 
     const deleteStaff = (staff) => {
-        const temp = [...listStaff];
-        temp.splice(staff, 1);
-        setListStaff(temp);
-    }
-
-    const changeTitle = (e) => {
-        setNameProject(e.target.value);
-        setCounter(e.target.value.length);
+        setListStaff(listStaff.filter(item => item !== staff));
     }
 
     return (
         <div className='create'>
              <div className="create__editor">
-                <textarea
-                    className='title' 
-                    placeholder='Заголовок'
-                    maxLength={120}
-                    onChange={e => changeTitle(e)}
-                />
-                <div className="counter">
-                    <span className="current">{120-counter}</span>
-                </div>
+                <div 
+                    className={nameProject.length !== 0 ? "title" : "title empty"}
+                    contentEditable="true"
+                    data-placeholder="Заголовок"
+                    value={nameProject}
+                    onInput={e => setNameProject(e.currentTarget.textContent)}
+                ></div>
 
                 <div 
                     className={descriptionProject.length !== 0 ? "description" : "description empty"}
                     contentEditable="true"
                     data-placeholder="Описание проекта"
+                    value={descriptionProject}
                     onInput={e => setDescriptionProject(e.currentTarget.textContent)}
-                >
-                    {descriptionProject} 
-                </div>
+                ></div>
 
                 <div className="type-project">
-                    <p className="name">Тип проекта</p>
-                    <Select
-                        defaultValue="sale"
-                        defaultName="На продажу"
-                        options={[{value: "donates", name: "Сбор донатов"}, {value: "team", name: "Набор команды"}]}
-                        value={typeProject} 
-                        onChange={typeProject => setTypeProject(typeProject)}
-                    />
+                    <div onClick={() => setTypeProject('sale')} className={typeProject === 'sale' ? "type__item active" : "type__item"}>
+                        На продажу
+                    </div>
+
+                    <div onClick={() => setTypeProject('donates')} className={typeProject === 'donates' ? "type__item active" : "type__item"}>
+                        Сбор донатов
+                    </div>
+
+                    <div onClick={() => setTypeProject('team')} className={typeProject === 'team' ? "type__item active" : "type__item"}>
+                        Набор команды
+                    </div>
                 </div>
                 
                 {typeProject === 'sale'
                     ?
                     <div className="price-project">
-                        <p className="name">Цена проекта</p>
                         <Input
                             type="number"
-                            placeholder="Введите цену"
+                            placeholder="Цена проекта"
                             value={priceProject} 
                             onChange={e => setPriceProject(e.target.value)}
                         />
@@ -135,32 +132,28 @@ const Create = () => {
                     typeProject === 'donates'
                         ?
                         <>
-                            <div className="create__item target-price-project">
-                                <p className="name">Цель дотанов</p>
+                            <div className="target-donates">
                                 <Input
                                     type="number"
-                                    placeholder="Введите сумму"
+                                    placeholder="Цель дотанов"
                                     value={priceProject} 
                                     onChange={e => setPriceProject(e.target.value)}
                                 />
                             </div>
 
-                            <div className="create__item payment-project">
-                                <p className="name">Платежная система</p>
+                            <div className="payment-project">
                                 <Input
-                                    placeholder="Введите платежную систему"
+                                    placeholder="Платежная система"
                                     value={paymentSystem} 
                                     onChange={e => setPaymentSystem(e.target.value)}
                                 />
                             </div>
                         </>
                         :
-                        <div className="create__item description-staff-project">
-                            <p className="name">Какие сотрудники требуются</p>
-
+                        <div className="staff-project">
                             <ul className='list-staff'>
-                                {listStaff.map(staff =>
-                                    <div className='list-staff-item'>
+                                {listStaff.map((staff, index) =>
+                                    <div key={index} className='list-staff-item'>
                                         <li>{staff}</li>
                                         <GrFormClose className='close' onClick={() => deleteStaff(staff)} />
                                     </div>
@@ -170,10 +163,11 @@ const Create = () => {
                             <div className="form-add-staff">
                                 <Input
                                     placeholder="Введите должность"
+                                    maxLength={30}
                                     value={nameStaff} 
                                     onChange={e => setNameStaff(e.target.value)}
                                 />
-                                <Button mode='fill' onClick={addStaff}>Добавить</Button>
+                                <Button mode='outline' onClick={addStaff}>Добавить</Button>
                             </div>
                         </div>
                 }

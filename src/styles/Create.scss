@@ -12,12 +12,6 @@
     box-shadow: $app-shadow;
     
     .create__editor {
-        p.name {
-            color: $app-grey-color;
-            margin: 0;
-            font-size: 15px;
-        }
-
         .title {
             height: 100%;
             width: 100%;
@@ -26,6 +20,7 @@
             border: 0;
             outline: 0;
             resize: none;
+            overflow-y: hidden;
         }
 
         .counter {
@@ -41,44 +36,60 @@
             outline: 0;
             overflow-y: hidden;
             resize: none;
-            margin-bottom: 20px;
+            margin: 20px 0 40px 0;
             cursor: text;
         }
 
-        [data-placeholder].empty:before{
+        [data-placeholder].title.empty:before{
+            content: attr(data-placeholder);
+            color: $app-grey-color;
+        }
+
+        [data-placeholder].description.empty:before{
             content: attr(data-placeholder);
             color: $app-grey-color;
         }
     
         .type-project {
-            max-width: 200px;
+            width: 100%;
+            background-color: $app-background-color;
+            border-radius: $app-radius;
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-around;
 
-            Select {
-                margin-top: 5px;
+            .type__item {
+                border-radius: $app-radius;
+                padding: 7px 20px;
+                margin: 5px 10px;
+                cursor: pointer;
+            }
+
+            .type__item.active {
+                background-color: $app-white-color;
             }
         }
 
-        .price-project, .target-price-project, .count-staff-project {
+        Input {
+            margin-top: 10px;
+        }
+
+        .price-project, .target-donates {
             max-width: 200px;
         }
 
-        .payment-project {
-            width: 100%;
-        }
-
-        .description-staff-project {
+        .staff-project {
             max-width: 450px;
 
             .list-staff {
-                margin-top: 10px;
+                margin-top: 15px;
                 padding: 0 20px;
                 
                 .list-staff-item {
-                    width: 300px;
+                    width: 345px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    margin-bottom: 10px;
 
                     li {
                         font-size: 17px;
@@ -94,7 +105,7 @@
                 padding: 0;
                 display: flex;
                 align-items: center;
-                margin-top: -5px;
+                margin-top: -15px;
 
                 Input {
                     margin-right: 10px;
@@ -102,9 +113,12 @@
 
                 Button {
                     padding: 9px 20px;
-                    margin-top: 4px;
                 }
             }
         }
+    }
+
+    Button {
+        margin-top: 10px;
     }
 }
