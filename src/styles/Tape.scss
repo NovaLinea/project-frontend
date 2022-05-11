@@ -57,7 +57,7 @@
 
                 .time {
                     color: $app-grey-color;
-                    font-size: 15px;
+                    font-size: 16px;
                     cursor: text;
                 }
             }
@@ -80,23 +80,45 @@
                 font-size: 17px;
             }
 
-            .progress-donates {
-                margin: -5px 0 3px 0;
-                height: 25px;
-                border-radius: $app-radius;
-                font-size: 15px;
-                color: $app-white-color;
-                font-weight: 600;
+            .donates {
+                .progress-donates {
+                    margin: -5px 0 3px 0;
+                    height: 25px;
+                    border-radius: $app-radius;
+                    font-size: 15px;
+                    color: $app-white-color;
+                    font-weight: 600;
+                }
+    
+                .bg-app-blue {
+                    background-color: $app-blue-color;
+                }
+        
+                .borders {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 0 2px;
+        
+                    p {
+                        color: $app-grey-color;
+                        margin-bottom: 10px;
+                    }
+                }
             }
-    
-            .borders {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 2px;
-    
-                p {
-                    color: $app-grey-color;
+
+            .necessary__staff {
+                p.title {
+                    margin: 0;
+                    margin-top: -10px;
+                    font-weight: bold;
+                    font-size: 17px;
+                }
+                
+                .list__staff {
+                    padding-left: 20px;
+                    margin-top: 5px;
+                    margin-bottom: 10px;
                 }
             }
         }

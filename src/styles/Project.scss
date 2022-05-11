@@ -33,6 +33,19 @@
         }
     }
 
+    .project__body {
+        .description-open {
+            cursor: text;
+        }
+
+        .donates, .necessary__staff {
+            Button {
+                margin-top: 0;
+                margin-bottom: 20px;
+            }
+        }
+    }
+
     .comments {
         p.title {
             font-weight: bold;

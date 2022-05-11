@@ -166,17 +166,28 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                 }
 
                 {project.type === 'donates' &&
-                    <>
+                    <div className='donates'>
                         {project.price === project.progress
                             ? <ProgressBar variant='success' className='progress-donates' now={100} label={project.price}  />
-                            : <ProgressBar className='progress-donates' max={project.price} now={project.progress} label={project.progress}  />
+                            : <ProgressBar variant='app-blue' className='progress-donates' max={project.price} now={project.progress} label={project.progress}  />
                         }
 
                         <div className="borders">
                             <p className='start'>0</p>
                             <p className='end'>{project.price}</p>
                         </div>
-                    </>
+                    </div>
+                }
+
+                {project.type === 'team' &&
+                    <div className='necessary__staff'>
+                        <p className='title'>Требуются в команду:</p>
+                        <ul className='list__staff'>
+                            {project.staff.map(staff => 
+                                <li className='staff__item'>{staff}</li>
+                            )}
+                        </ul>
+                    </div>
                 }
             </div>
 

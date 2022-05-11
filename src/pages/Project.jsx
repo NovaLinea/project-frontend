@@ -13,7 +13,8 @@ import { BsThreeDots } from "react-icons/bs";
 import Error from '../components/UI/error/Error';
 import Loader from '../components/UI/loader/Loader';
 import Textarea from '../components/UI/textarea/Textarea';
-import { Dropdown } from 'react-bootstrap';
+import Button from '../components/UI/button/Button';
+import { Dropdown, ProgressBar } from 'react-bootstrap';
 
 
 const Project = () => {
@@ -241,12 +242,42 @@ const Project = () => {
 
                     <div className="heading">
                         <p className="title">{project.name}</p>
-                        <p className="price">{project.price}₽</p>
+                        {project.type === 'sale' &&
+                            <p className="price">{project.price}₽</p>
+                        }
                     </div>
                 </div>
 
                 <div className="project__body">
-                    <p className="description">{project.description}</p>
+                    <p className="description description-open">{project.description}</p>
+
+                    {project.type === 'donates' &&
+                        <div className='donates'>
+                            {project.price === project.progress
+                                ? <ProgressBar variant='success' className='progress-donates' now={100} label={project.price}  />
+                                : <ProgressBar variant='app-blue' className='progress-donates' max={project.price} now={project.progress} label={project.progress}  />
+                            }
+
+                            <div className="borders">
+                                <p className='start'>0</p>
+                                <p className='end'>{project.price}</p>
+                            </div>
+
+                            <Button mode='fill'>Задонатить</Button>
+                        </div>
+                    }
+
+                    {project.type === 'team' &&
+                        <div className='necessary__staff'>
+                            <p className='title'>Требуются в команду:</p>
+                            <ul className='list__staff'>
+                                {project.staff.map(staff => 
+                                    <li className='staff__item'>{staff}</li>
+                                )}
+                            </ul>
+                            <Button mode='fill'>Подать заявку</Button>
+                        </div>
+                    }
                 </div>
 
                 <div className="project__footer">
