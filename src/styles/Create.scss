@@ -23,12 +23,6 @@
             overflow-y: hidden;
         }
 
-        .counter {
-            color: $app-grey-color;
-            float: right;
-            font-size: 15px;
-        }
-
         .description {
             width: 100%;
             font-size: 17px;
@@ -36,18 +30,8 @@
             outline: 0;
             overflow-y: hidden;
             resize: none;
-            margin: 20px 0 40px 0;
+            margin: 10px 0 30px 0;
             cursor: text;
-        }
-
-        [data-placeholder].title.empty:before{
-            content: attr(data-placeholder);
-            color: $app-grey-color;
-        }
-
-        [data-placeholder].description.empty:before{
-            content: attr(data-placeholder);
-            color: $app-grey-color;
         }
     
         .type-project {
@@ -59,9 +43,11 @@
             justify-content: space-around;
 
             .type__item {
+                width: 33%;
+                text-align: center;
                 border-radius: $app-radius;
-                padding: 7px 20px;
-                margin: 5px 10px;
+                padding: 7px;
+                margin: 5px 7px;
                 cursor: pointer;
             }
 

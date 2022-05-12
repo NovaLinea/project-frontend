@@ -6,6 +6,8 @@ import { GrFormClose } from 'react-icons/gr';
 import Button from '../components/UI/button/Button';
 import Input from '../components/UI/input/Input';
 import Error from '../components/UI/error/Error';
+import ContentEditable from 'react-contenteditable'
+import TextareaAutosize from '@mui/material/TextareaAutosize';
 
 
 const Create = () => {
@@ -24,7 +26,7 @@ const Create = () => {
     async function createProject() {
         try {
             if (store.isAuth) {
-                if (nameProject === "" || descriptionProject === "" || (typeProject === "donates" && paymentSystem === "") || (typeProject !== "team" && priceProject === "")) {
+                if (nameProject === "" || descriptionProject === "" || (typeProject === "donates" && paymentSystem === "" && priceProject === "") || (typeProject !== "team" && priceProject === "")) {
                     setIsError('Вы заполнили не все поля');
                     setTimeout(() => {
                         setIsError(null)
@@ -37,19 +39,19 @@ const Create = () => {
                     }, timeout)
                 }
                 else {
+                    console.log(nameProject);
                     await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
             
+                    setNameProject("");
+                    setDescriptionProject("");
+                    setPriceProject("");
+                    setPaymentSystem("");
+                    setListStaff([]);
+
                     setIsNotification('Проект успешно создан');
                     setTimeout(() => {
                         setIsNotification(null)
                     }, timeout)
-
-                    setNameProject("");
-                    setDescriptionProject("");
-                    setTypeProject("sale");
-                    setPriceProject("");
-                    setPaymentSystem("");
-                    setListStaff([]);
                 }
             }
             else {
@@ -88,21 +90,22 @@ const Create = () => {
     return (
         <div className='create'>
              <div className="create__editor">
-                <div 
-                    className={nameProject.length !== 0 ? "title" : "title empty"}
-                    contentEditable="true"
-                    data-placeholder="Заголовок"
-                    data-value={nameProject}
-                    onInput={e => setNameProject(e.currentTarget.textContent)}
-                ></div>
+                <TextareaAutosize
+                    className="title"
+                    aria-label="empty textarea"
+                    placeholder="Заголовок"
+                    maxLength={120}
+                    value={nameProject}
+                    onChange={e => setNameProject(e.target.value)}
+                />
 
-                <div 
-                    className={descriptionProject.length !== 0 ? "description" : "description empty"}
-                    contentEditable="true"
-                    data-placeholder="Описание проекта"
+                <TextareaAutosize
+                    className="description"
+                    aria-label="empty textarea"
+                    placeholder="Описание проекта"
                     value={descriptionProject}
-                    onInput={e => setDescriptionProject(e.currentTarget.textContent)}
-                ></div>
+                    onChange={e => setDescriptionProject(e.target.value)}
+                />
 
                 <div className="type-project">
                     <div onClick={() => setTypeProject('sale')} className={typeProject === 'sale' ? "type__item active" : "type__item"}>

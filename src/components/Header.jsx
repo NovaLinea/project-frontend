@@ -11,6 +11,7 @@ import Button from "./UI/button/Button"
 import SignUp from "../components/SignUp"
 import SignIn from "../components/SignIn"
 import { Dropdown } from 'react-bootstrap';
+import Badge from '@mui/material/Badge';
 
 
 const Header = () => {
@@ -55,7 +56,9 @@ const Header = () => {
                         <Button mode='fill' onClick={() => setModalSignIn(true)}>Вход</Button>
                         :
                         <>
-                            <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
+                            <Badge badgeContent={0} color="primary">
+                                <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
+                            </Badge>
 
                             <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClick={() => setShowNotifies(false)}>
                                 <p className="title">Уведомления</p>
