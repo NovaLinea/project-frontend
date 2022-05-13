@@ -1,20 +1,19 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import '../styles/Create.scss';
 import ProjectService from '../API/ProjectService';
 import { Context } from "../index";
 import { GrFormClose } from 'react-icons/gr';
 import Button from '../components/UI/button/Button';
 import Input from '../components/UI/input/Input';
-import Error from '../components/UI/error/Error';
-import ContentEditable from 'react-contenteditable'
 import TextareaAutosize from '@mui/material/TextareaAutosize';
+import Snackbar from '../components/UI/error/Snackbar';
 
 
 const Create = () => {
     const {store} = useContext(Context)
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
-    const [isNotification, setIsNotification] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [nameProject, setNameProject] = useState("");
     const [descriptionProject, setDescriptionProject] = useState("");
     const [typeProject, setTypeProject] = useState("sale");
@@ -26,18 +25,12 @@ const Create = () => {
     async function createProject() {
         try {
             if (store.isAuth) {
-                if (nameProject === "" || descriptionProject === "" || (typeProject === "donates" && paymentSystem === "" && priceProject === "") || (typeProject !== "team" && priceProject === "")) {
-                    setIsError('Вы заполнили не все поля');
-                    setTimeout(() => {
-                        setIsError(null)
-                    }, timeout)
-                }
-                else if (typeProject === "team" && listStaff.length === 0) {
-                    setIsError('Добавьте хотя бы одну должность');
-                    setTimeout(() => {
-                        setIsError(null)
-                    }, timeout)
-                }
+                if (nameProject === "" || descriptionProject === "" || (typeProject === "donates" && paymentSystem === "" && priceProject === "") || (typeProject !== "team" && priceProject === ""))
+                    showSnackbar('Вы заполнили не все поля', 'error');
+
+                else if (typeProject === "team" && listStaff.length === 0)
+                    showSnackbar('Добавьте хотя бы одну должность', 'error');
+
                 else {
                     console.log(nameProject);
                     await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
@@ -48,24 +41,21 @@ const Create = () => {
                     setPaymentSystem("");
                     setListStaff([]);
 
-                    setIsNotification('Проект успешно создан');
-                    setTimeout(() => {
-                        setIsNotification(null)
-                    }, timeout)
+                    showSnackbar('Проект успешно создан', 'success');
                 }
             }
-            else {
-                setIsError('Вы не авторизованы в системе');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            else
+                showSnackbar('Вы не авторизованы в системе', 'error');
+
         } catch (e) {
-            setIsError('Ошибка при создании проекта');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при создании проекта', 'error');
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     const addStaff = () => {
@@ -74,12 +64,8 @@ const Create = () => {
                 setListStaff([...listStaff, nameStaff]);
                 setNameStaff("");
             }
-            else {
-                setIsError('Такая должность уже указана');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            else
+                showSnackbar('Такая должность уже указана', 'error');
         }
     }
 
@@ -179,16 +165,11 @@ const Create = () => {
             <Button mode='fill' onClick={createProject}>Создать</Button>
             
             {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
+                <Snackbar ref={snackbarRef} message={store.isError} mode='error' />
             }
 
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
 
-            {isNotification &&
-                <Error mode='success'>{isNotification}</Error>
-            }
         </div>
     );
 };

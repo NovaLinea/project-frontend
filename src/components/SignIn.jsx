@@ -1,30 +1,37 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import '../styles/Auth.scss';
 import { Context } from "../index";
 import Input from './UI/input/Input';
 import Button from './UI/button/Button';
 import Error from './UI/error/Error';
+import Snackbar from '../components/UI/error/Snackbar';
 
 
 const SignIn = ({action}) => {
     const {store} = useContext(Context);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isError, setIsError] = useState(null);
     const timeout = 5000;
 
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
+    }
+
     const signIn = () => {
         if (email === '' || password === '') {
-            setIsError('Вы заполнили не все поля');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Вы заполнили не все поля', 'error');
         }
         else {
             store.signin(email, password);
             setEmail('');
             setPassword('');
-            action('close');
+            //action('close');
         }
 	}
 
@@ -53,12 +60,10 @@ const SignIn = ({action}) => {
             <p>Нет аккаунта? <span onClick={signUp}>Регистрация</span></p>
 
             {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
+                <Snackbar ref={snackbarRef} message={store.isError} mode="error" />
             }
 
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
 	);
 }
