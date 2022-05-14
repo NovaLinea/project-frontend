@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Tape.scss';
 import { Context } from "../index";
@@ -8,7 +8,7 @@ import { FaRegComment } from "react-icons/fa";
 import { HiOutlineBookmark } from "react-icons/hi";
 import { RiShareForwardLine } from "react-icons/ri";
 import { BsBookmarkFill } from "react-icons/bs";
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import { ProgressBar } from "react-bootstrap";
 
 
@@ -16,8 +16,9 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
     const {store} = useContext(Context);
     const navigate = useNavigate();
     const maxSymbols = 350;
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [likes, setLikes] = useState([]);
     const [countLikes, setCountLikes] = useState(project.likes);
     const [modeLike, setModeLike] = useState(false);
@@ -61,17 +62,10 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                     await ProjectService.likeProject(project.id, store.isUserID);
                 }
             }
-            else {
-                setIsError('Вы не авторизованы в системе');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            else
+                showSnackbar('Вы не авторизованы в системе', 'error');
         } catch (e) {
-            setIsError('Ошибка при изменении данных в БД');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при изменении данных в БД', 'error');
         }
     }
 
@@ -91,17 +85,10 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                     await ProjectService.favoriteProject(project.id, store.isUserID);
                 }
             }
-            else {
-                setIsError('Вы не авторизованы в системе');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            else
+                showSnackbar('Вы не авторизованы в системе', 'error');
         } catch (e) {
-            setIsError('Ошибка при добавлении проект в избранное');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при добавлении проект в избранное', 'error');
         }
     }
 
@@ -128,6 +115,12 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
         else {
             setTime(new Date(project.time).toDateString().substring(4));
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     return (
@@ -184,7 +177,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                         <p className='title'>Требуются в команду:</p>
                         <ul className='list__staff'>
                             {project.staff.map(staff => 
-                                <li className='staff__item'>{staff}</li>
+                                <li key={staff} className='staff__item'>{staff}</li>
                             )}
                         </ul>
                     </div>
@@ -222,13 +215,7 @@ const ProjectItem = ({project, listLikes, listFavorites}) => {
                 </div>
             </div>
 
-            {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
-            }
-
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
     );
 };

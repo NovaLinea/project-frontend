@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/Tape.scss';
 import { useLocation } from "react-router-dom";
 import UserService from '../API/UserService';
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import Loader from '../components/UI/loader/Loader';
 import ListUsers from './ListUsers';
 
 
 const Follows = ({userID, action}) => {
     const location = useLocation();
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [follows, setFollows] = useState([]);
 
@@ -26,13 +27,16 @@ const Follows = ({userID, action}) => {
                 setFollows(response.data);
             }
         } catch (e) {
-            setIsError('Ошибка при получение подписчиков');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получение подписчиков', 'error');
         } finally {
             setIsLoading(false);
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     if (isLoading) {
@@ -50,9 +54,7 @@ const Follows = ({userID, action}) => {
                 : <ListUsers users={follows} action={action} />
             }
 
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
     );
 };

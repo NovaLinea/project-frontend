@@ -6,7 +6,7 @@ import { GrFormClose } from 'react-icons/gr';
 import Button from '../components/UI/button/Button';
 import Input from '../components/UI/input/Input';
 import TextareaAutosize from '@mui/material/TextareaAutosize';
-import Snackbar from '../components/UI/error/Snackbar';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 
 
 const Create = () => {
@@ -32,7 +32,6 @@ const Create = () => {
                     showSnackbar('Добавьте хотя бы одну должность', 'error');
 
                 else {
-                    console.log(nameProject);
                     await ProjectService.createProject(store.isUserID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff);
             
                     setNameProject("");
@@ -164,10 +163,6 @@ const Create = () => {
 
             <Button mode='fill' onClick={createProject}>Создать</Button>
             
-            {store.isError &&
-                <Snackbar ref={snackbarRef} message={store.isError} mode='error' />
-            }
-
             <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
 
         </div>

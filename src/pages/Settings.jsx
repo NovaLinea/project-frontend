@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import '../styles/Settings.scss';
 import { Context } from "../index";
 import { useNavigate } from 'react-router-dom';
 import UserService from '../API/UserService';
 import Input from '../components/UI/input/Input';
 import Textarea from '../components/UI/textarea/Textarea';
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import Loader from '../components/UI/loader/Loader';
 import Button from '../components/UI/button/Button';
 import Modal from '../components/UI/modal/Modal'
@@ -16,9 +16,9 @@ import ConfirmAction from '../components/ConfirmAction';
 const Settings = () => {
     const {store} = useContext(Context)
     const navigate = useNavigate();
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
-    const [isNotification, setIsNotification] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState({});
     const [name, setName] = useState("");
@@ -63,10 +63,7 @@ const Settings = () => {
             }
             
         } catch (e) {
-            setIsError('Ошибка при получении настроек');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении настроек', 'error');
         } finally {
             setIsLoading(false);
         }
@@ -75,56 +72,30 @@ const Settings = () => {
     async function saveData() {
         try {
             await UserService.saveData(store.isUserID, name, email, description, ntfsNewMsg, ntfsNewSubs, ntfsNewComment, ntfsUpdate, ntfsEmail);
-
-            setIsNotification('Настройки успешно сохранены');
-            setTimeout(() => {
-                setIsNotification(null)
-            }, timeout)
+            showSnackbar('Настройки успешно сохранены', 'success');
         } catch (e) {
-            setIsError('Ошибка при сохранении данных пользователя');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при сохранении данных пользователя', 'error');
         }
     }
 
     async function changePassword() {
         try {
-            if (newPassword === "" || oldPassword === "" || confirmPassword === "") {
-                setIsError('Вы заполнили не все поля');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
-            else if (newPassword !== confirmPassword) {
-                setIsError('Новые пароли не совпадают');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
-            else if (newPassword === oldPassword) {
-                setIsError('Новые пароли не отличается от старого');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            if (newPassword === "" || oldPassword === "" || confirmPassword === "")
+                showSnackbar('Вы заполнили не все поля', 'error');
+            else if (newPassword !== confirmPassword)
+                showSnackbar('Новые пароли не совпадают', 'error');
+            else if (newPassword === oldPassword)
+                showSnackbar('Новые пароли не отличается от старого', 'error');
             else {
                 await UserService.changePassword(store.isUserID, oldPassword, newPassword);
 
-                setIsNotification('Пароль успешно изменен');
-                setTimeout(() => {
-                    setIsNotification(null)
-                }, timeout)
-
+                showSnackbar('Пароль успешно изменен', 'success');
                 setOldPassword("");
                 setNewPassword("");
                 setConfirmPassword("");
             }
         } catch (e) {
-            setIsError('Ошибка при изменении пароля');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при изменении пароля', 'error');
         }
     }
 
@@ -135,10 +106,7 @@ const Settings = () => {
             store.logout();
             navigate("/")
         } catch (e) {
-            setIsError('Ошибка при удалении аккаунта');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при удалении аккаунта', 'error');
         }
     }
 
@@ -157,6 +125,12 @@ const Settings = () => {
     const changeDescription = (e) => {
         setDescription(e.target.value);
         setCounterDescription(e.target.value.length);
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     if (isLoading) {
@@ -269,17 +243,7 @@ const Settings = () => {
                 <p onClick={() => setModalConfirm(true)}>Удалить аккаунт</p>
             </div>
 
-            {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
-            }
-
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
-
-            {isNotification &&
-                <Error mode='success'>{isNotification}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
 
             <Modal title='Удаление аккаунта' visible={modalConfirm} setVisible={setModalConfirm}>
                 <ConfirmAction text="Вы уверены, что хотите удалить аккаунт и все свои проекты?" action={confirmDelete}/>

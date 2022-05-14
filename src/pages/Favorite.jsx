@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { Context } from "../index";
 import '../styles/Favorites.scss';
 import ProjectService from '../API/ProjectService';
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import Loader from '../components/UI/loader/Loader';
 import ListProjects from '../components/ListProjects';
 
 
 const Favorite = () => {
     const {store} = useContext(Context);
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [projects, setProjects] = useState([]);
 
@@ -22,17 +23,19 @@ const Favorite = () => {
         try {
             const response = await ProjectService.fetchFavoritesProjects(store.isUserID);
 
-            if (response.data) {
+            if (response.data)
                 setProjects(response.data);
-            }
         } catch (e) {
-            setIsError('Ошибка при получении проектов');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении проектов', 'error');
         } finally {
             setIsLoading(false);
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     if (isLoading) {
@@ -50,13 +53,7 @@ const Favorite = () => {
                 : <p className='empty'>У вас нет избранных проектов</p>
             }
 
-            {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
-            }
-
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
     );
 };

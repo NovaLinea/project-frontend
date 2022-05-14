@@ -55,6 +55,7 @@ export default class Store {
             setTimeout(() => {
                 this.setError(null);
             }, this.timeout)
+            return e.response?.data?.message;
         }
     }
 

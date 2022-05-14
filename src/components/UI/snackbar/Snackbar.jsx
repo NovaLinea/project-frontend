@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
 import classes from './Snackbar.module.scss'
 import { GrFormClose } from 'react-icons/gr'
 
@@ -6,9 +6,20 @@ import { GrFormClose } from 'react-icons/gr'
 const Snackbar = forwardRef((props, ref) => {
     const [show, setShow] = React.useState(false);
     const timeout = 5000;
+    const [message, setMessage] = useState("");
+    const [mode, setMode] = useState("");
 
     useImperativeHandle(ref, () => ({
         show() {
+            setShow(true);
+            setTimeout(() => {
+                setShow(false)
+            }, timeout)
+        },
+        show(message, mode) {
+            setMessage(message);
+            setMode(mode);
+
             setShow(true);
             setTimeout(() => {
                 setShow(false)
@@ -20,9 +31,9 @@ const Snackbar = forwardRef((props, ref) => {
         show &&
             <div
                 className={classes.snackbar}
-                id={props.mode === "error" ? classes.error : classes.success}
+                id={mode === "error" ? classes.error : classes.success}
             >
-                <div className={classes.message}>{props.message}</div>
+                <div className={classes.message}>{message}</div>
                 <GrFormClose onClick={() => setShow(false)} className={classes.close}/>
             </div>
     );

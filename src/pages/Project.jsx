@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import { Context } from "../index";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import '../styles/Tape.scss';
@@ -10,7 +10,7 @@ import { HiOutlineBookmark } from "react-icons/hi";
 import { RiShareForwardLine } from "react-icons/ri";
 import { BsBookmarkFill } from "react-icons/bs";
 import { BsThreeDots } from "react-icons/bs";
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import Loader from '../components/UI/loader/Loader';
 import Textarea from '../components/UI/textarea/Textarea';
 import Button from '../components/UI/button/Button';
@@ -21,8 +21,9 @@ const Project = () => {
     const {store} = useContext(Context);
     const navigate = useNavigate();
     const params = useParams();
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [project, setProject] = useState({});
     const [time, setTime] = useState("");
@@ -51,10 +52,9 @@ const Project = () => {
                 }
             }
         } catch (e) {
-            setIsError('Ошибка при получении данных проекта');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении данных проекта', 'error');
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -77,12 +77,7 @@ const Project = () => {
             }
             
         } catch (e) {
-            setIsError('Ошибка при получении данных о лайках и избранном');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
-        } finally {
-            setIsLoading(false);
+            showSnackbar('Ошибка при получении данных о лайках и избранном', 'error');
         }
     }
 
@@ -104,17 +99,10 @@ const Project = () => {
                     await ProjectService.likeProject(project.id, store.isUserID);
                 }
             }
-            else {
-                setIsError('Вы не авторизованы в системе');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            else
+                showSnackbar('Вы не авторизованы в системе', 'error');
         } catch (e) {
-            setIsError('Ошибка при изменении данных в БД');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при изменении данных в БД', 'error');
         }
     }
 
@@ -134,17 +122,10 @@ const Project = () => {
                     await ProjectService.favoriteProject(project.id, store.isUserID);
                 }
             }
-            else {
-                setIsError('Вы не авторизованы в системе');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            else
+                showSnackbar('Вы не авторизованы в системе', 'error');
         } catch (e) {
-            setIsError('Ошибка при добавлении проект в избранное');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при добавлении проект в избранное', 'error');
         }
     }
 
@@ -153,10 +134,7 @@ const Project = () => {
             await ProjectService.deleteProject(project.id);
             navigate('/');
         } catch (e) {
-            setIsError('Ошибка при удалени проекта');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при удалени проекта', 'error');
         }
     }
 
@@ -183,6 +161,12 @@ const Project = () => {
         else {
             setTime(new Date(projectTime).toDateString().substring(4));
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     if (isLoading) {
@@ -313,9 +297,7 @@ const Project = () => {
                     />
                 </div>
                 
-                {isError &&
-                    <Error mode='error'>{isError}</Error>
-                }
+                <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
             </div>
         </div>
     );

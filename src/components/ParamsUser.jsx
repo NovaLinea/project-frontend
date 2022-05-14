@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import UserService from '../API/UserService';
 import { useLocation } from "react-router-dom";
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import Modal from '../components/UI/modal/Modal'
 import Follows from './Follows';
 import Followings from './Followings';
@@ -9,8 +9,9 @@ import Followings from './Followings';
 
 const ParamsUser = ({countProjects, userID}) => {
     const location = useLocation();
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [follows, setFollows] = useState(0);
     const [followings, setFollowings] = useState(0);
     const [modalFollows, setModalFollows] = useState(false);
@@ -29,10 +30,7 @@ const ParamsUser = ({countProjects, userID}) => {
                 setFollows(response.data.follows);
             }
         } catch (e) {
-            setIsError('Ошибка при получение параметров профиля');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получение параметров профиля', 'error');
         }
     }
 
@@ -42,6 +40,12 @@ const ParamsUser = ({countProjects, userID}) => {
 
     const closeModalFollowings = () => {
         setModalFollowings(false);
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     return (
@@ -69,9 +73,7 @@ const ParamsUser = ({countProjects, userID}) => {
                 <Followings userID={userID} action={closeModalFollowings} />
             </Modal>
 
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
     );
 };

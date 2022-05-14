@@ -12,6 +12,7 @@
     bottom: 20px;
     z-index: 9999;
     border: none;
+    animation: snackbar-in-right .2s;
 
     .message {
         font-size: 16px;
@@ -34,3 +35,12 @@
     background: rgb(166, 211, 166);
     color: rgb(74, 105, 53);
 }
+
+@keyframes snackbar-in-right {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }

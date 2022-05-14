@@ -1,15 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { Context } from "../index";
 import UserService from '../API/UserService';
 import ProjectItem from './ProjectItem';
 import Loader from '../components/UI/loader/Loader';
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 
 
 const ListProjects = ({projects}) => {
     const {store} = useContext(Context);
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [favorites, setFavorites] = useState([]);
     const [likes, setLikes] = useState([]);
@@ -34,13 +35,15 @@ const ListProjects = ({projects}) => {
             }
             
         } catch (e) {
-            setIsError('Ошибка при получении данных о лайках и избранном');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении данных о лайках и избранном', 'error');
         } finally {
             setIsLoading(false);
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
     }
 
     if (isLoading) {
@@ -57,13 +60,7 @@ const ListProjects = ({projects}) => {
                 <ProjectItem key={project.id} project={project} listLikes={likes} listFavorites={favorites} />
             )}
 
-            {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
-            }
-
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
     );
 };

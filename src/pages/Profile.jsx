@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { Context } from "../index";
 import '../styles/Profile.scss';
 import { useParams, useNavigate, useLocation } from "react-router-dom";
@@ -8,7 +8,7 @@ import { AiOutlineUserAdd } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { FcCheckmark } from "react-icons/fc";
 import Button from "../components/UI/button/Button";
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import Loader from '../components/UI/loader/Loader';
 import ListProjects from '../components/ListProjects';
 import ParamsUser from '../components/ParamsUser';
@@ -19,8 +19,9 @@ const Profile = () => {
     const params = useParams();
     const navigate = useNavigate();
     const location = useLocation()
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [dataUser, setDataUser] = useState("");
     const [projects, setProjects] = useState([]);
@@ -44,10 +45,7 @@ const Profile = () => {
             }
             
         } catch (e) {
-            setIsError('Ошибка при получении данных пользователя');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении данных пользователя', 'error');
         } finally {
             setIsLoading(false);
         }
@@ -60,10 +58,7 @@ const Profile = () => {
                 setProjects(response.data);
             }
         } catch (e) {
-            setIsError('Ошибка при получении проектов');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении проектов', 'error');
         }
     }
 
@@ -78,10 +73,7 @@ const Profile = () => {
                     setModeSubscribe(true)
             }
         } catch (e) {
-            setIsError('Ошибка при получении подписок');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении подписок', 'error');
         }
     }
 
@@ -101,18 +93,17 @@ const Profile = () => {
                     await UserService.subscribeUser(store.isUserID, params.userID);
                 }
             }
-            else {
-                setIsError('Вы не авторизированы в системе');
-                setTimeout(() => {
-                    setIsError(null)
-                }, timeout)
-            }
+            else
+                showSnackbar('Вы не авторизированы в системе', 'error');
         } catch (e) {
-            setIsError('Ошибка при подписке на пользователя');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при подписке на пользователя', 'error');
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
     }
 
     if (isLoading) {
@@ -171,13 +162,7 @@ const Profile = () => {
                 }
             </div>
 
-            {store.isError &&
-                <Error mode='error'>{store.isError}</Error>
-            }
-
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
     );
 };

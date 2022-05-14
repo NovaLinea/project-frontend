@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import '../styles/Tape.scss';
 import ProjectService from '../API/ProjectService';
-import Error from '../components/UI/error/Error';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 import ListProjects from '../components/ListProjects';
 
 
 const Popular = () => {
-    const timeout = 5000;
-    const [isError, setIsError] = useState(null);
+    const snackbarRef = useRef(null);
+    const [messageSnackbar, setMessageSnackbar] = useState("");
+    const [modeSnackbar, setModeSnackbar] = useState("");
     const [projects, setProjects] = useState([])
 
     useEffect(() => {
@@ -22,20 +23,20 @@ const Popular = () => {
                 setProjects(response.data);
             }
         } catch (e) {
-            setIsError('Ошибка при получении проектов');
-            setTimeout(() => {
-                setIsError(null)
-            }, timeout)
+            showSnackbar('Ошибка при получении проектов', 'error');
         }
+    }
+
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
     }
 
     return (
         <div className='popular'>
             <ListProjects projects={projects} />
 
-            {isError &&
-                <Error mode='error'>{isError}</Error>
-            }
+            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
         </div>
     );
 };

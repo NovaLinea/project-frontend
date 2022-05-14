@@ -3,32 +3,26 @@ import '../styles/Auth.scss';
 import { Context } from "../index";
 import Input from './UI/input/Input';
 import Button from './UI/button/Button';
-import Error from './UI/error/Error';
-import Snackbar from '../components/UI/error/Snackbar';
+import Snackbar from '../components/UI/snackbar/Snackbar';
 
 
 const SignIn = ({action}) => {
     const {store} = useContext(Context);
     const snackbarRef = useRef(null);
-    const [messageSnackbar, setMessageSnackbar] = useState("");
-    const [modeSnackbar, setModeSnackbar] = useState("");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isError, setIsError] = useState(null);
-    const timeout = 5000;
-
-    const showSnackbar = (message, mode) => {
-        setMessageSnackbar(message);
-        setModeSnackbar(mode)
-        snackbarRef.current.show();
-    }
 
     const signIn = () => {
         if (email === '' || password === '') {
-            showSnackbar('Вы заполнили не все поля', 'error');
+            snackbarRef.current.show('Вы заполнили не все поля', 'error');
         }
         else {
-            store.signin(email, password);
+            const err = store.signin(email, password);
+
+            if (err) {
+                console.log(err);
+                //snackbarRef.current.show(err, 'error');
+            }
             setEmail('');
             setPassword('');
             //action('close');
@@ -36,7 +30,6 @@ const SignIn = ({action}) => {
 	}
 
     const signUp = () => {
-        setIsError(null);
         action('signUp');
     }
 
@@ -56,14 +49,9 @@ const SignIn = ({action}) => {
             />
             <br/>
             <Button mode='fill' onClick={signIn}>Войти</Button>
-
             <p>Нет аккаунта? <span onClick={signUp}>Регистрация</span></p>
 
-            {store.isError &&
-                <Snackbar ref={snackbarRef} message={store.isError} mode="error" />
-            }
-
-            <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
+            <Snackbar ref={snackbarRef} />
         </div>
 	);
 }
