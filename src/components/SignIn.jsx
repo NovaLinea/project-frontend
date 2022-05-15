@@ -14,18 +14,18 @@ const SignIn = ({action}) => {
 
     const signIn = () => {
         if (email === '' || password === '') {
-            snackbarRef.current.show('Вы заполнили не все поля', 'error');
+            snackbarRef.current.show1('Вы заполнили не все поля', 'error');
         }
         else {
             const err = store.signin(email, password);
 
             if (err) {
                 console.log(err);
-                //snackbarRef.current.show(err, 'error');
+                //snackbarRef.current.show1(err, 'error');
             }
             setEmail('');
             setPassword('');
-            //action('close');
+            action('close');
         }
 	}
 

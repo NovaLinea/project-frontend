@@ -52,4 +52,16 @@ export default class ProjectService {
     static async deleteProject(projectID) {
         return $api.get(`/project/${projectID}/delete-project`)
     }
+
+    static async saveChangesProject(userID, nameProject, descriptionProject, typeProject, priceProject, paymentSystem, listStaff) {
+        if (typeProject === 'sale') {
+            return $api.post(`/project/${userID}/save-changes`, {name: nameProject, description: descriptionProject, price: Number(priceProject), editing_time: new Date().toISOString()})
+        }
+        else if (typeProject === 'donates') {
+            return $api.post(`/project/${userID}/save-changes`, {name: nameProject, description: descriptionProject, price: Number(priceProject), payment_system: paymentSystem, editing_time: new Date().toISOString()})
+        }
+        else {
+            return $api.post(`/project/${userID}/save-changes`, {name: nameProject, description: descriptionProject, staff: listStaff, editing_time: new Date().toISOString()})
+        }
+    }
 }

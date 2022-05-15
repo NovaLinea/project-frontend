@@ -15,6 +15,7 @@ import Loader from '../components/UI/loader/Loader';
 import Textarea from '../components/UI/textarea/Textarea';
 import Button from '../components/UI/button/Button';
 import { Dropdown, ProgressBar } from 'react-bootstrap';
+import Create from './Create';
 
 
 const Project = () => {
@@ -33,6 +34,7 @@ const Project = () => {
     const [countLikes, setCountLikes] = useState(project.likes);
     const [modeLike, setModeLike] = useState(false);
     const [modeFavorite, setModeFavorite] = useState(false);
+    const [statusEdit, setStatusEdit] = useState(false);
 
     useEffect(() => {
         getDataProject();
@@ -47,9 +49,8 @@ const Project = () => {
                 setCountLikes(response.data.likes);
                 determinateTime(response.data.time);
 
-                if (store.isAuth) {
+                if (store.isAuth)
                     fetchLikesFavorites(response.data.id);
-                }
             }
         } catch (e) {
             showSnackbar('Ошибка при получении данных проекта', 'error');
@@ -138,6 +139,31 @@ const Project = () => {
         }
     }
 
+    async function saveChanges(data) {
+        try {
+            setIsLoading(true);
+            await ProjectService.saveChangesProject(params.projectID, data.name, data.description, project.type, data.price, data.payment, data.staff);
+
+            project.name = data.name;
+            project.description = data.description;
+            
+            if (project.type === 'sale' || project.type === 'donates')
+                project.price = data.price;
+
+            if (project.type === 'donates')
+                project.payment = data.payment;
+
+            if (project.type === 'team')
+                project.staff = data.staff;
+
+            setStatusEdit(false);
+        } catch (e) {
+            showSnackbar('Ошибка при сохранении изменений', 'error');
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     const determinateTime = (projectTime) => {
         const countTime = Math.round((new Date() - new Date(projectTime)) / (1000 * 60));
         
@@ -177,53 +203,68 @@ const Project = () => {
         );
     }
 
+    if (statusEdit) {
+        return(
+            <Create 
+                name={project.name} 
+                description={project.description}
+                type={project.type}
+                price={project.price}
+                payment={project.payment}
+                staff={project.staff}
+                save={saveChanges}
+                cancel={() => setStatusEdit(false)}
+            />
+        );
+    }
+
     return (
         <div className="projects">
             <div className='project'>
                 <div className="project__header">
                     <div className="main__data">
-                        <div className="person">
-                            <div className="photo"></div>
-                            <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
+                    <div className="person">
+                        <div className="photo"></div>
+                        <Link to={`/profile/${project.user_id}`} className="name">{project.name_creator}</Link>
 
-                            <div className='type'>
-                                {project.type === 'sale'
-                                    ? <span>Продажа</span>
-                                    :
-                                    project.type === 'donates'
-                                        ? <span>Сбор донатов</span>
-                                        : <span>Набор команды</span>
-                                }
-                            </div>
-                            
-                            <div className="time">{time}</div>
+                        <div className='type'>
+                            {project.type === 'sale'
+                                ? <span>Продажа</span>
+                                :
+                                project.type === 'donates'
+                                    ? <span>Сбор донатов</span>
+                                    : <span>Набор команды</span>
+                            }
                         </div>
-                        <Dropdown className='dropdown'>
-                            <Dropdown.Toggle variant="light" className='dropdown__btn'>
-                                <div className='menu__icon'>
-                                    <BsThreeDots/>
-                                </div>
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu variant="light" className='actions'>
-                                <Dropdown.Item className='action__item'>
-                                    Пожаловаться
-                                </Dropdown.Item>
-                                
-                                {store.isUserID === project.user_id &&
-                                    <>
-                                        <Dropdown.Item className='action__item'>
-                                            Редактировать
-                                        </Dropdown.Item>
-                                        <Dropdown.Item onClick={() => deleteProject()} className='action__item delete'>
-                                            Удалить
-                                        </Dropdown.Item>
-                                    </>
-                                }
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        
+                        <div className="time">{time}</div>
                     </div>
+                    <Dropdown className='dropdown'>
+                        <Dropdown.Toggle variant="light" className='dropdown__btn'>
+                            <div className='menu__icon'>
+                                <BsThreeDots/>
+                            </div>
+                        </Dropdown.Toggle>
 
+                        <Dropdown.Menu variant="light" className='actions'>
+                            <Dropdown.Item className='action__item'>
+                                Пожаловаться
+                            </Dropdown.Item>
+                            
+                            {store.isUserID === project.user_id &&
+                                <>
+                                    <Dropdown.Item onClick={() => setStatusEdit(true)} className='action__item'>
+                                        Редактировать
+                                    </Dropdown.Item>
+                                    <Dropdown.Item onClick={() => deleteProject()} className='action__item delete'>
+                                        Удалить
+                                    </Dropdown.Item>
+                                </>
+                            }
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    </div>
+                    
                     <div className="heading">
                         <p className="title">{project.name}</p>
                         {project.type === 'sale' &&
@@ -256,7 +297,7 @@ const Project = () => {
                             <p className='title'>Требуются в команду:</p>
                             <ul className='list__staff'>
                                 {project.staff.map(staff => 
-                                    <li className='staff__item'>{staff}</li>
+                                    <li key={staff} className='staff__item'>{staff}</li>
                                 )}
                             </ul>
                             <Button mode='fill'>Подать заявку</Button>
@@ -295,7 +336,7 @@ const Project = () => {
                         value={comment} 
                         onChange={e => setComment(e.target.value)}
                     />
-                </div>
+                </div>        
                 
                 <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
             </div>

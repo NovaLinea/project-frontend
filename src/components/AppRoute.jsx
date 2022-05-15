@@ -1,9 +1,9 @@
 import React, {useContext} from 'react'
 import {Routes, Route} from "react-router-dom"
 import {Context} from "../index";
-import NotFound from '../pages/NotFound';
 import { privateRoutes, publicRoutes } from '../router';
 import { observer } from 'mobx-react-lite';
+import NotFound from '../pages/NotFound';
 import Loader from '../components/UI/loader/Loader';
 import Header from './Header';
 import Sidebar from './Sidebar';

@@ -16,7 +16,7 @@ const Snackbar = forwardRef((props, ref) => {
                 setShow(false)
             }, timeout)
         },
-        show(message, mode) {
+        show1(message, mode) {
             setMessage(message);
             setMode(mode);
 
@@ -31,9 +31,9 @@ const Snackbar = forwardRef((props, ref) => {
         show &&
             <div
                 className={classes.snackbar}
-                id={mode === "error" ? classes.error : classes.success}
+                id={props.mode === "error" ? classes.error : classes.success}
             >
-                <div className={classes.message}>{message}</div>
+                <div className={classes.message}>{props.message}</div>
                 <GrFormClose onClick={() => setShow(false)} className={classes.close}/>
             </div>
     );

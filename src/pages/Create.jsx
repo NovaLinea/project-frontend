@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react'
+import React, { useState, useContext, useRef, useEffect } from 'react'
 import '../styles/Create.scss';
 import ProjectService from '../API/ProjectService';
 import { Context } from "../index";
@@ -9,7 +9,7 @@ import TextareaAutosize from '@mui/material/TextareaAutosize';
 import Snackbar from '../components/UI/snackbar/Snackbar';
 
 
-const Create = () => {
+const Create = (props) => {
     const {store} = useContext(Context)
     const snackbarRef = useRef(null);
     const [messageSnackbar, setMessageSnackbar] = useState("");
@@ -21,6 +21,17 @@ const Create = () => {
     const [paymentSystem, setPaymentSystem] = useState("");
     const [nameStaff, setNameStaff] = useState("");
     const [listStaff, setListStaff] = useState([]);
+
+    useEffect(() => {
+        if (props.type) {
+            setNameProject(props.name);
+            setDescriptionProject(props.description);
+            setTypeProject(props.type);
+            setPriceProject(props.price);
+            setPaymentSystem(props.payment);
+            setListStaff(props.staff);
+        }
+    }, [])
 
     async function createProject() {
         try {
@@ -51,10 +62,11 @@ const Create = () => {
         }
     }
 
-    const showSnackbar = (message, mode) => {
-        setMessageSnackbar(message);
-        setModeSnackbar(mode)
-        snackbarRef.current.show();
+    const saveChanges = () => {
+        const newData = {
+            name: nameProject, description: descriptionProject, price: priceProject, payment: paymentSystem, staff: listStaff, id: Date.now()
+        }
+        props.save(newData);
     }
 
     const addStaff = () => {
@@ -72,9 +84,15 @@ const Create = () => {
         setListStaff(listStaff.filter(item => item !== staff));
     }
 
+    const showSnackbar = (message, mode) => {
+        setMessageSnackbar(message);
+        setModeSnackbar(mode)
+        snackbarRef.current.show();
+    }
+
     return (
         <div className='create'>
-             <div className="create__editor">
+            <div className="create__editor">
                 <TextareaAutosize
                     className="title"
                     aria-label="empty textarea"
@@ -92,20 +110,22 @@ const Create = () => {
                     onChange={e => setDescriptionProject(e.target.value)}
                 />
 
-                <div className="type-project">
-                    <div onClick={() => setTypeProject('sale')} className={typeProject === 'sale' ? "type__item active" : "type__item"}>
-                        На продажу
-                    </div>
+                {!props.type &&
+                    <div className="type-project">
+                        <div onClick={() => setTypeProject('sale')} className={typeProject === 'sale' ? "type__item active" : "type__item"}>
+                            На продажу
+                        </div>
 
-                    <div onClick={() => setTypeProject('donates')} className={typeProject === 'donates' ? "type__item active" : "type__item"}>
-                        Сбор донатов
-                    </div>
+                        <div onClick={() => setTypeProject('donates')} className={typeProject === 'donates' ? "type__item active" : "type__item"}>
+                            Сбор донатов
+                        </div>
 
-                    <div onClick={() => setTypeProject('team')} className={typeProject === 'team' ? "type__item active" : "type__item"}>
-                        Набор команды
+                        <div onClick={() => setTypeProject('team')} className={typeProject === 'team' ? "type__item active" : "type__item"}>
+                            Набор команды
+                        </div>
                     </div>
-                </div>
-                
+                }
+
                 {typeProject === 'sale'
                     ?
                     <div className="price-project">
@@ -140,8 +160,8 @@ const Create = () => {
                         :
                         <div className="staff-project">
                             <ul className='list-staff'>
-                                {listStaff.map((staff, index) =>
-                                    <div key={index} className='list-staff-item'>
+                                {listStaff.map(staff =>
+                                    <div key={staff} className='list-staff-item'>
                                         <li>{staff}</li>
                                         <GrFormClose className='close' onClick={() => deleteStaff(staff)} />
                                     </div>
@@ -161,10 +181,16 @@ const Create = () => {
                 }
             </div>
 
-            <Button mode='fill' onClick={createProject}>Создать</Button>
-            
+            {!props.type
+                ? <Button mode='fill' onClick={createProject}>Создать</Button>
+                : 
+                <div className="actions__edit">
+                    <Button mode='fill' onClick={saveChanges}>Сохранить изменения</Button>
+                    <Button mode='output' onClick={props.cancel} style={{marginLeft: 10}}>Отмена</Button>
+                </div>
+            }
+    
             <Snackbar ref={snackbarRef} message={messageSnackbar} mode={modeSnackbar} />
-
         </div>
     );
 };
