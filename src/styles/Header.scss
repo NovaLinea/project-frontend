@@ -82,6 +82,11 @@
             }
 
             .dropdown {
+                .dropdown__btn {
+                    background-color: $app-white-color;
+                    box-shadow: none;
+                }
+
                 .dropdown__btn:hover {
                     opacity: 0.9;
                 }

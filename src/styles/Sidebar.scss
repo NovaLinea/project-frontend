@@ -12,6 +12,7 @@
     top: 70px;
     left: 50%;
     transform: translateX(-50%);
+    -webkit-animation: show-sidebar .25s forwards;
     z-index: 2;
 
     .sidebar__item {
@@ -39,5 +40,28 @@
     .sidebar__item:hover {
         background-color: $app-hover-color;
         cursor: pointer;
+    }
+}
+
+.hidden {
+    -webkit-animation: hidden-sidebar .25s forwards;
+}
+
+
+@keyframes show-sidebar {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: 70px;
+    }
+}
+
+@keyframes hidden-sidebar {
+    0% {
+        top: 70px;
+    }
+    100% {
+        top: 0;
     }
 }

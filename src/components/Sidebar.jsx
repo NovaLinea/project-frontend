@@ -14,6 +14,8 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const location = useLocation()
     const [activeItem, setActiveItem] = useState('');
+    const [show, setShow] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
 
     useEffect(() => {
         if (location.pathname === "/") {
@@ -27,8 +29,31 @@ const Sidebar = () => {
         }
     }, [location.pathname])
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            window.addEventListener('scroll', controlNavbar);
+    
+            return () => {
+                window.removeEventListener('scroll', controlNavbar);
+            };
+        }
+    }, [lastScrollY]);
+
+    const controlNavbar = () => {
+        if (typeof window !== 'undefined') { 
+            if (window.scrollY > lastScrollY) {
+                setShow(false); 
+            }
+            else {
+                setShow(true);  
+            }
+    
+            setLastScrollY(window.scrollY);
+        }
+      };
+
     return (
-        <div className='sidebar'>
+        <div className={`sidebar ${!show && 'hidden'}`}>
             <div onClick={() => navigate('/popular')} className={activeItem === 'popular' ? 'sidebar__item active' : 'sidebar__item'}>
                 <AiOutlineFire className='sidebar__item-icon'/>
             </div>
