@@ -132,10 +132,13 @@ const Project = () => {
 
     async function deleteProject() {
         try {
+            setIsLoading(true);
             await ProjectService.deleteProject(project.id);
             navigate('/');
         } catch (e) {
             showSnackbar('Ошибка при удалени проекта', 'error');
+        } finally {
+            setIsLoading(false);
         }
     }
 
