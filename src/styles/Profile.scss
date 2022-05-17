@@ -18,12 +18,38 @@
             display: flex;
             justify-content: space-between;
 
-            .img {
+            .photo__user {
                 background-color: $app-background-color;
                 width: 100px;
                 height: 100px;
-                border-radius: $app-radius;
                 margin-right: 15px;
+                cursor: zoom-in;
+
+                .photo {
+                    display: block;
+                    width: 100px;
+                    height: 100px;
+                    object-fit: cover;
+                    border-radius: $app-radius;
+                }
+
+                .change__photo {
+                    background-color: $app-background-color;
+                    display: inline;
+                    padding: 0 5px;
+                    border-radius: 2px;
+                    position: absolute;
+                    margin: -30px 0 0 5px;
+                    cursor: pointer;
+                    display: none;
+                }
+            }
+
+            .photo__user:hover {
+                .change__photo {
+                    display: block;
+                    -webkit-animation: show-change-photo .25s forwards;
+                }
             }
 
             .text {
@@ -109,5 +135,14 @@
                 color: $app-black-color;
             }
         }
+    }
+}
+
+@keyframes show-change-photo {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

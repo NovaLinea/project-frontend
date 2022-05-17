@@ -7,11 +7,13 @@ import ProjectService from '../API/ProjectService';
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { FcCheckmark } from "react-icons/fc";
+import { BiImage } from "react-icons/bi";
 import Button from "../components/UI/button/Button";
 import Snackbar from '../components/UI/snackbar/Snackbar';
 import Loader from '../components/UI/loader/Loader';
 import ListProjects from '../components/ListProjects';
 import ParamsUser from '../components/ParamsUser';
+import Avatar from '@mui/material/Avatar';
 
 
 const Profile = () => {
@@ -27,6 +29,7 @@ const Profile = () => {
     const [projects, setProjects] = useState([]);
     const [modeSubscribe, setModeSubscribe] = useState(false);
     const [followings, setFollowings] = useState([]);
+    const [photo, setPhoto] = useState(null);
 
     useEffect(() => {
         fetchData();
@@ -100,6 +103,16 @@ const Profile = () => {
         }
     }
 
+    const changePhoto = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                setPhoto(e.target.result);
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+
     const showSnackbar = (message, mode) => {
         setMessageSnackbar(message);
         setModeSnackbar(mode)
@@ -118,11 +131,22 @@ const Profile = () => {
         <div className='profile'>
             <div className="profile__card">
                 <div className="information">
-                    <div className="img">
+                    <div className="photo__user">
+                        <Avatar 
+                            className='photo' 
+                            src={photo}
+                            variant="square" 
+                            sx={{ width: 100, height: 100 }}
+                        />
 
-                    </div>
+                        <label title="Сменить фото" className="change__photo">
+                            <input type="file" onChange={changePhoto} accept="image/png, image/jpeg" hidden="hidden" />
+                            <BiImage />
+                        </label>
+                    </div>                    
+
                     <div className="text">
-                        <p className="name">{dataUser.name}</p>
+                        <h3 className="name">{dataUser.name}</h3>
                         <p className="description">{dataUser.description}</p>
                     </div>
                 </div>

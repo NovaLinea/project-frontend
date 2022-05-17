@@ -44,6 +44,7 @@ body {
         }
         
         .actions {
+            background-color: $app-white-color;
             width: 170px;
             border: none;
             border-radius: $app-radius;
@@ -51,6 +52,7 @@ body {
             padding: 0 7px;
             -webkit-box-shadow: $app-shadow;
             box-shadow: $app-shadow;
+            -webkit-animation: show-dropdown .25s forwards;
         
             .action__item {
                 width: 100%;
@@ -83,5 +85,14 @@ body {
         font-weight: bold;
         color: $app-grey-color;
         margin-top: 100px;
+    }
+}
+
+@keyframes show-dropdown {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
     }
 }

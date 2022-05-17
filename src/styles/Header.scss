@@ -3,34 +3,22 @@
 .header {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.02);
     background-color: $app-white-color;
-    width: 100%;
     height: 60px;
-    display: flex;
     position: fixed;
     z-index: 3;
 
     .container {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
         .header__left {
             .logo {
                 text-decoration: none;
                 font-size: 22px;
-                font-weight: bold;
                 color: $app-black-color;
             }
         }
 
         .header__right {
-            display: flex;
-            align-items: center;
-            justify-content: right;
-        
             .search, .notifications {
                 font-size: 28px;
-                font-weight: bold;
                 cursor: pointer;
             }
 

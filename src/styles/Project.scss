@@ -20,6 +20,10 @@
             }
 
             .dropdown {
+                .dropdown__btn {
+                    box-shadow: none;
+                }
+                
                 .menu__icon {
                     background-color: $app-white-color;
                     color: $app-grey-color;

@@ -41,23 +41,23 @@ const Header = () => {
     }
 
     return (
-        <div className='header'>
-            <div className="container">
+        <div className='header d-flex w100'>
+            <div className="container d-flex justify-between align-center">
                 <div className="header__left">
-                    <Link to='/' className='logo'>
+                    <Link to='/' className='logo fw-bold'>
                         ProjectUnion
                     </Link>
                 </div>
 
-                <div className="header__right">
-                    <BiSearch className='search'/>
+                <div className="header__right d-flex justify-between align-center">
+                    <BiSearch className='search fw-bold'/>
                     {!store.isAuth
                         ?
                         <Button mode='fill' onClick={() => setModalSignIn(true)}>Вход</Button>
                         :
                         <>
                             <Badge badgeContent={0} color="primary">
-                                <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications'/>
+                                <AiOutlineBell onClick={() => setShowNotifies(!showNotifies)} className='notifications fw-bold'/>
                             </Badge>
 
                             <div className={showNotifies ? 'notifications__panel show' : 'notifications__panel'} onClick={() => setShowNotifies(false)}>
